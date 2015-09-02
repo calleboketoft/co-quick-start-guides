@@ -38,4 +38,8 @@ Add `tsconfig.json` and `.settings/tasks.json` to the package
 *Generating ngResource models for all endpoints:*
 - `lb-ng server/server.js lb-service.js`
 
+**Using authorization without authentication**
+- `npm install --save git+https://github.com/calleboketoft/co-loopback-haxxess-token`
+- Add bootscript `haxxessTokenInit.ts`: `module.exports = (server) => require('co-loopback-haxxess-token')(server)`
+
 *Note: the authorization management client is built for this EXACT setup, so make sure the user is called ExtUser and none of the other models are tampered with.*
