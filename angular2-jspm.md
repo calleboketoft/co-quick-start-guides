@@ -17,6 +17,7 @@
 
 ## Angular 2 with JSPM
 
+- add to `.gitignore`: `client/jspm_packages`
 - `npm install --save jspm`
 - `./node_modules/.bin/jspm init`
 - public files in `client`
