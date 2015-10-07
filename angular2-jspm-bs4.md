@@ -159,7 +159,16 @@ gulp.task('sass', function () {
 })
 ```
 
-- `./node_modules/.bin/gulp sass`
+- add to `package.json`:
+
+```json
+"scripts": { "postinstall": "./node_modules/.bin/gulp sass" }
+```
+
+- add to `.gitignore`:
+
+`client/css`
+
 - add to `client/index.html`:
 
 ```html
