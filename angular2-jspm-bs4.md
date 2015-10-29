@@ -8,8 +8,10 @@
 - add to `server/middleware.json`:
 
 ```json
-"loopback#static": {
+"files": {
+  "loopback#static": {
     "params": "$!../client"
+  }
 }
 ```
 
