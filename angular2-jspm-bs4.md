@@ -117,7 +117,7 @@ bootstrap(AppCmp, [
 ])
 ```
 
-- add `client/app/components/app-component.ts`:
+- add `client/app/components/app-cmp.ts`:
 
 ```javascript
 import { Component } from 'angular2/angular2'
@@ -126,8 +126,10 @@ import { PageCmp } from './page-cmp'
 
 @Component({
   selector: 'app',
-  template: `<a [router-link]="['/Page']">Page</a><br>
-             <router-outlet></router-outlet>`,
+  template: `
+    <a [router-link]="['/Page']">Page</a><br>
+    <router-outlet></router-outlet>
+  `,
   directives: [ROUTER_DIRECTIVES]
 })
 @RouteConfig([
