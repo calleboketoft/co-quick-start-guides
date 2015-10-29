@@ -30,7 +30,7 @@
 "scripts": { "postinstall": "./node_modules/.bin/jspm install" }
 ```
 
-- install jspm deps `./node_modules/.bin/jspm install angular2 npm:@reactivex/rxjs reflect-metadata npm:zone.js`
+- install angular 2 `./node_modules/.bin/jspm install angular2`
 
 - create `client/index.html`:
 
