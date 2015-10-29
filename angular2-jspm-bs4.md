@@ -15,6 +15,14 @@
 }
 ```
 
+- add to package.json:
+
+```json
+"scripts": {
+  "start": "node server/server.js"
+}
+```
+
 ---
 
 ## Angular 2 with JSPM
@@ -31,6 +39,7 @@
 ```
 
 - install angular 2 `./node_modules/.bin/jspm install angular2`
+- install angular 2 deps `'./node-modules/.bin jspm install reflect-metadata zone.js`
 
 - create `client/tsconfig.json`:
 
@@ -196,3 +205,7 @@ gulp.task('sass', function () {
   <link href="css/bootstrap.css" rel="stylesheet" />
 ...
 ```
+
+## Build and serve
+
+- install NPM and JSPM + build SASS `npm install`
