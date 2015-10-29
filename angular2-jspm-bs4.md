@@ -107,12 +107,12 @@ bootstrap(AppComponent)
 import 'reflect-metadata'
 import 'zone.js'
 import { bind, bootstrap } from 'angular2/angular2';
-import { routerBindings, LocationStrategy, HashLocationStrategy } from 'angular2/router'
+import { ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy } from 'angular2/router'
 
-import { AppCmp } from 'app/components/app-cmp'
+import { AppCmp } from './components/app-cmp'
 
 bootstrap(AppCmp, [
-  routerBindings(AppCmp),
+  ROUTER_PROVIDERS,
   bind(LocationStrategy).toClass(HashLocationStrategy)
 ])
 ```
