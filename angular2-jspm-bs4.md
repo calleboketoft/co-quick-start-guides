@@ -66,12 +66,10 @@ System.config({
 ```javascript
 import 'zone.js'
 import 'reflect-metadata'
-import { Component, View, bootstrap } from 'angular2/angular2';
+import { Component, bootstrap } from 'angular2/angular2';
 
 @Component({
-  selector: 'app'
-})
-@View({
+  selector: 'app',
   template: '<h1>Hello {{ name }}</h1>'
 })
 class AppComponent {
@@ -95,10 +93,10 @@ import 'zone.js'
 import { bind, bootstrap } from 'angular2/angular2';
 import { routerBindings, LocationStrategy, HashLocationStrategy } from 'angular2/router'
 
-import { AppComponent } from 'app/components/app-component'
+import { AppCmp } from 'app/components/app-cmp'
 
-bootstrap(AppComponent, [
-  routerBindings(AppComponent),
+bootstrap(AppCmp, [
+  routerBindings(AppCmp),
   bind(LocationStrategy).toClass(HashLocationStrategy)
 ])
 ```
@@ -108,7 +106,7 @@ bootstrap(AppComponent, [
 ```javascript
 import { Component } from 'angular2/angular2'
 import { ROUTER_DIRECTIVES, RouteConfig } from 'angular2/router'
-import { PageComponent } from './page-component'
+import { PageCmp } from './page-cmp'
 
 @Component({
   selector: 'app',
@@ -117,9 +115,9 @@ import { PageComponent } from './page-component'
   directives: [ROUTER_DIRECTIVES]
 })
 @RouteConfig([
-  { path: '/page', as: 'Page', component: PageComponent }
+  { path: '/page', as: 'Page', component: PageCmp }
 ])
-export class AppComponent {
+export class AppCmp {
   name: string
   constructor () {
     this.name = 'Calle'
@@ -127,7 +125,7 @@ export class AppComponent {
 }
 ```
 
-- add `client/app/components/page-component.ts`:
+- add `client/app/components/page-cmp.ts`:
 
 ```javascript
 import { Component } from 'angular2/angular2'
@@ -136,7 +134,7 @@ import { Component } from 'angular2/angular2'
   selector: 'page',
   template: `<h1>Page</h1>`
 })
-export class PageComponent {}
+export class PageCmp {}
 
 ```
 
