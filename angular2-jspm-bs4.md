@@ -106,14 +106,12 @@ bootstrap(AppComponent, [
 - add `client/app/components/app-component.ts`:
 
 ```javascript
-import { Component, View } from 'angular2/angular2'
+import { Component } from 'angular2/angular2'
 import { ROUTER_DIRECTIVES, RouteConfig } from 'angular2/router'
 import { PageComponent } from './page-component'
 
 @Component({
-  selector: 'app'
-})
-@View({
+  selector: 'app',
   template: `<a [router-link]="['/Page']">Page</a><br>
              <router-outlet></router-outlet>`,
   directives: [ROUTER_DIRECTIVES]
@@ -132,12 +130,10 @@ export class AppComponent {
 - add `client/app/components/page-component.ts`:
 
 ```javascript
-import { Component, View } from 'angular2/angular2'
+import { Component } from 'angular2/angular2'
 
 @Component({
-  selector: 'page'
-})
-@View({
+  selector: 'page',
   template: `<h1>Page</h1>`
 })
 export class PageComponent {}
