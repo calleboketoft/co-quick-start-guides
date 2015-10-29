@@ -209,3 +209,4 @@ gulp.task('sass', function () {
 ## Build and serve
 
 - install NPM and JSPM + build SASS `npm install`
+- start static file serving `npm start`
