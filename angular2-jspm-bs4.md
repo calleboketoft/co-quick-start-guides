@@ -32,6 +32,22 @@
 
 - install angular 2 `./node_modules/.bin/jspm install angular2`
 
+- create `client/tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "commonjs",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": false,
+    "noImplicitAny": false
+  }
+}
+```
+
 - create `client/index.html`:
 
 ```html
