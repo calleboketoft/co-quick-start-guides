@@ -11,6 +11,7 @@
 - create file `.gitignore`
 
 ```bash
+.DS_Store
 src/**/*.js
 src/**/*.map
 node_modules
@@ -120,10 +121,33 @@ import { MyComponentCmp } from '../my-component/my-component-cmp'
 
 ## Publishing
 
-- TODO
-- prepublish compilation
-- npm publish
-- parts to ignore for the npm package
+- `package.json` script `prepublish` specifies what should be run before publishing
+
+```json
+"scripts": {
+  "prepublish": "npm run tsc"
+}
+```
+
+there are two ways of specifying which files to include in the NPM package:
+
+- `.npmignore` lists which files to ignore
+
+```bash
+test
+examples
+.gitignore
+```
+
+- `package.json` files property lists which filest to include
+
+```json
+"files": [
+  "src/my-component/"
+]
+```
+
+- When everything is ready, publish the package `npm publish`
 
 ## Testing
 
