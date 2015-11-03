@@ -12,8 +12,8 @@
 
 ```bash
 .DS_Store
-src/**/*.js
-src/**/*.map
+src/example/**/*.js
+src/example/**/*.map
 node_modules
 ```
 
@@ -148,6 +148,15 @@ examples
 ```
 
 - When everything is ready, publish the package `npm publish`
+
+## Importing module using JSPM
+
+- install `my-component` into angular 2 project by `jspm install npm:my-component`
+- import into TypeScript file like this
+
+```javascript
+import { MyComponentCmp } from 'my-component'
+```
 
 ## Testing
 
