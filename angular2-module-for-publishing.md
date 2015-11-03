@@ -6,7 +6,7 @@
 - cd `myproj`
 - git init
 - npm init (specify version 0.0.1)
-- npm install --save-dev angular2 systemjs typescript live-server
+- npm install --save-dev angular2 systemjs typescript express
 - mkdir `src`
 - create file `.gitignore`
 
@@ -15,6 +15,19 @@
 src/example/**/*.js
 src/example/**/*.map
 node_modules
+```
+
+- create file `server.js`
+
+```javascript
+var port = 3000
+var staticDir = './'
+var express = require('express')
+var app = express()
+app.use(express.static(staticDir))
+var server = app.listen(port, () => {
+  console.log('serving at: ' + port)
+})
 ```
 
 - create file `src/tsconfig.json`
@@ -39,7 +52,7 @@ node_modules
 {
   "scripts": {
     "tsc": "tsc -p src", // add -w for watching
-    "start": "live-server --open=src"
+    "start": "node server"
   }
 }
 ```
