@@ -37,8 +37,8 @@ node_modules
 ```json
 {
   "scripts": {
-    "tsc": "tsc -p src",
-    "start": "live-server --open=src/example"
+    "tsc": "tsc -p src", // add -w for watching
+    "start": "live-server --open=src"
   }
 }
 ```
@@ -46,7 +46,7 @@ node_modules
 ## Component example
 
 - cd `src`, mkdir `example`
-- create file `src/example/index.html`
+- create file `src/index.html`
 
 ```html
 <!DOCTYPE html>
@@ -83,6 +83,8 @@ class AppComponent { }
 bootstrap(AppComponent)
 ```
 
+- the skeleton is ready! Compile `npm run tsc` and start serving `npm start`
+
 - optionally add `bootstrap.css` for styling
 
 ```html
@@ -92,3 +94,30 @@ bootstrap(AppComponent)
 ## Component
 
 - create component folder `src/my-component`
+- create component file `src/my-component/my-component-cmp.ts`
+
+```javascript
+import { Component } from 'angular2/angular2'
+@Component({
+  selector: 'my-component',
+  template: '<p>My Component</p>'
+})
+export class MyComponentCmp { }
+```
+
+- import component to `src/example/app.ts` and enable it
+
+```javascript
+import { MyComponentCmp } from '../my-component/my-component-cmp'
+
+@Component({
+  directives: [MyComponentCmp],
+  template: `<my-component></my-component>`
+})
+```
+
+- compile tsc and open server to view
+
+## Testing
+
+- TODO
