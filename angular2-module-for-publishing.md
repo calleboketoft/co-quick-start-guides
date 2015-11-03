@@ -97,8 +97,10 @@ class AppComponent { }
 bootstrap(AppComponent)
 ```
 
-- the skeleton is ready! Compile `npm run tsc` and start serving `npm start`
-
+- the skeleton is ready!
+- Compile `npm run tsc`
+- Start serving `npm start`
+- Open browser at `localhost:3000/src`
 - optionally add `bootstrap.css` for styling
 
 ```html
@@ -133,6 +135,14 @@ import { MyComponentCmp } from '../my-component/my-component-cmp'
 - compile tsc and open server to view
 
 ## Publishing
+
+- Specify main file in `package.json`
+
+```json
+{
+  "main": "src/my-component/my-component-cmp.js"
+}
+```
 
 - `package.json` script `prepublish` specifies what should be run before publishing
 
