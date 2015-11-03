@@ -118,6 +118,13 @@ import { MyComponentCmp } from '../my-component/my-component-cmp'
 
 - compile tsc and open server to view
 
+## Publishing
+
+- TODO
+- prepublish compilation
+- npm publish
+- parts to ignore for the npm package
+
 ## Testing
 
 - TODO
