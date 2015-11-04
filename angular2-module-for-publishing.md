@@ -78,7 +78,7 @@ var server = app.listen(port, () => {
           'my-component': { defaultExtension: 'js' }
         }
       })
-      System.import('example/app')
+      System.import('example/bootstrap')
     </script>
   </head>
   <body>
@@ -87,16 +87,23 @@ var server = app.listen(port, () => {
 </html>
 ```
 
+- create file `example/bootstrap.ts`
+
+```javascript
+import { bootstrap } from 'angular2/angular2'
+import { AppCmp } from './app-cmp'
+bootstrap(AppCmp)
+```
+
 - create file `example/app.ts`
 
 ```javascript
-import {Component, bootstrap} from 'angular2/angular2'
+import { Component } from 'angular2/angular2'
 @Component({
   selector: 'app',
   template: '<h1>Angular 2</h1>'
 })
 class AppComponent { }
-bootstrap(AppComponent)
 ```
 
 - the skeleton is ready!
@@ -123,7 +130,7 @@ import { Component } from 'angular2/angular2'
 export class MyComponentCmp { }
 ```
 
-- import component to `src/example/app.ts` and enable it
+- import component to `src/example/app-cmp.ts` and enable it
 
 ```javascript
 import { MyComponentCmp } from '../my-component/my-component-cmp'
