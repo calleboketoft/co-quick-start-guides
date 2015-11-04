@@ -12,9 +12,11 @@
 
 ```bash
 .DS_Store
-src/example/**/*.js
-src/example/**/*.map
 node_modules
+npm-debug.log
+*.log
+src/jspm_packages
+src/css
 ```
 
 - create file `server.js`
