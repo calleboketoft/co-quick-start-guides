@@ -169,7 +169,7 @@ export class PageCmp {}
 
 ## Bootstrap 4 alpha
 
-- `npm install --save-dev git+https://git@github.com/twbs/bootstrap.git#v4.0.0-alpha`
+- `npm install --save-dev git+https://git@github.com/twbs/bootstrap.git#v4-dev`
 - `npm install --save-dev gulp gulp-sass`
 
 - create `gulpfile.js`:
