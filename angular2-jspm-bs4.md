@@ -210,3 +210,37 @@ gulp.task('sass', function () {
 
 - install NPM and JSPM + build SASS `npm install`
 - start static file serving `npm start`
+
+## Compile into one script file
+
+- add to `package.json`:
+
+```json
+"scripts": {
+  "compile": "cd client && ../node_modules/.bin/jspm bundle-sfx -m app/bootstrap compiled.js && cd .."
+}
+```
+
+- rename `index.html` to `index-src.html`
+- create new `index.html`
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <title>Angular 2 ES6 App</title>
+  </head>
+  <body>
+    <app>Loading...</app>
+    <script src="compiled.js"></script>
+  </body>
+</html>
+```
+
+- add to `.gitignore`
+
+```bash
+client/compiled.js
+client/compiled.js.map
+```
