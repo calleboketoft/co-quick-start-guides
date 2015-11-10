@@ -1,4 +1,5 @@
 # ng2-jspm-bs4-quickstart
+This guide is my personal start for each new Angular 2 project. A guide by one of the core team members can be found here: https://gist.github.com/robwormald/429e01c6d802767441ec
 
 - npm init -y
 - `.gitignore`:
@@ -72,7 +73,10 @@ var server = app.listen(port, () => {
 - add to `package.json`
 
 ```json
-"scripts": { "postinstall": "./node_modules/.bin/jspm install" }
+"scripts": {
+  "jspm": "./node_modules/.bin/jspm install",
+  "postinstall": "npm run jspm"
+}
 ```
 
 - install angular 2 and deps
@@ -164,7 +168,7 @@ bootstrap(AppComponent)
 ```
 
 ---
-#Angular 2 Router
+## Angular 2 Router
 
 - modify `client/app/bootstrap.ts`:
 
@@ -243,7 +247,10 @@ gulp.task('sass', function () {
 - add to `package.json`:
 
 ```json
-"scripts": { "postinstall": "./node_modules/.bin/gulp sass" }
+"scripts": {
+  "postinstall": "npm run gulp",
+  "gulp": "./node_modules/.bin/gulp sass"
+}
 ```
 
 - add to `.gitignore`:
@@ -261,12 +268,13 @@ gulp.task('sass', function () {
   <link href="css/bootstrap.css" rel="stylesheet" />
 ...
 ```
-
+---
 ## Build and serve
 
 - install NPM and JSPM + build SASS `npm install`
 - start static file serving `npm start`
 
+---
 ## Compile into one script file
 
 - add to `package.json`:
