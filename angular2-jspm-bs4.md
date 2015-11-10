@@ -1,8 +1,46 @@
 # ng2-jspm-bs4-quickstart
 
+- npm init -y
+- `.gitignore`:
+
+```bash
+.DS_Store
+node_modules
+npm-debug.log
+*.log
+client/jspm_packages
+client/css
+```
+
 ## Static file serving
 
-- slc loopback
+### Alt 1: Express
+
+- `npm install --save express`
+- `server.js`:
+
+```javascript
+var port = 3000
+var staticDir = './'
+var express = require('express')
+var app = express()
+app.use(express.static(staticDir))
+var server = app.listen(port, () => {
+  console.log('serving at: ' + port)
+})
+```
+
+- add to package.json:
+
+```json
+"scripts": {
+  "start": "node server.js"
+}
+```
+
+### Alt 2: Loopback
+
+- `slc loopback`
 - remove all files that look redundant from the generated package
 - remove `server/boot/root.js`
 - add to `server/middleware.json`:
@@ -27,7 +65,6 @@
 
 ## Angular 2 with JSPM
 
-- add to `.gitignore`: `client/jspm_packages`
 - `npm install --save jspm`
 - `./node_modules/.bin/jspm init`
 - public files in `client`
@@ -38,10 +75,14 @@
 "scripts": { "postinstall": "./node_modules/.bin/jspm install" }
 ```
 
-- install angular 2 `./node_modules/.bin/jspm install angular2`
-- install angular 2 deps `'./node-modules/.bin jspm install reflect-metadata zone.js`
+- install angular 2 and deps
 
-- create `client/tsconfig.json`:
+```bash
+./node_modules/.bin/jspm install angular2
+./node_modules/.bin/jspm install reflect-metadata zone.js
+```
+
+- create `client/tsconfig.json`
 
 ```json
 {
@@ -55,6 +96,21 @@
     "noImplicitAny": false
   }
 }
+```
+
+- add to `client/config.js`:
+
+```javascript
+System.config({
+  typescriptOptions: {
+    "module": "commonjs",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": false,
+    "noImplicitAny": false
+  }
+})
 ```
 
 - create `client/index.html`:
@@ -95,12 +151,12 @@ import { Component, bootstrap } from 'angular2/angular2';
 
 @Component({
   selector: 'app',
-  template: '<h1>Hello {{ name }}</h1>'
+  template: '<h1>{{title}}</h1>'
 })
 class AppComponent {
-  name: string
+  title: string
   constructor () {
-    this.name = 'Calle'
+    this.title = 'up'
   }
 }
 
