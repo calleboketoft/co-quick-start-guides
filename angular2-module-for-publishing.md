@@ -53,7 +53,9 @@ var server = app.listen(port, () => {
 ```json
 {
   "scripts": {
-    "tsc": "tsc -p src", // add -w for watching
+    "compile": "npm run tsc",
+    "tsc": "tsc -p src",
+    "watch": "tsc -p src -w",
     "start": "node server"
   }
 }
@@ -107,7 +109,7 @@ class AppComponent { }
 ```
 
 - the skeleton is ready!
-- Compile `npm run tsc`
+- Compile `npm run compile`
 - Start serving `npm start`
 - Open browser at `localhost:3000/src`
 - optionally add `bootstrap.css` for styling
@@ -157,7 +159,7 @@ import { MyComponentCmp } from '../my-component/my-component-cmp'
 
 ```json
 "scripts": {
-  "prepublish": "npm run tsc"
+  "prepublish": "npm run compile"
 }
 ```
 
