@@ -1,8 +1,47 @@
 # ng2-jspm-bs4-quickstart
+This guide is my personal start for each new Angular 2 project. A guide by one of the core team members can be found here: https://gist.github.com/robwormald/429e01c6d802767441ec
+
+- npm init -y
+- `.gitignore`:
+
+```bash
+.DS_Store
+node_modules
+npm-debug.log
+*.log
+client/jspm_packages
+client/css
+```
 
 ## Static file serving
 
-- slc loopback
+### Alt 1: Express
+
+- `npm install --save express`
+- `server.js`:
+
+```javascript
+var port = 3000
+var staticDir = './'
+var express = require('express')
+var app = express()
+app.use(express.static(staticDir))
+var server = app.listen(port, () => {
+  console.log('serving at: ' + port)
+})
+```
+
+- add to package.json:
+
+```json
+"scripts": {
+  "start": "node server.js"
+}
+```
+
+### Alt 2: Loopback
+
+- `slc loopback`
 - remove all files that look redundant from the generated package
 - remove `server/boot/root.js`
 - add to `server/middleware.json`:
@@ -27,7 +66,6 @@
 
 ## Angular 2 with JSPM
 
-- add to `.gitignore`: `client/jspm_packages`
 - `npm install --save jspm`
 - `./node_modules/.bin/jspm init`
 - public files in `client`
@@ -35,13 +73,20 @@
 - add to `package.json`
 
 ```json
-"scripts": { "postinstall": "./node_modules/.bin/jspm install" }
+"scripts": {
+  "jspm": "./node_modules/.bin/jspm install",
+  "postinstall": "npm run jspm"
+}
 ```
 
-- install angular 2 `./node_modules/.bin/jspm install angular2`
-- install angular 2 deps `'./node-modules/.bin jspm install reflect-metadata zone.js`
+- install angular 2 and deps
 
-- create `client/tsconfig.json`:
+```bash
+./node_modules/.bin/jspm install angular2
+./node_modules/.bin/jspm install reflect-metadata zone.js
+```
+
+- create `client/tsconfig.json`
 
 ```json
 {
@@ -55,6 +100,21 @@
     "noImplicitAny": false
   }
 }
+```
+
+- add to `client/config.js`:
+
+```javascript
+System.config({
+  typescriptOptions: {
+    "module": "commonjs",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": false,
+    "noImplicitAny": false
+  }
+})
 ```
 
 - create `client/index.html`:
@@ -95,12 +155,12 @@ import { Component, bootstrap } from 'angular2/angular2';
 
 @Component({
   selector: 'app',
-  template: '<h1>Hello {{ name }}</h1>'
+  template: '<h1>{{title}}</h1>'
 })
 class AppComponent {
-  name: string
+  title: string
   constructor () {
-    this.name = 'Calle'
+    this.title = 'up'
   }
 }
 
@@ -108,7 +168,7 @@ bootstrap(AppComponent)
 ```
 
 ---
-#Angular 2 Router
+## Angular 2 Router
 
 - modify `client/app/bootstrap.ts`:
 
@@ -187,7 +247,10 @@ gulp.task('sass', function () {
 - add to `package.json`:
 
 ```json
-"scripts": { "postinstall": "./node_modules/.bin/gulp sass" }
+"scripts": {
+  "postinstall": "npm run gulp",
+  "gulp": "./node_modules/.bin/gulp sass"
+}
 ```
 
 - add to `.gitignore`:
@@ -205,12 +268,13 @@ gulp.task('sass', function () {
   <link href="css/bootstrap.css" rel="stylesheet" />
 ...
 ```
-
+---
 ## Build and serve
 
 - install NPM and JSPM + build SASS `npm install`
 - start static file serving `npm start`
 
+---
 ## Compile into one script file
 
 - add to `package.json`:
