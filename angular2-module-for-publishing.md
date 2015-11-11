@@ -98,6 +98,8 @@ var server = app.listen(port, () => {
 - mkdir `src/example`
 - create file `src/example/bootstrap.ts`
 
+NOTE: bootstrapping code is separated from example so that the example code
+can be used as a component by itself in a separate repo.
 ```javascript
 import { bootstrap } from 'angular2/angular2'
 import { AppCmp } from './app-cmp'
