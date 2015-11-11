@@ -53,7 +53,7 @@ var server = app.listen(port, () => {
 ```json
 {
   "scripts": {
-    "compile": "npm run tsc",
+    "prepublish": "npm run tsc",
     "tsc": "tsc -p src",
     "watch": "tsc -p src -w",
     "start": "node server"
@@ -116,7 +116,7 @@ class AppComponent { }
 ```
 
 - the skeleton is ready!
-- Compile `npm run compile`
+- Install and compile `npm install`
 - Start serving `npm start`
 - Open browser at `localhost:3000/src`
 - optionally add `bootstrap.css` for styling
