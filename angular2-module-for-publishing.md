@@ -63,7 +63,13 @@ var server = app.listen(port, () => {
 
 ## Component example
 
-- cd `src`, mkdir `example`
+- create file `index.html`
+
+```html
+<html><head><meta http-equiv="refresh" content="0; URL='/src'" /></head></html>
+```
+
+- cd `src`
 - create file `src/index.html`
 
 ```html
@@ -89,7 +95,8 @@ var server = app.listen(port, () => {
 </html>
 ```
 
-- create file `example/bootstrap.ts`
+- mkdir `src/example`
+- create file `src/example/bootstrap.ts`
 
 ```javascript
 import { bootstrap } from 'angular2/angular2'
@@ -97,7 +104,7 @@ import { AppCmp } from './app-cmp'
 bootstrap(AppCmp)
 ```
 
-- create file `example/app.ts`
+- create file `src/example/app.ts`
 
 ```javascript
 import { Component } from 'angular2/angular2'
