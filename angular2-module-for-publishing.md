@@ -6,7 +6,7 @@
 - cd `myproj`
 - git init
 - npm init (specify version 0.0.1)
-- npm install --save-dev angular2 systemjs typescript express
+- npm install --save-dev angular2 systemjs typescript express ghooks
 - mkdir `src`
 - create file `.gitignore`
 
@@ -53,8 +53,15 @@ var server = app.listen(port, () => {
 ```json
 {
   "scripts": {
-    "tsc": "tsc -p src", // add -w for watching
+    "build": "npm run tsc",
+    "tsc": "tsc -p src",
+    "watch": "tsc -p src -w",
     "start": "node server"
+  },
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm run build"
+    }
   }
 }
 ```
@@ -107,7 +114,7 @@ class AppComponent { }
 ```
 
 - the skeleton is ready!
-- Compile `npm run tsc`
+- Build `npm run build`
 - Start serving `npm start`
 - Open browser at `localhost:3000/src`
 - optionally add `bootstrap.css` for styling
@@ -157,7 +164,7 @@ import { MyComponentCmp } from '../my-component/my-component-cmp'
 
 ```json
 "scripts": {
-  "prepublish": "npm run tsc"
+  "prepublish": "npm run build"
 }
 ```
 
