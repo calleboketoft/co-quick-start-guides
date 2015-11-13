@@ -53,7 +53,11 @@ var server = app.listen(port, () => {
 ```json
 {
   "scripts": {
+<<<<<<< HEAD
     "build": "npm run tsc",
+=======
+    "prepublish": "npm run tsc",
+>>>>>>> 84601f29072d7be79d2b15a7f90ca2043be7bc4e
     "tsc": "tsc -p src",
     "watch": "tsc -p src -w",
     "start": "node server"
@@ -68,7 +72,13 @@ var server = app.listen(port, () => {
 
 ## Component example
 
-- cd `src`, mkdir `example`
+- create file `index.html`
+
+```html
+<html><head><meta http-equiv="refresh" content="0; URL='/src'" /></head></html>
+```
+
+- cd `src`
 - create file `src/index.html`
 
 ```html
@@ -94,15 +104,18 @@ var server = app.listen(port, () => {
 </html>
 ```
 
-- create file `example/bootstrap.ts`
+- mkdir `src/example`
+- create file `src/example/bootstrap.ts`
 
+NOTE: bootstrapping code is separated from example so that the example code
+can be used as a component by itself in a separate repo.
 ```javascript
 import { bootstrap } from 'angular2/angular2'
 import { AppCmp } from './app-cmp'
 bootstrap(AppCmp)
 ```
 
-- create file `example/app.ts`
+- create file `src/example/app.ts`
 
 ```javascript
 import { Component } from 'angular2/angular2'
@@ -114,7 +127,11 @@ class AppComponent { }
 ```
 
 - the skeleton is ready!
+<<<<<<< HEAD
 - Build `npm run build`
+=======
+- Install and compile `npm install`
+>>>>>>> 84601f29072d7be79d2b15a7f90ca2043be7bc4e
 - Start serving `npm start`
 - Open browser at `localhost:3000/src`
 - optionally add `bootstrap.css` for styling
