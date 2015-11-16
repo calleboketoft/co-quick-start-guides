@@ -178,12 +178,14 @@ export class MyComponentCmp { }
 - import component to `src/example/app-cmp.ts` and enable it
 
 ```javascript
+import { Component } from 'angular2/angular2'
 import { MyComponentCmp } from '../my-component/my-component-cmp'
-
 @Component({
   directives: [MyComponentCmp],
-  template: `<my-component></my-component>`
+  selector: 'app',
+  template: '<my-component></my-component>'
 })
+export class AppCmp { }
 ```
 
 - compile tsc and open server to view
@@ -230,7 +232,15 @@ describe('MyComponent', function () {
 })
 ```
 
-- add testing to `ghooks` config:
+- add test script to `package.json`:
+
+```json
+"scripts": {
+  "test": "karma start"
+}
+```
+
+- add testing to `ghooks` config in `package.json`:
 
 ```json
 "config": {
