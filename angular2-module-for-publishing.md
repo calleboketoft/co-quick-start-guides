@@ -6,7 +6,7 @@
 - cd `myproj`
 - git init
 - npm init (specify version 0.0.1)
-- npm install --save-dev angular2 systemjs typescript express ghooks
+- npm install --save-dev angular2 typescript express ghooks jspm
 - mkdir `src`
 - create file `.gitignore`
 
@@ -15,7 +15,7 @@
 node_modules
 npm-debug.log
 *.log
-src/jspm_packages
+jspm_packages
 src/css
 ```
 
@@ -53,14 +53,12 @@ var server = app.listen(port, () => {
 ```json
 {
   "scripts": {
-<<<<<<< HEAD
+    "start": "node server",
     "build": "npm run tsc",
-=======
-    "prepublish": "npm run tsc",
->>>>>>> 84601f29072d7be79d2b15a7f90ca2043be7bc4e
+    "prepublish": "npm run build",
     "tsc": "tsc -p src",
     "watch": "tsc -p src -w",
-    "start": "node server"
+    "postinstall": "jspm install"
   },
   "config": {
     "ghooks": {
@@ -85,21 +83,15 @@ var server = app.listen(port, () => {
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="../../node_modules/systemjs/dist/system.src.js"></script>
-    <script src="../../node_modules/angular2/bundles/angular2.dev.js"></script>
-    <script src="../../node_modules/angular2/bundles/router.dev.js"></script>
-    <script>
-      System.config({
-        packages: {
-          'example': { defaultExtension: 'js' },
-          'my-component': { defaultExtension: 'js' }
-        }
-      })
-      System.import('example/bootstrap')
-    </script>
+    <title>Angular 2 ES6 App</title>
   </head>
-  <body>
+  <body style="margin-top: 50px;">
     <app>Loading...</app>
+    <script src="../jspm_packages/system.js"></script>
+    <script src="../jspm.config.js"></script>
+    <script>
+      System.import('./example/bootstrap')
+    </script>
   </body>
 </html>
 ```
@@ -110,12 +102,15 @@ var server = app.listen(port, () => {
 NOTE: bootstrapping code is separated from example so that the example code
 can be used as a component by itself in a separate repo.
 ```javascript
+import 'reflect-metadata'
+import 'zone.js'
+
 import { bootstrap } from 'angular2/angular2'
 import { AppCmp } from './app-cmp'
 bootstrap(AppCmp)
 ```
 
-- create file `src/example/app.ts`
+- create file `src/example/app-cmp.ts`
 
 ```javascript
 import { Component } from 'angular2/angular2'
@@ -123,15 +118,41 @@ import { Component } from 'angular2/angular2'
   selector: 'app',
   template: '<h1>Angular 2</h1>'
 })
-class AppComponent { }
+export class AppCmp { }
+```
+
+Set up JSPM:
+
+- `npm install jspm`
+- `node_modules/.bin/jspm init`
+ - config file: `jspm.config.js`
+ - transpiler: `typescript`
+- `jspm install angular2 reflect-metadata zone.js`
+- Add config to `jspm.config.js`:
+
+```javascript
+System.config({
+  typescriptOptions: {
+    "module": "commonjs",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": false,
+    "noImplicitAny": false
+  },
+  packages: {
+    "src": {
+      "defaultExtension": "ts"
+    },
+    "test": {
+      "defaultExtension": "ts"
+    }
+  }
+})
 ```
 
 - the skeleton is ready!
-<<<<<<< HEAD
-- Build `npm run build`
-=======
 - Install and compile `npm install`
->>>>>>> 84601f29072d7be79d2b15a7f90ca2043be7bc4e
 - Start serving `npm start`
 - Open browser at `localhost:3000/src`
 - optionally add `bootstrap.css` for styling
@@ -167,6 +188,58 @@ import { MyComponentCmp } from '../my-component/my-component-cmp'
 
 - compile tsc and open server to view
 
+## Testing
+
+- Install dependencies `npm install -D jasmine-core karma karma-chrome-launcher karma-jasmine karma-jspm`
+- Initialise Karma `node_modules/.bin/karma init`
+- Update `karma.config.js`:
+
+```javascript
+config.set({
+  jspm: {
+    config: 'jspm.config.js',
+    loadFiles: [
+      'test/**/*.ts'
+    ],
+    serveFiles: [
+      'src/my-component/*.ts'
+    ]
+  },
+  frameworks: ['jspm', 'jasmine'],
+  proxies: {
+    '/src/': '/base/src/',
+    '/test/': '/base/test/',
+    '/jspm_packages/': '/base/jspm_packages/'
+  },
+  singleRun: true
+})
+```
+
+- create folder `test`
+- create file `test/test.ts`
+
+```javascript
+import 'reflect-metadata'
+import 'zone.js'
+import { MyComponentCmp } from '../src/my-component/my-component-cmp'
+
+describe('MyComponent', function () {
+  it('Should be defined', function () {
+    expect(MyComponentCmp).toBeDefined()
+  })
+})
+```
+
+- add testing to `ghooks` config:
+
+```json
+"config": {
+  "ghooks": {
+    "pre-commit": "npm run build && npm run test"
+  }
+}
+```
+
 ## Publishing
 
 - Specify main file in `package.json`
@@ -195,7 +268,7 @@ examples
 .gitignore
 ```
 
-- `package.json` files property lists which filest to include
+- `package.json` files property lists which files to include
 
 ```json
 "files": [
@@ -213,7 +286,3 @@ examples
 ```javascript
 import { MyComponentCmp } from 'my-component'
 ```
-
-## Testing
-
-- TODO
