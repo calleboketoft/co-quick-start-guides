@@ -318,6 +318,11 @@ describe('MyComponentPageObject' , () => {
 }
 ```
 
+- Run the e2e tests:
+  - Open terminal and build the e2e tests: `npm run build`
+  - Serve the example: `npm start`
+  - Open another terminal tab and run the protractor tests: `npm run test-e2e`
+
 ## Publishing
 
 - Specify main file in `package.json`
