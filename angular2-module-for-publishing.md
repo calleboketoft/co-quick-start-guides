@@ -190,7 +190,7 @@ export class AppCmp { }
 
 - compile tsc and open server to view
 
-## Testing
+## Testing - Unit tests
 
 - Install dependencies `npm install -D jasmine-core karma karma-chrome-launcher karma-jasmine karma-jspm`
 - Initialise Karma `node_modules/.bin/karma init`
@@ -217,13 +217,13 @@ config.set({
 })
 ```
 
-- create folder `test`
-- create file `test/test.ts`
+- create folder `test` and `test/unit`
+- create file `test/unit/my-component.spec.ts`:
 
 ```javascript
 import 'reflect-metadata'
 import 'zone.js'
-import { MyComponentCmp } from '../src/my-component/my-component-cmp'
+import { MyComponentCmp } from '../../src/my-component/my-component-cmp'
 
 describe('MyComponent', function () {
   it('Should be defined', function () {
@@ -236,7 +236,8 @@ describe('MyComponent', function () {
 
 ```json
 "scripts": {
-  "test": "karma start"
+  "test-unit": "karma start",
+  "test": "npm run test-unit"
 }
 ```
 
@@ -245,8 +246,76 @@ describe('MyComponent', function () {
 ```json
 "config": {
   "ghooks": {
-    "pre-commit": "npm run build && npm run test"
+    "pre-commit": "npm run build",
+    "pre-push": "npm run build && npm run test-unit"
   }
+}
+```
+
+## Testing - E2E tests
+
+- `npm install -D protractor`
+- add the file `protractor.conf.js`:
+
+```javascript
+exports.config = {
+  baseUrl: 'http://localhost:3000/src/',
+  specs: ['test/e2e/**/*.spec.js'],
+  directConnect: true,
+  exclude: [],
+  multiCapabilities: [{
+    browserName: 'chrome'
+  }],
+  allScriptsTimeout: 110000,
+  getPageTimeout: 100000,
+  framework: 'jasmine2',
+  jasmineNodeOpts: {
+    isVerbose: false,
+    showColors: true,
+    includeStackTrace: false,
+    defaultTimeoutInterval: 400000
+  },
+  // ng2 related configuration
+  // useAllAngular2AppRoots: tells Protractor to wait for any angular2 apps on
+  // the page instead of just the one matching `rootEl`
+  useAllAngular2AppRoots: true
+};
+```
+
+- create folder `test/e2e`
+- create file `test/e2e/my-component.page-object.ts`
+
+```javascript
+export class MyComponentPageObject {
+  public myComponentEl = element(by.tagName('p'));
+}
+```
+
+- create file `test/e2e/my-component.spec.ts`:
+
+```javascript
+import { MyComponentPageObject } from './my-component.page-object'
+
+describe('MyComponentPageObject' , () => {
+  beforeEach(() => {
+    browser.get('/')
+    let pageObject = new MyComponentPageObject()
+    it('should be a text in the paragraph', () => {
+      expect(pageObject.myComponentEl.getText()).toEqual('My Component')
+    })
+  })
+})
+```
+
+- add tasks for e2e tests into `package.json`:
+
+```json
+"scripts": {
+  "postinstall": "jspm install && npm run webdriver",
+  "webdriver": "node_modules/protractor/bin/webdriver-manager update",
+  "tsc-e2e": "tsc -p test/e2e",
+  "watch-tsc-e2e": "tsc -p test/e2e -w",
+  "test-e2e": "protractor protractor.conf.js"
 }
 ```
 
