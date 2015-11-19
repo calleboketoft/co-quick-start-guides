@@ -126,7 +126,7 @@ Set up JSPM:
 - `node_modules/.bin/jspm init`
  - config file: `jspm.config.js`
  - transpiler: `typescript`
-- `jspm install angular2 reflect-metadata zone.js`
+- `./node_modules/.bin/jspm install angular2 reflect-metadata zone.js`
 - Add config to `jspm.config.js`:
 
 ```javascript
@@ -187,7 +187,7 @@ import { MyComponentCmp } from '../my-component/my-component-cmp'
 export class AppCmp { }
 ```
 
-- compile tsc and open server to view
+- compile tsc `npm run build` and open server `npm start` to view in browser `http://localhost:3000`
 
 ## Testing - Unit tests
 
@@ -251,6 +251,8 @@ describe('MyComponent', function () {
 }
 ```
 
+- run tests `npm run test-unit`
+
 ## Testing - E2E tests
 
 - `npm install -D protractor`
@@ -285,6 +287,10 @@ exports.config = {
 - create file `test/e2e/my-component.page-object.ts`
 
 ```javascript
+// globals from protractor
+declare var element:any
+declare var by:any
+
 export class MyComponentPageObject {
   public myComponentEl = element(by.tagName('p'));
 }
@@ -293,19 +299,28 @@ export class MyComponentPageObject {
 - create file `test/e2e/my-component.spec.ts`:
 
 ```javascript
+// globals from protractor
+declare var describe:any
+declare var it:any
+declare var expect:any
+declare var beforeEach:any
+declare var browser:any
+
 import { MyComponentPageObject } from './my-component.page-object'
 
 describe('MyComponentPageObject' , () => {
   beforeEach(() => {
     browser.get('/')
-    let pageObject = new MyComponentPageObject()
-    it('should be a text in the paragraph', () => {
-      expect(pageObject.myComponentEl.getText()).toEqual('My Component')
-    })
+  })
+
+  let pageObject = new MyComponentPageObject()
+  it('should be a text in the paragraph', () => {
+    expect(pageObject.myComponentEl.getText()).toEqual('My Component')
   })
 })
 ```
 
+- add another `tsconfig.json` like the previous one in `test/e2e`
 - add tasks for e2e tests into `package.json`:
 
 ```json
@@ -318,6 +333,7 @@ describe('MyComponentPageObject' , () => {
 }
 ```
 
+- Install `webdriver` by `npm run webdriver`
 - Run the e2e tests:
   - Open terminal and build the e2e tests: `npm run build`
   - Serve the example: `npm start`
