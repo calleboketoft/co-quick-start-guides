@@ -1,5 +1,7 @@
 # Angular 2 Module for Publishing
 
+Here's a complete module following this guide: [co-selectable-items](https://github.com/calleboketoft/co-selectable-items)
+
 ## Skeleton
 
 - create folder `myproj` for project
