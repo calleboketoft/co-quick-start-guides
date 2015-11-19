@@ -123,7 +123,6 @@ export class AppCmp { }
 
 Set up JSPM:
 
-- `npm install jspm`
 - `node_modules/.bin/jspm init`
  - config file: `jspm.config.js`
  - transpiler: `typescript`
