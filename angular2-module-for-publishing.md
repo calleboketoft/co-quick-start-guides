@@ -8,7 +8,7 @@ Here's a complete module following this guide: [co-selectable-items](https://git
 - cd `myproj`
 - git init
 - npm init (specify version 0.0.1)
-- npm install --save-dev angular2 typescript express ghooks jspm
+- `npm install --save-dev angular2 typescript express ghooks jspm`
 - mkdir `src`
 - create file `.gitignore`
 
@@ -257,7 +257,7 @@ describe('MyComponent', function () {
 
 ## Testing - E2E tests
 
-- `npm install -D protractor`
+- `npm install -D protractor gulp`
 - add the file `protractor.conf.js`:
 
 ```javascript
@@ -283,6 +283,33 @@ exports.config = {
   // the page instead of just the one matching `rootEl`
   useAllAngular2AppRoots: true
 };
+```
+
+- add the file `gulpfile.js`:
+
+```javascript
+var gulp = require('gulp')
+var path = require('path')
+var child_process = require('child_process')
+var express = require('express')
+var http = require('http')
+var server = http.createServer(express().use(express.static(__dirname)))
+
+gulp.task('protractor-run', ['serve-files'], (done) => {
+  var argv = process.argv.slice(3) // forward args to protractor
+  child_process.spawn(getProtractorBinary('protractor'), argv, {
+    stdio: 'inherit'
+  }).once('close', done)
+})
+gulp.task('serve-files', (done) => server.listen(3000, done))
+gulp.task('test-e2e', ['protractor-run'], (done) => server.close())
+
+function getProtractorBinary(binaryName){
+  var winExt = /^win/.test(process.platform)? '.cmd' : ''
+  var pkgPath = require.resolve('protractor')
+  var protractorDir = path.resolve(path.join(path.dirname(pkgPath), '..', 'bin'))
+  return path.join(protractorDir, '/' + binaryName + winExt)
+}
 ```
 
 - create folder `test/e2e`
@@ -330,16 +357,12 @@ describe('MyComponentPageObject' , () => {
   "postinstall": "jspm install && npm run webdriver",
   "webdriver": "node_modules/protractor/bin/webdriver-manager update",
   "tsc-e2e": "tsc -p test/e2e",
-  "watch-tsc-e2e": "tsc -p test/e2e -w",
-  "test-e2e": "protractor protractor.conf.js"
+  "test-e2e": "npm run tsc-e2e && gulp test-e2e"
 }
 ```
 
 - Install `webdriver` by `npm run webdriver`
-- Run the e2e tests:
-  - Open terminal and build the e2e tests: `npm run build`
-  - Serve the example: `npm start`
-  - Open another terminal tab and run the protractor tests: `npm run test-e2e`
+- Run the e2e tests `npm run test-e2e`
 
 ## Publishing
 
