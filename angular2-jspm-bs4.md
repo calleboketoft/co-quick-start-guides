@@ -17,12 +17,12 @@ client/css
 
 ### Alt 1: Express
 
-- `npm install --save express`
+- `npm install -D express`
 - `server.js`:
 
 ```javascript
 var port = 3000
-var staticDir = './'
+var staticDir = './client'
 var express = require('express')
 var app = express()
 app.use(express.static(staticDir))
@@ -68,7 +68,7 @@ var server = app.listen(port, () => {
 
 - `npm install --save jspm`
 - `./node_modules/.bin/jspm init`
-- public files in `client`
+- `server baseURL` : `client`
 - transpiler `typescript`
 - add to `package.json`
 
