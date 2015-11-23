@@ -1,5 +1,7 @@
 # Angular 2 Module for Publishing
 
+Here's a complete module following this guide: [co-selectable-items](https://github.com/calleboketoft/co-selectable-items)
+
 ## Skeleton
 
 - create folder `myproj` for project
@@ -126,7 +128,7 @@ Set up JSPM:
 - `node_modules/.bin/jspm init`
  - config file: `jspm.config.js`
  - transpiler: `typescript`
-- `jspm install angular2 reflect-metadata zone.js`
+- `./node_modules/.bin/jspm install angular2 reflect-metadata zone.js`
 - Add config to `jspm.config.js`:
 
 ```javascript
@@ -187,9 +189,9 @@ import { MyComponentCmp } from '../my-component/my-component-cmp'
 export class AppCmp { }
 ```
 
-- compile tsc and open server to view
+- compile tsc `npm run build` and open server `npm start` to view in browser `http://localhost:3000`
 
-## Testing
+## Testing - Unit tests
 
 - Install dependencies `npm install -D jasmine-core karma karma-chrome-launcher karma-jasmine karma-jspm`
 - Initialise Karma `node_modules/.bin/karma init`
@@ -216,13 +218,13 @@ config.set({
 })
 ```
 
-- create folder `test`
-- create file `test/test.ts`
+- create folder `test` and `test/unit`
+- create file `test/unit/my-component.spec.ts`:
 
 ```javascript
 import 'reflect-metadata'
 import 'zone.js'
-import { MyComponentCmp } from '../src/my-component/my-component-cmp'
+import { MyComponentCmp } from '../../src/my-component/my-component-cmp'
 
 describe('MyComponent', function () {
   it('Should be defined', function () {
@@ -235,7 +237,8 @@ describe('MyComponent', function () {
 
 ```json
 "scripts": {
-  "test": "karma start"
+  "test-unit": "karma start",
+  "test": "npm run test-unit"
 }
 ```
 
@@ -244,10 +247,99 @@ describe('MyComponent', function () {
 ```json
 "config": {
   "ghooks": {
-    "pre-commit": "npm run build && npm run test"
+    "pre-commit": "npm run build",
+    "pre-push": "npm run build && npm run test-unit"
   }
 }
 ```
+
+- run tests `npm run test-unit`
+
+## Testing - E2E tests
+
+- `npm install -D protractor`
+- add the file `protractor.conf.js`:
+
+```javascript
+exports.config = {
+  baseUrl: 'http://localhost:3000/src/',
+  specs: ['test/e2e/**/*.spec.js'],
+  directConnect: true,
+  exclude: [],
+  multiCapabilities: [{
+    browserName: 'chrome'
+  }],
+  allScriptsTimeout: 110000,
+  getPageTimeout: 100000,
+  framework: 'jasmine2',
+  jasmineNodeOpts: {
+    isVerbose: false,
+    showColors: true,
+    includeStackTrace: false,
+    defaultTimeoutInterval: 400000
+  },
+  // ng2 related configuration
+  // useAllAngular2AppRoots: tells Protractor to wait for any angular2 apps on
+  // the page instead of just the one matching `rootEl`
+  useAllAngular2AppRoots: true
+};
+```
+
+- create folder `test/e2e`
+- create file `test/e2e/my-component.page-object.ts`
+
+```javascript
+// globals from protractor
+declare var element:any
+declare var by:any
+
+export class MyComponentPageObject {
+  public myComponentEl = element(by.tagName('p'));
+}
+```
+
+- create file `test/e2e/my-component.spec.ts`:
+
+```javascript
+// globals from protractor
+declare var describe:any
+declare var it:any
+declare var expect:any
+declare var beforeEach:any
+declare var browser:any
+
+import { MyComponentPageObject } from './my-component.page-object'
+
+describe('MyComponentPageObject' , () => {
+  beforeEach(() => {
+    browser.get('/')
+  })
+
+  let pageObject = new MyComponentPageObject()
+  it('should be a text in the paragraph', () => {
+    expect(pageObject.myComponentEl.getText()).toEqual('My Component')
+  })
+})
+```
+
+- add another `tsconfig.json` like the previous one in `test/e2e`
+- add tasks for e2e tests into `package.json`:
+
+```json
+"scripts": {
+  "postinstall": "jspm install && npm run webdriver",
+  "webdriver": "node_modules/protractor/bin/webdriver-manager update",
+  "tsc-e2e": "tsc -p test/e2e",
+  "watch-tsc-e2e": "tsc -p test/e2e -w",
+  "test-e2e": "protractor protractor.conf.js"
+}
+```
+
+- Install `webdriver` by `npm run webdriver`
+- Run the e2e tests:
+  - Open terminal and build the e2e tests: `npm run build`
+  - Serve the example: `npm start`
+  - Open another terminal tab and run the protractor tests: `npm run test-e2e`
 
 ## Publishing
 
