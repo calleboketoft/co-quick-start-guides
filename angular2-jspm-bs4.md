@@ -7,10 +7,8 @@ This guide is my personal start for each new Angular 2 project. A guide by one o
 ```bash
 .DS_Store
 node_modules
-npm-debug.log
 *.log
 client/jspm_packages
-client/css
 ```
 
 ## Static file serving
@@ -66,7 +64,7 @@ var server = app.listen(port, () => {
 
 ## Angular 2 with JSPM
 
-- `npm install --save jspm`
+- `npm install --save jspm angular2`
 - `./node_modules/.bin/jspm init`
 - `server baseURL` : `client`
 - transpiler `typescript`
@@ -74,16 +72,14 @@ var server = app.listen(port, () => {
 
 ```json
 "scripts": {
-  "jspm": "./node_modules/.bin/jspm install",
-  "postinstall": "npm run jspm"
+  "postinstall": "jspm install"
 }
 ```
 
-- install angular 2 and deps
+- install angular 2 for jspm
 
 ```bash
 ./node_modules/.bin/jspm install angular2
-./node_modules/.bin/jspm install reflect-metadata zone.js
 ```
 
 - create `client/tsconfig.json`
@@ -134,6 +130,15 @@ System.config({
 </html>
 ```
 
+**-- Temporary fix for Angular beta 0 --**
+
+- Angular 2 is also needed in node_modules for angular2-polyfills.js (hopefully temporarily only)
+- `npm install angular2`
+- copy the file `node_modules/angular2/bundles/angular2-polyfills.js` to the folder `client/vendor/`
+- Add the line `<script src="vendor/angular2-polyfills.js"></script>` above the script tag for `system.js`
+
+**-- End of fix --**
+
 - add to `client/config.js`:
 
 ```javascript
@@ -149,16 +154,15 @@ System.config({
 - add file `client/app/bootstrap.ts`:
 
 ```javascript
-import 'zone.js'
-import 'reflect-metadata'
-import { Component, bootstrap } from 'angular2/angular2';
+import { Component } from 'angular2/core'
+import { bootstrap } from 'angular2/platform/browser'
 
 @Component({
   selector: 'app',
   template: '<h1>{{title}}</h1>'
 })
 class AppComponent {
-  title: string
+  public title: string
   constructor () {
     this.title = 'up'
   }
@@ -167,15 +171,18 @@ class AppComponent {
 bootstrap(AppComponent)
 ```
 
+- run the server `npm start` and open `localhost:3000` in a browser
+
+All should be up and running!
+
 ---
 ## Angular 2 Router
 
 - modify `client/app/bootstrap.ts`:
 
 ```javascript
-import 'reflect-metadata'
-import 'zone.js'
-import { bind, bootstrap } from 'angular2/angular2';
+import { bind } from 'angular2/core'
+import { bootstrap } from 'angular2/platform/browser'
 import { ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy } from 'angular2/router'
 
 import { AppCmp } from './components/app-cmp'
@@ -189,14 +196,14 @@ bootstrap(AppCmp, [
 - add `client/app/components/app-cmp.ts`:
 
 ```javascript
-import { Component } from 'angular2/angular2'
+import { Component } from 'angular2/core'
 import { ROUTER_DIRECTIVES, RouteConfig } from 'angular2/router'
 import { PageCmp } from './page-cmp'
 
 @Component({
   selector: 'app',
   template: `
-    <a [router-link]="['/Page']">Page</a><br>
+    <a [routerLink]="['/Page']">Page</a><br>
     <router-outlet></router-outlet>
   `,
   directives: [ROUTER_DIRECTIVES]
@@ -205,7 +212,7 @@ import { PageCmp } from './page-cmp'
   { path: '/page', as: 'Page', component: PageCmp }
 ])
 export class AppCmp {
-  name: string
+  public name: string
   constructor () {
     this.name = 'Calle'
   }
@@ -215,7 +222,7 @@ export class AppCmp {
 - add `client/app/components/page-cmp.ts`:
 
 ```javascript
-import { Component } from 'angular2/angular2'
+import { Component } from 'angular2/core'
 
 @Component({
   selector: 'page',
@@ -231,7 +238,6 @@ export class PageCmp {}
 
 - `npm install --save-dev git+https://git@github.com/twbs/bootstrap.git#v4-dev`
 - `npm install --save-dev gulp gulp-sass`
-
 - create `gulpfile.js`:
 
 ```javascript
@@ -248,8 +254,7 @@ gulp.task('sass', function () {
 
 ```json
 "scripts": {
-  "postinstall": "npm run gulp",
-  "gulp": "./node_modules/.bin/gulp sass"
+  "postinstall": "gulp sass"
 }
 ```
 
