@@ -4,21 +4,18 @@ Here's a complete module following this guide: [co-selectable-items](https://git
 
 ## Skeleton
 
-- create folder `myproj` for project
+- mkdir `myproj`
 - cd `myproj`
-- git init
-- npm init (specify version 0.0.1)
-- `npm install --save-dev angular2 typescript express ghooks jspm`
-- mkdir `src`
+- `git init`
+- `npm init` (specify version 0.0.1)
+- `npm install --save angular2 es6-promise es6-shim reflect-metadata rxjs zone.js systemjs`
+- `npm install --save-dev typescript express ghooks`
 - create file `.gitignore`
 
 ```bash
 .DS_Store
 node_modules
-npm-debug.log
 *.log
-jspm_packages
-src/css
 ```
 
 - create file `server.js`
@@ -34,40 +31,38 @@ var server = app.listen(port, () => {
 })
 ```
 
+- create folder `src`
 - create file `src/tsconfig.json`
 
 ```json
 {
   "compilerOptions": {
-    "target": "ES5",
+    "target": "es5",
     "module": "commonjs",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "removeComments": false,
-    "noImplicitAny": true
+    "noImplicitAny": false
   }
 }
 ```
 
-- add scripts to package.json
+- add scripts and ghooks config to package.json
 
 ```json
-{
-  "scripts": {
-    "start": "node server",
-    "build": "npm run tsc",
-    "prepublish": "npm run build",
-    "tsc": "tsc -p src",
-    "watch": "tsc -p src -w",
-    "postinstall": "jspm install"
-  },
-  "config": {
-    "ghooks": {
-      "pre-commit": "npm run build"
-    }
+"scripts": {
+  "start": "node server",
+  "build": "npm run tsc",
+  "prepublish": "npm run build",
+  "tsc": "tsc -p src",
+  "watch": "tsc -p src -w",
+},
+"config": {
+  "ghooks": {
+    "pre-commit": "npm run build"
   }
-}
+},
 ```
 
 ## Component example
@@ -78,7 +73,20 @@ var server = app.listen(port, () => {
 <html><head><meta http-equiv="refresh" content="0; URL='/src'" /></head></html>
 ```
 
-- cd `src`
+- create file `src/systemjs.config.js`
+
+```javascript
+System.config({
+  baseURL: '/',
+  defaultJSExtensions: true,
+  warnings: true,
+  map: {
+    'angular2': 'node_modules/angular2',
+    'rxjs': 'node_modules/rxjs'
+  }
+})
+```
+
 - create file `src/index.html`
 
 ```html
@@ -89,8 +97,9 @@ var server = app.listen(port, () => {
   </head>
   <body style="margin-top: 50px;">
     <app>Loading...</app>
-    <script src="../jspm_packages/system.js"></script>
-    <script src="../jspm.config.js"></script>
+    <script src="../node_modules/angular2/bundles/angular2-polyfills.js"></script>
+    <script src="../node_modules/systemjs/dist/system.js"></script>
+    <script src="systemjs.config.js"></script>
     <script>
       System.import('./example/bootstrap')
     </script>
@@ -98,69 +107,31 @@ var server = app.listen(port, () => {
 </html>
 ```
 
-- mkdir `src/example`
+- create folder `src/example`
 - create file `src/example/bootstrap.ts`
 
 NOTE: bootstrapping code is separated from example so that the example code
 can be used as a component by itself in a separate repo.
 ```javascript
-import 'reflect-metadata'
-import 'zone.js'
-
-import { bootstrap } from 'angular2/angular2'
-import { AppCmp } from './app-cmp'
+import {bootstrap} from 'angular2/platform/browser'
+import {AppCmp} from './app-cmp'
 bootstrap(AppCmp)
 ```
 
 - create file `src/example/app-cmp.ts`
 
 ```javascript
-import { Component } from 'angular2/angular2'
+import {Component} from 'angular2/core'
 @Component({
   selector: 'app',
   template: '<h1>Angular 2</h1>'
 })
-export class AppCmp { }
+export class AppCmp {}
 ```
 
-Set up JSPM:
+- The base of the app is ready to view!
+- compile tsc `npm run build` and start server `npm start` to view in browser `http://localhost:3000`
 
-- `node_modules/.bin/jspm init`
- - config file: `jspm.config.js`
- - transpiler: `typescript`
-- `./node_modules/.bin/jspm install angular2 reflect-metadata zone.js`
-- Add config to `jspm.config.js`:
-
-```javascript
-System.config({
-  typescriptOptions: {
-    "module": "commonjs",
-    "sourceMap": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "removeComments": false,
-    "noImplicitAny": false
-  },
-  packages: {
-    "src": {
-      "defaultExtension": "ts"
-    },
-    "test": {
-      "defaultExtension": "ts"
-    }
-  }
-})
-```
-
-- the skeleton is ready!
-- Install and compile `npm install`
-- Start serving `npm start`
-- Open browser at `localhost:3000/src`
-- optionally add `bootstrap.css` for styling
-
-```html
-<link rel="stylesheet" href="example/bootstrap.css">
-```
 
 ## Component
 
@@ -168,66 +139,66 @@ System.config({
 - create component file `src/my-component/my-component-cmp.ts`
 
 ```javascript
-import { Component } from 'angular2/angular2'
+import {Component} from 'angular2/core'
 @Component({
   selector: 'my-component',
   template: '<p>My Component</p>'
 })
-export class MyComponentCmp { }
+export class MyComponentCmp {}
 ```
 
 - import component to `src/example/app-cmp.ts` and enable it
 
 ```javascript
-import { Component } from 'angular2/angular2'
-import { MyComponentCmp } from '../my-component/my-component-cmp'
+import {Component} from 'angular2/core'
+import {MyComponentCmp} from '../my-component/my-component-cmp'
 @Component({
   directives: [MyComponentCmp],
   selector: 'app',
   template: '<my-component></my-component>'
 })
-export class AppCmp { }
+export class AppCmp {}
 ```
-
-- compile tsc `npm run build` and open server `npm start` to view in browser `http://localhost:3000`
 
 ## Testing - Unit tests
 
-- Install dependencies `npm install -D jasmine-core karma karma-chrome-launcher karma-jasmine karma-jspm`
-- Initialise Karma `node_modules/.bin/karma init`
+- Install dependencies `npm install --save-dev jasmine-core karma karma-chrome-launcher karma-jasmine karma-systemjs`
+- Initialise Karma `./node_modules/.bin/karma init`
 - Update `karma.config.js`:
 
 ```javascript
-config.set({
-  jspm: {
-    config: 'jspm.config.js',
-    loadFiles: [
-      'test/**/*.ts'
-    ],
-    serveFiles: [
-      'src/my-component/*.ts'
-    ]
-  },
-  frameworks: ['jspm', 'jasmine'],
-  proxies: {
-    '/src/': '/base/src/',
-    '/test/': '/base/test/',
-    '/jspm_packages/': '/base/jspm_packages/'
-  },
-  singleRun: true
-})
+frameworks: ['systemjs', 'jasmine'],
+files:['src/test/unit/*.spec.js'],
+systemjs: {
+  configFile: 'src/systemjs.config.js',
+  // list of files to serve (will not automatically be loaded)
+  serveFiles: [
+    'src/**/*',
+    'node_modules/**/*'
+  ],
+  // list of files to insert <script> tag for
+  includeFiles: [
+    'node_modules/angular2/bundles/angular2-polyfills.js'
+  ],
+  config: {
+    transpiler: null,
+    paths: {
+      'systemjs': '/node_modules/systemjs/dist/system.js',
+      'system-polyfills': '/node_modules/systemjs/dist/system-polyfills.js',
+      'es6-module-loader': '/node_modules/es6-module-loader/dist/es6-module-loader.js'
+    },
+  }
+}
 ```
 
-- create folder `test` and `test/unit`
-- create file `test/unit/my-component.spec.ts`:
+- create folder `src/test` and `test/unit`
+- create file `src/test/unit/my-component.spec.ts`:
 
 ```javascript
-import 'reflect-metadata'
-import 'zone.js'
-import { MyComponentCmp } from '../../src/my-component/my-component-cmp'
+import {MyComponentCmp} from '../../src/my-component/my-component-cmp'
 
-describe('MyComponent', function () {
-  it('Should be defined', function () {
+describe('MyComponent', () => {
+  it('Should be defined', () => {
     expect(MyComponentCmp).toBeDefined()
   })
 })
@@ -242,6 +213,7 @@ describe('MyComponent', function () {
 }
 ```
 
+- run tests `npm run test-unit`
 - add testing to `ghooks` config in `package.json`:
 
 ```json
@@ -253,8 +225,6 @@ describe('MyComponent', function () {
 }
 ```
 
-- run tests `npm run test-unit`
-
 ## Testing - E2E tests
 
 - `npm install -D protractor gulp`
@@ -263,7 +233,7 @@ describe('MyComponent', function () {
 ```javascript
 exports.config = {
   baseUrl: 'http://localhost:3000/src/',
-  specs: ['test/e2e/**/*.spec.js'],
+  specs: ['src/test/e2e/**/*.spec.js'],
   directConnect: true,
   exclude: [],
   multiCapabilities: [{
@@ -282,7 +252,7 @@ exports.config = {
   // useAllAngular2AppRoots: tells Protractor to wait for any angular2 apps on
   // the page instead of just the one matching `rootEl`
   useAllAngular2AppRoots: true
-};
+}
 ```
 
 - add the file `gulpfile.js`:
@@ -312,16 +282,15 @@ function getProtractorBinary(binaryName){
 }
 ```
 
-- create folder `test/e2e`
-- create file `test/e2e/my-component.page-object.ts`
+- create folder `src/test/e2e`
+- create file `src/test/e2e/my-component.page-object.ts`
 
 ```javascript
 // globals from protractor
-declare var element:any
-declare var by:any
+declare var element, by
 
 export class MyComponentPageObject {
-  public myComponentEl = element(by.tagName('p'));
+  public myComponentEl = element(by.tagName('p'))
 }
 ```
 
@@ -329,11 +298,7 @@ export class MyComponentPageObject {
 
 ```javascript
 // globals from protractor
-declare var describe:any
-declare var it:any
-declare var expect:any
-declare var beforeEach:any
-declare var browser:any
+declare var describe, it, expect, beforeEach, browser
 
 import { MyComponentPageObject } from './my-component.page-object'
 
@@ -349,19 +314,17 @@ describe('MyComponentPageObject' , () => {
 })
 ```
 
-- add another `tsconfig.json` like the previous one in `test/e2e`
 - add tasks for e2e tests into `package.json`:
 
 ```json
 "scripts": {
-  "postinstall": "jspm install && npm run webdriver",
-  "webdriver": "node_modules/protractor/bin/webdriver-manager update",
-  "tsc-e2e": "tsc -p test/e2e",
-  "test-e2e": "npm run tsc-e2e && gulp test-e2e"
+  "postinstall": "npm run install_webdriver",
+  "install_webdriver": "node_modules/protractor/bin/webdriver-manager update",
+  "test-e2e": "npm run tsc && gulp test-e2e"
 }
 ```
 
-- Install `webdriver` by `npm run webdriver`
+- Install `webdriver` by `npm run install_webdriver`
 - Run the e2e tests `npm run test-e2e`
 
 ## Publishing
@@ -387,7 +350,7 @@ there are two ways of specifying which files to include in the NPM package:
 - `.npmignore` lists which files to ignore
 
 ```bash
-test
+src/test
 examples
 .gitignore
 ```
@@ -401,12 +364,3 @@ examples
 ```
 
 - When everything is ready, publish the package `npm publish`
-
-## Importing module using JSPM
-
-- install `my-component` into angular 2 project by `jspm install npm:my-component`
-- import into TypeScript file like this
-
-```javascript
-import { MyComponentCmp } from 'my-component'
-```
