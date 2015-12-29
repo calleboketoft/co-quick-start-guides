@@ -6,7 +6,6 @@ https://github.com/TypeStrong/ts-loader
 - `cd myproj`
 - `npm init -y`
 - `npm install -D webpack webpack-dev-server typescript ts-loader tsd`
-
 - create `webpack.config.js`
 
 ```javascript
@@ -66,8 +65,9 @@ module.exports = {
 }
 ```
 
+- create folder `typings` and empty file `typings/tsd.d.ts`
 - create dir `src` and `public`
-- create `src/app.ts`
+- create `src/app.tsx`
 
 ```javascript
 console.log('works')
@@ -102,18 +102,15 @@ console.log('works')
 ```
 
 - now the whole thing is ready
+- `npm run webpack`
 - `npm start`
 - navigate in browser to http://localhost:8080/webpack-dev-server/
 - the server compiles and live-reloads on changes
 
 ## Add React
 
-- add `postinstall` script to `package.json`
-
-```json
-"postinstall": "tsd reinstall --overwrite --save"
-```
-
+- `npm install -D react`
+- `./node_modules/.bin/tsd install react react-dom --save`
 - update `tsconfig.json`
 
 ```json
@@ -122,21 +119,33 @@ console.log('works')
     "jsx": "react"
   },
   "files": [
-    "./typings/react/react.d.ts",
-    "./typings/tsd.d.ts",
-    "./src/app.tsx"
+    "./typings/react/react.d.ts"
   ]
 }
 ```
 
-- update `tsd.json`
+- update `public/index.html`
 
-```json
-{
-  "installed": {
-    "react/react.d.ts": {
-      "commit": "b3aeee64552e324581fdbe0926f4a96e981e451b"
-    }
-  }
-}
+```html
+...
+<body>
+  <div id="example"></div>
+...
 ```
+
+- update `src/app.tsx`
+
+```javascript
+import * as React from 'react'
+import * as ReactDOM from 'react-dom'
+
+ReactDOM.render(
+  <h1>Hello, world</h1>,
+  document.getElementById('example')
+)
+```
+
+- `npm install`
+- `npm run webpack`
+- `npm start`
+- navigate to http://localhost:8080/webpack-dev-server/
