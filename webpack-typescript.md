@@ -5,6 +5,14 @@ https://github.com/TypeStrong/ts-loader
 - create dir for project `mkdir myproj`
 - `cd myproj`
 - `npm init -y`
+- create `.gitignore`
+
+```bash
+public/bundle.*
+node_modules
+typings
+```
+
 - `npm install -D webpack webpack-dev-server typescript ts-loader tsd`
 - create `webpack.config.js`
 
