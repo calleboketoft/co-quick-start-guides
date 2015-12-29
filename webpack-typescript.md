@@ -109,7 +109,7 @@ console.log('works')
 
 ## Add React
 
-- `npm install -D react`
+- `npm install -D react react-dom`
 - `./node_modules/.bin/tsd install react react-dom --save`
 - update `tsconfig.json`
 
@@ -119,7 +119,8 @@ console.log('works')
     "jsx": "react"
   },
   "files": [
-    "./typings/react/react.d.ts"
+    "./typings/react/react.d.ts",
+    "./typings/react/react-dom.d.ts"
   ]
 }
 ```
