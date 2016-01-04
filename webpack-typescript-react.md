@@ -113,7 +113,7 @@ console.log('works')
 - now the whole thing is ready
 - `npm run webpack`
 - `npm start`
-- navigate in browser to http://localhost:8080/webpack-dev-server/
+- navigate in browser to http://localhost:8080
 - the server compiles and live-reloads on changes
 
 ## Add React
@@ -126,11 +126,7 @@ console.log('works')
 {
   "compilerOptions": {
     "jsx": "react"
-  },
-  "files": [
-    "./typings/react/react.d.ts",
-    "./typings/react/react-dom.d.ts"
-  ]
+  }
 }
 ```
 
@@ -158,4 +154,4 @@ ReactDOM.render(
 - `npm install`
 - `npm run webpack`
 - `npm start`
-- navigate to http://localhost:8080/webpack-dev-server/
+- navigate to http://localhost:8080
