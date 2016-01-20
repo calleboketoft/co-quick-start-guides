@@ -364,3 +364,37 @@ examples
 ```
 
 - When everything is ready, publish the package `npm publish`
+
+## TypeScript watcher using Gulp
+
+The command `tsc -p src -w` has been working extremely slow for me so I decided to use gulp for the watcher instead. (The problem with the gulp version is that it doesn't notice new files so whenever adding a new file it must be restarted.)
+
+- `npm install --save-dev gulp gulp-typescript gulp-sourcemaps`
+- add `gulpfile.js`
+
+```javascript
+var gulp = require('gulp')
+var ts = require('gulp-typescript')
+var sourcemaps = require('gulp-sourcemaps')
+var tsProject = ts.createProject('src/tsconfig.json')
+gulp.task('typescript', function () {
+  var tsResult = gulp.src('./src/**/*.ts')
+    .pipe(sourcemaps.init())
+    .pipe(ts(tsProject))
+
+  return tsResult.js
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('./src'))
+})
+gulp.task('typescript:watch', ['typescript'], function () {
+  gulp.watch('./src/**/*.ts', ['typescript'])
+})
+```
+
+- add to `package.json` scripts
+
+```json
+"gulp-ts:watch": "gulp typescript:watch"
+```
+
+- run with `npm run gulp-ts:watch`
