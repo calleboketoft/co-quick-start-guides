@@ -398,4 +398,3 @@ gulp.task('typescript:watch', ['typescript'], function () {
 ```
 
 - run with `npm run gulp-ts:watch`
-- Note: in chrome dev tools, the TypeScript files are under `sources`
