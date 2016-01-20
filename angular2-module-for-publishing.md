@@ -56,7 +56,7 @@ var server = app.listen(port, () => {
   "build": "npm run tsc",
   "prepublish": "npm run build",
   "tsc": "tsc -p src",
-  "watch": "tsc -p src -w",
+  "tsc:watch": "tsc -p src -w"
 },
 "config": {
   "ghooks": {
