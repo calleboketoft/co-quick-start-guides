@@ -367,7 +367,7 @@ examples
 
 ## TypeScript watcher using Gulp
 
-The command `tsc -p src -w` has been working extremely slow for me so I decided to use gulp for the watcher instead. (The problem with the gulp version is that it doesn't notice new files so whenever adding a new file it must be restarted.)
+The command `tsc -p src -w` has been working extremely slow for me so I decided to use gulp for the watcher instead.
 
 - `npm install --save-dev gulp gulp-typescript gulp-sourcemaps`
 - add `gulpfile.js`
@@ -378,7 +378,7 @@ var ts = require('gulp-typescript')
 var sourcemaps = require('gulp-sourcemaps')
 var tsProject = ts.createProject('src/tsconfig.json')
 gulp.task('typescript', function () {
-  var tsResult = gulp.src('./src/**/*.ts')
+  var tsResult = gulp.src('src/**/*.ts')
     .pipe(sourcemaps.init())
     .pipe(ts(tsProject))
 
@@ -387,7 +387,7 @@ gulp.task('typescript', function () {
     .pipe(gulp.dest('./src'))
 })
 gulp.task('typescript:watch', ['typescript'], function () {
-  gulp.watch('./src/**/*.ts', ['typescript'])
+  gulp.watch('src/**/*.ts', ['typescript'])
 })
 ```
 
