@@ -69,7 +69,7 @@ export class ParentCmp {
 
 - Child component
 
-The child receives the data with a decorated parameter `@Input dataForChild`.
+The child receives the data with a decorated parameter `@Input dataFromParent`.
 
 ```javascript
 import {Component, Input} from 'angular2/core'
@@ -78,6 +78,6 @@ import {Component, Input} from 'angular2/core'
   template: `<div>Child</div>`
 })
 export class ChildCmp {
-  @Input() dataForChild
+  @Input() dataFromParent
 }
 ```
