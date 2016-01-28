@@ -73,9 +73,10 @@ var server = app.listen(port, () => {
 <html><head><meta http-equiv="refresh" content="0; URL='/src'" /></head></html>
 ```
 
-- create file `src/systemjs.config.js`
+- create file `src/systemjs.config.ts`
 
 ```javascript
+declare var System
 System.config({
   baseURL: '/',
   defaultJSExtensions: true,
