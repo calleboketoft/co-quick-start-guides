@@ -114,6 +114,7 @@ System.config({
 NOTE: bootstrapping code is separated from example so that the example code
 can be used as a component by itself in a separate repo.
 ```javascript
+///<reference path="../../node_modules/angular2/typings/browser.d.ts"/>
 import {bootstrap} from 'angular2/platform/browser'
 import {AppCmp} from './app-cmp'
 bootstrap(AppCmp)
