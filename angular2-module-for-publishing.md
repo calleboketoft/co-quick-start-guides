@@ -31,8 +31,7 @@ var server = app.listen(port, () => {
 })
 ```
 
-- create folder `src`
-- create file `src/tsconfig.json`
+- create file `tsconfig.json`
 
 ```json
 {
@@ -44,7 +43,10 @@ var server = app.listen(port, () => {
     "experimentalDecorators": true,
     "removeComments": false,
     "noImplicitAny": false
-  }
+  },
+  "exclude": [
+    "node_modules"
+  ]
 }
 ```
 
@@ -55,8 +57,8 @@ var server = app.listen(port, () => {
   "start": "node server",
   "build": "npm run typescript",
   "prepublish": "npm run build",
-  "typescript": "tsc -p src",
-  "watch": "tsc -p src -w"
+  "typescript": "tsc -p .",
+  "watch": "tsc -p . -w"
 },
 "config": {
   "ghooks": {
@@ -73,6 +75,7 @@ var server = app.listen(port, () => {
 <html><head><meta http-equiv="refresh" content="0; URL='/src'" /></head></html>
 ```
 
+- create folder `src`
 - create file `src/systemjs.config.ts`
 
 ```javascript
