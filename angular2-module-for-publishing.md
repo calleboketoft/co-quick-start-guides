@@ -53,10 +53,10 @@ var server = app.listen(port, () => {
 ```json
 "scripts": {
   "start": "node server",
-  "build": "npm run tsc",
+  "build": "npm run typescript",
   "prepublish": "npm run build",
-  "tsc": "tsc -p src",
-  "tsc:watch": "tsc -p src -w"
+  "typescript": "tsc -p src",
+  "watch": "tsc -p src -w"
 },
 "config": {
   "ghooks": {
