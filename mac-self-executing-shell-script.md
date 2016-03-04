@@ -7,5 +7,5 @@
 - enter some script like
 
 ```bash
-open -a Google\ Chrome --args --disable-web-security
+open -a Google\ Chrome --args --disable-web-security --user-data-dir
 ```
