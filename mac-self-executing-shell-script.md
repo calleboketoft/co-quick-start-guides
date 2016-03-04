@@ -9,3 +9,5 @@
 ```bash
 open -a Google\ Chrome --args --disable-web-security --user-data-dir
 ```
+
+- Starting Chrome in debug mode: `--remote-debugging-port=9222`
