@@ -374,32 +374,24 @@ examples
 
 The command `tsc -p src -w` has been working extremely slow for me so I decided to use gulp for the watcher instead.
 
-- `npm install --save-dev gulp gulp-typescript gulp-sourcemaps`
+- `npm install --save-dev gulp gulp-shell`
 - add `gulpfile.js`
 
 ```javascript
-var gulp = require('gulp')
-var ts = require('gulp-typescript')
-var sourcemaps = require('gulp-sourcemaps')
-var tsProject = ts.createProject('src/tsconfig.json')
-gulp.task('typescript', function () {
-  var tsResult = gulp.src('src/**/*.ts')
-    .pipe(sourcemaps.init())
-    .pipe(ts(tsProject))
+var shell = require('gulp-shell')
+gulp.task('tsc', shell.task([
+  'npm run typescript'
+]))
 
-  return tsResult.js
-    .pipe(sourcemaps.write('.')) // no arg would make inline maps
-    .pipe(gulp.dest('./src'))
-})
-gulp.task('typescript:watch', ['typescript'], function () {
-  gulp.watch('src/**/*.ts', ['typescript'])
+gulp.task('watch', () => {
+  gulp.watch(paths.typescripts, ['tsc'])
 })
 ```
 
 - add to `package.json` scripts
 
 ```json
-"gulp-ts:watch": "gulp typescript:watch"
+"gulp:watch": "gulp watch"
 ```
 
 - run with `npm run gulp-ts:watch`
