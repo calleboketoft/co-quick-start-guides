@@ -11,7 +11,7 @@ import 'rxjs/add/operator/map'
 import {Observable} from 'rxjs/Rx'
 ```
 
-- requests in series
+## Request based on response from another request
 
 First get a list with detail free items. Then use the item ids from that list to make a subsequent call for those items to get all details.
 
@@ -40,4 +40,13 @@ First get a list with detail free items. Then use the item ids from that list to
   getItemsWithDetails().subscribe(res => console.log(res))
   // => [{id: 1, name: 'item1'}, {id: 2, name: 'item2'}]
 
+```
+
+## Await multiple requests to complete
+
+```javascript
+Observable.zip(this.store.select('myReducer'), this.store.select('myOtherReducer'))
+  .filter(res => <any>(res[0] && res[1])) // skip empty
+  .take(1) // only need 1 response
+  .subscribe(resolve) // both responses have arrived, resolve promise
 ```
