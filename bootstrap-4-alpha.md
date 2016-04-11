@@ -18,7 +18,7 @@ gulp.task('sass', function () {
 
 ```json
 "scripts": {
-  "postinstall": "gulp sass"
+  "sass": "gulp sass"
 }
 ```
 
