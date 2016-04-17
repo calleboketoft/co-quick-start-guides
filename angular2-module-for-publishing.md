@@ -159,7 +159,7 @@ export class AppCmp {}
 import {Component} from 'angular2/core'
 @Component({
   selector: 'my-component',
-  template: '<p>My Component</p>'
+  template: `<p>My Component</p>`
 })
 export class MyComponentCmp {}
 ```
@@ -172,7 +172,7 @@ import {MyComponentCmp} from '../my-component/my-component-cmp'
 @Component({
   directives: [MyComponentCmp],
   selector: 'app',
-  template: '<my-component></my-component>'
+  template: `<my-component></my-component>`
 })
 export class AppCmp {}
 ```
