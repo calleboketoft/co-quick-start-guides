@@ -1,4 +1,5 @@
-# ng2-jspm-bs4-quickstart
+# Angular 2 and JSPM
+
 This guide is my personal start for each new Angular 2 project. A guide by one of the core team members can be found here: https://gist.github.com/robwormald/429e01c6d802767441ec
 
 - npm init -y
@@ -12,53 +13,6 @@ client/jspm_packages
 ```
 
 ## Static file serving
-
-### Alt 1: Express
-
-- `npm install -D express`
-- `server.js`:
-
-```javascript
-var port = 3000
-var staticDir = './client'
-var express = require('express')
-var app = express()
-app.use(express.static(staticDir))
-var server = app.listen(port, () => {
-  console.log('serving at: ' + port)
-})
-```
-
-- add to package.json:
-
-```json
-"scripts": {
-  "start": "node server.js"
-}
-```
-
-### Alt 2: Loopback
-
-- `slc loopback`
-- remove all files that look redundant from the generated package
-- remove `server/boot/root.js`
-- add to `server/middleware.json`:
-
-```json
-"files": {
-  "loopback#static": {
-    "params": "$!../client"
-  }
-}
-```
-
-- add to package.json:
-
-```json
-"scripts": {
-  "start": "node server/server.js"
-}
-```
 
 ---
 
