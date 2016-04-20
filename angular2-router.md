@@ -1,6 +1,6 @@
 # Angular 2 Router
 
-- modify `client/bootstrap.ts`:
+- modify `bootstrap.ts`:
 
 ```javascript
 import {bind} from 'angular2/core'
@@ -15,7 +15,7 @@ bootstrap(AppCmp, [
 ])
 ```
 
-- add `client/app-cmp.ts`:
+- add `app-cmp.ts`:
 
 ```javascript
 import {Component} from 'angular2/core'
@@ -36,7 +36,7 @@ import {PageCmp} from './page-cmp'
 export class AppCmp {}
 ```
 
-- add `client/page-cmp.ts`:
+- add `page-cmp.ts`:
 
 ```javascript
 import {Component} from 'angular2/core'
