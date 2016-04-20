@@ -7,7 +7,7 @@ Here's a complete module following this guide: [co-selectable-items](https://git
 - mkdir `myproj`
 - cd `myproj`
 - `git init`
-- `npm init` (specify version 0.0.1)
+- `npm init -y`
 - `npm install --save angular2 es6-promise es6-shim reflect-metadata rxjs zone.js systemjs`
 - `npm install --save-dev typescript express ghooks`
 - create file `.gitignore`
