@@ -13,6 +13,9 @@ client/jspm_packages
 ```
 
 ## Static file serving
+[Express.js](https://github.com/calleboketoft/co-quick-start-guides/blob/master/server-express-nano-static.md)
+
+[Loopback](https://github.com/calleboketoft/co-quick-start-guides/blob/master/server-loopback-static.md)
 
 ---
 
@@ -128,63 +131,6 @@ bootstrap(AppComponent)
 - run the server `npm start` and open `localhost:3000` in a browser
 
 All should be up and running!
-
----
-## Angular 2 Router
-
-- modify `client/app/bootstrap.ts`:
-
-```javascript
-import { bind } from 'angular2/core'
-import { bootstrap } from 'angular2/platform/browser'
-import { ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy } from 'angular2/router'
-
-import { AppCmp } from './components/app-cmp'
-
-bootstrap(AppCmp, [
-  ROUTER_PROVIDERS,
-  bind(LocationStrategy).toClass(HashLocationStrategy)
-])
-```
-
-- add `client/app/components/app-cmp.ts`:
-
-```javascript
-import { Component } from 'angular2/core'
-import { ROUTER_DIRECTIVES, RouteConfig } from 'angular2/router'
-import { PageCmp } from './page-cmp'
-
-@Component({
-  selector: 'app',
-  template: `
-    <a [routerLink]="['/Page']">Page</a><br>
-    <router-outlet></router-outlet>
-  `,
-  directives: [ROUTER_DIRECTIVES]
-})
-@RouteConfig([
-  { path: '/page', as: 'Page', component: PageCmp }
-])
-export class AppCmp {
-  public name: string
-  constructor () {
-    this.name = 'Calle'
-  }
-}
-```
-
-- add `client/app/components/page-cmp.ts`:
-
-```javascript
-import { Component } from 'angular2/core'
-
-@Component({
-  selector: 'page',
-  template: `<h1>Page</h1>`
-})
-export class PageCmp {}
-
-```
 
 ---
 
