@@ -107,3 +107,12 @@ export class UserHobbyModel {
   }
 }
 ```
+
+## Using the model
+
+```javascript
+this._userHobbyModel.get({urlParams: {userId: 'calle'}})
+  .subscribe((res) => {
+    console.log(res.json())
+  })
+```
