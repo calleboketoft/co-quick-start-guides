@@ -50,3 +50,12 @@ Observable.zip(this.store.select('myReducer'), this.store.select('myOtherReducer
   .take(1) // only need 1 response
   .subscribe(resolve) // both responses have arrived, resolve promise
 ```
+
+## Get value from observable
+
+```javascript
+let localValue
+myObservable.subscribe(value => {
+  localValue = value
+})
+```
