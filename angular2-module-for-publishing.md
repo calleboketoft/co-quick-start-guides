@@ -17,6 +17,7 @@ Here's a complete module following this guide: [co-selectable-items](https://git
 .DS_Store
 node_modules
 *.log
+typings
 ```
 
 - create file `server.js`
