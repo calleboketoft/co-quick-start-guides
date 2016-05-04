@@ -9,7 +9,7 @@ Here's a complete module following this guide: [co-selectable-items](https://git
 - `git init`
 - `npm init -y`
 - `npm install --save @angular/core @angular/compiler @angular/common @angular/platform-browser @angular/platform-browser-dynamic rxjs@5.0.0-beta.6 zone.js@0.6.12 reflect-metadata es6-shim systemjs`
-- `npm install --save-dev concurrently typescript typings express ghooks`
+- `npm install --save-dev typescript typings express ghooks`
 
 - create file `.gitignore`
 
@@ -60,8 +60,8 @@ var server = app.listen(port, () => {
   "start": "node server",
   "build": "npm run tsc",
   "prepublish": "npm run build",
-  "tsc": "tsc -p .",
-  "tsc:watch": "tsc -p . -w",
+  "typescript": "tsc -p .",
+  "watch": "tsc -p . -w",
   "typings": "typings",
   "postinstall": "typings install"
 },
@@ -116,7 +116,7 @@ System.config({
     '@angular/router': {defaultExtension: 'js', main: 'index.js'},
     '@angular/router-deprecated': {defaultExtension: 'js', main: 'index.js'},
     '@angular/testing': {defaultExtension: 'js', main: 'index.js'},
-    '@angular/upgrade': {defaultExtension: 'js', main: 'index.js'},
+    '@angular/upgrade': {defaultExtension: 'js', main: 'index.js'}
   }
 })
 ```
@@ -131,8 +131,12 @@ System.config({
   </head>
   <body style="margin-top: 50px;">
     <app>Loading...</app>
-    <script src="../node_modules/angular2/bundles/angular2-polyfills.js"></script>
-    <script src="../node_modules/systemjs/dist/system.js"></script>
+    <!-- Polyfill(s) for older browsers -->
+    <script src="../node_modules/es6-shim/es6-shim.min.js"></script>
+
+    <script src="../node_modules/zone.js/dist/zone.js"></script>
+    <script src="../node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="../node_modules/systemjs/dist/system.src.js"></script>
     <script src="systemjs.config.js"></script>
     <script>
       System.import('./example/bootstrap')
