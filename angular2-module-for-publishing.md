@@ -8,8 +8,9 @@ Here's a complete module following this guide: [co-selectable-items](https://git
 - cd `myproj`
 - `git init`
 - `npm init -y`
-- `npm install --save angular2 es6-promise es6-shim reflect-metadata rxjs zone.js systemjs`
-- `npm install --save-dev typescript express ghooks`
+- `npm install --save @angular/core @angular/compiler @angular/common @angular/platform-browser @angular/platform-browser-dynamic rxjs@5.0.0-beta.6 zone.js@0.6.12 reflect-metadata es6-shim systemjs`
+- `npm install --save-dev concurrently typescript typings express ghooks`
+
 - create file `.gitignore`
 
 ```bash
@@ -45,7 +46,9 @@ var server = app.listen(port, () => {
     "noImplicitAny": false
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "typings/main",
+    "typings/main.d.ts"
   ]
 }
 ```
@@ -55,16 +58,29 @@ var server = app.listen(port, () => {
 ```json
 "scripts": {
   "start": "node server",
-  "build": "npm run typescript",
+  "build": "npm run tsc",
   "prepublish": "npm run build",
-  "typescript": "tsc -p .",
-  "watch": "tsc -p . -w"
+  "tsc": "tsc -p .",
+  "tsc:watch": "tsc -p . -w",
+  "typings": "typings",
+  "postinstall": "typings install"
 },
 "config": {
   "ghooks": {
     "pre-commit": "npm run build"
   }
 },
+```
+
+- add file `typings.json`
+
+```json
+{
+  "ambientDependencies": {
+    "es6-shim": "registry:dt/es6-shim#0.31.2+20160317120654",
+    "jasmine": "registry:dt/jasmine#2.2.0+20160412134438"
+  }
+}
 ```
 
 ## Component example
@@ -84,20 +100,23 @@ System.config({
   baseURL: '/',
   warnings: true,
   map: {
-    'src': '../src',
-    'angular2': '../node_modules/angular2',
-    'rxjs': '../node_modules/rxjs'
+    'src': 'src',
+    '@angular': '/node_modules/@angular',
+    'rxjs': 'node_modules/rxjs'
   },
   packages: {
-    'src': {
-      defaultExtension: 'js'
-    },
-    'angular2': {
-      defaultExtension: 'js'
-    },
-    'rxjs': {
-      defaultExtension: 'js'
-    }
+    'src': {defaultExtension: 'js'},
+    'rxjs': {defaultExtension: 'js'},
+    '@angular/common': {defaultExtension: 'js', main: 'index.js'},
+    '@angular/compiler': {defaultExtension: 'js', main: 'index.js'},
+    '@angular/core': {defaultExtension: 'js', main: 'index.js'},
+    '@angular/http': {defaultExtension: 'js', main: 'index.js'},
+    '@angular/platform-browser': {defaultExtension: 'js', main: 'index.js'},
+    '@angular/platform-browser-dynamic': {defaultExtension: 'js', main: 'index.js'},
+    '@angular/router': {defaultExtension: 'js', main: 'index.js'},
+    '@angular/router-deprecated': {defaultExtension: 'js', main: 'index.js'},
+    '@angular/testing': {defaultExtension: 'js', main: 'index.js'},
+    '@angular/upgrade': {defaultExtension: 'js', main: 'index.js'},
   }
 })
 ```
@@ -128,8 +147,7 @@ System.config({
 NOTE: bootstrapping code is separated from example so that the example code
 can be used as a component by itself in a separate repo.
 ```javascript
-///<reference path="../../node_modules/angular2/typings/browser.d.ts"/>
-import {bootstrap} from 'angular2/platform/browser'
+import {bootstrap} from '@angular/platform-browser-dynamic'
 import {AppCmp} from './app-cmp'
 bootstrap(AppCmp)
 ```
@@ -137,7 +155,7 @@ bootstrap(AppCmp)
 - create file `src/example/app-cmp.ts`
 
 ```javascript
-import {Component} from 'angular2/core'
+import {Component} from '@angular/core'
 @Component({
   selector: 'app',
   template: `
@@ -157,7 +175,7 @@ export class AppCmp {}
 - create component file `src/my-component/my-component-cmp.ts`
 
 ```javascript
-import {Component} from 'angular2/core'
+import {Component} from '@angular/core'
 @Component({
   selector: 'my-component',
   template: `<p>My Component</p>`
@@ -168,7 +186,7 @@ export class MyComponentCmp {}
 - import component to `src/example/app-cmp.ts` and enable it
 
 ```javascript
-import {Component} from 'angular2/core'
+import {Component} from '@angular/core'
 import {MyComponentCmp} from '../my-component/my-component-cmp'
 @Component({
   directives: [MyComponentCmp],
