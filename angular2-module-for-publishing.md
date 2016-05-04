@@ -59,7 +59,7 @@ var server = app.listen(port, () => {
 ```json
 "scripts": {
   "start": "node server",
-  "build": "npm run tsc",
+  "build": "npm run typescript",
   "prepublish": "npm run build",
   "typescript": "tsc -p .",
   "watch": "tsc -p . -w",
