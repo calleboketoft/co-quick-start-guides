@@ -73,16 +73,7 @@ var server = app.listen(port, () => {
 },
 ```
 
-- add file `typings.json`
-
-```json
-{
-  "ambientDependencies": {
-    "es6-shim": "registry:dt/es6-shim#0.31.2+20160317120654",
-    "jasmine": "registry:dt/jasmine#2.2.0+20160412134438"
-  }
-}
-```
+- Install typings `./node_modules/.bin/typings install dt~es6-shim dt~jasmine --global --save`
 
 ## Component example
 
