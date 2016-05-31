@@ -59,7 +59,7 @@ var server = app.listen(port, () => {
 ```json
 "scripts": {
   "start": "node server",
-  "build": "npm run tsc",
+  "build": "npm run typescript",
   "prepublish": "npm run build",
   "typescript": "tsc -p .",
   "watch": "tsc -p . -w",
@@ -131,7 +131,9 @@ System.config({
     <script src="../node_modules/systemjs/dist/system.src.js"></script>
     <script src="systemjs.config.js"></script>
     <script>
-      System.import('./example/bootstrap')
+      System.import('./example/bootstrap').catch(function(err) {
+        console.error(err)
+      })
     </script>
   </body>
 </html>
