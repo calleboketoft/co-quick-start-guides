@@ -129,7 +129,7 @@ System.config({
     <script src="../node_modules/systemjs/dist/system.src.js"></script>
     <script src="systemjs.config.js"></script>
     <script>
-      System.import('./example/bootstrap').catch(function(err) {
+      System.import('./example/main').catch(function(err) {
         console.error(err)
       })
     </script>
@@ -138,7 +138,7 @@ System.config({
 ```
 
 - create folder `client-src/example`
-- create file `client-src/example/bootstrap.ts`
+- create file `client-src/example/main.ts`
 
 NOTE: bootstrapping code is separated from example so that the example code
 can be used as a component by itself in a separate repo.
@@ -146,6 +146,7 @@ can be used as a component by itself in a separate repo.
 import {bootstrap} from '@angular/platform-browser-dynamic'
 import {AppCmp} from './app-cmp'
 bootstrap(AppCmp)
+  .catch(err => console.error(err));
 ```
 
 - create file `client-src/example/app-cmp.ts`
