@@ -120,7 +120,7 @@ System.config({
     <title>Angular 2 ES6 App</title>
   </head>
   <body style="margin-top: 50px;">
-    <app>Loading...</app>
+    <app><div style="text-align: center;">Loading...</div></app>
     <!-- Polyfill(s) for older browsers -->
     <script src="../node_modules/es6-shim/es6-shim.min.js"></script>
 
@@ -146,7 +146,7 @@ can be used as a component by itself in a separate repo.
 import {bootstrap} from '@angular/platform-browser-dynamic'
 import {AppComponent} from './app.component'
 bootstrap(AppComponent)
-  .catch(err => console.error(err));
+  .catch(err => console.error(err))
 ```
 
 - create file `client-src/example/app.component.ts`
