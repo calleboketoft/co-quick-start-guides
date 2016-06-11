@@ -144,12 +144,12 @@ NOTE: bootstrapping code is separated from example so that the example code
 can be used as a component by itself in a separate repo.
 ```javascript
 import {bootstrap} from '@angular/platform-browser-dynamic'
-import {AppCmp} from './app-cmp'
-bootstrap(AppCmp)
+import {AppComponent} from './app.component'
+bootstrap(AppComponent)
   .catch(err => console.error(err));
 ```
 
-- create file `client-src/example/app-cmp.ts`
+- create file `client-src/example/app.component.ts`
 
 ```javascript
 import {Component} from '@angular/core'
@@ -159,7 +159,7 @@ import {Component} from '@angular/core'
     <h1>Angular 2</h1>
   `
 })
-export class AppCmp {}
+export class AppComponent {}
 ```
 
 - The base of the app is ready to view!
@@ -168,27 +168,27 @@ export class AppCmp {}
 
 ## Component
 
-- create component folder `client-src/my-component`
-- create component file `client-src/my-component/my-component-cmp.ts`
+- create component folder `client-src/my-page`
+- create component file `client-src/my-page/my-page.component.ts`
 
 ```javascript
 import {Component} from '@angular/core'
 @Component({
-  selector: 'my-component',
-  template: `<p>My Component</p>`
+  selector: 'my-page',
+  template: `<p>My Page</p>`
 })
-export class MyComponentCmp {}
+export class MyPageComponent {}
 ```
 
-- import component to `client-src/example/app-cmp.ts` and enable it
+- import component to `client-src/example/app.component.ts` and enable it
 
 ```javascript
 import {Component} from '@angular/core'
-import {MyComponentCmp} from '../my-component/my-component-cmp'
+import {MyPageComponent} from '../my-page/my-page.component'
 @Component({
-  directives: [MyComponentCmp],
+  directives: [MyPageComponent],
   selector: 'app',
-  template: `<my-component></my-component>`
+  template: `<my-page></my-page>`
 })
 export class AppCmp {}
 ```
@@ -225,14 +225,14 @@ systemjs: {
 ```
 
 - create folder `client-src/test` and `test/unit`
-- create file `client-src/test/unit/my-component.spec.ts`:
+- create file `client-src/test/unit/my-page.spec.ts`:
 
 ```javascript
-import {MyComponentCmp} from '../../src/my-component/my-component-cmp'
+import {MyPageComponent} from '../../src/my-page/my-page.component'
 
-describe('MyComponent', () => {
+describe('MyPageComponent', () => {
   it('Should be defined', () => {
-    expect(MyComponentCmp).toBeDefined()
+    expect(MyPageComponent).toBeDefined()
   })
 })
 ```
@@ -322,27 +322,27 @@ function getProtractorBinary(binaryName){
 // globals from protractor
 declare var element, by
 
-export class MyComponentPageObject {
-  public myComponentEl = element(by.tagName('p'))
+export class MyPagePageObject {
+  public myPageEl = element(by.tagName('p'))
 }
 ```
 
-- create file `test/e2e/my-component.spec.ts`:
+- create file `test/e2e/my-page.spec.ts`:
 
 ```javascript
 // globals from protractor
 declare var describe, it, expect, beforeEach, browser
 
-import {MyComponentPageObject} from './my-component.page-object'
+import {MyPagePageObject} from './my-page.page-object'
 
-describe('MyComponentPageObject' , () => {
+describe('MyPagePageObject' , () => {
   beforeEach(() => {
     browser.get('/')
   })
 
-  let pageObject = new MyComponentPageObject()
+  let pageObject = new MyPagePageObject()
   it('should be a text in the paragraph', () => {
-    expect(pageObject.myComponentEl.getText()).toEqual('My Component')
+    expect(pageObject.myPageEl.getText()).toEqual('My Page')
   })
 })
 ```
@@ -366,7 +366,7 @@ describe('MyComponentPageObject' , () => {
 
 ```json
 {
-  "main": "client-src/my-component/my-component-cmp.js"
+  "main": "client-src/my-page/my-page.component.js"
 }
 ```
 
@@ -392,7 +392,7 @@ examples
 
 ```json
 "files": [
-  "src/my-component/"
+  "client-src/my-page/"
 ]
 ```
 
@@ -400,7 +400,7 @@ examples
 
 ## TypeScript watcher using Gulp
 
-The command `tsc -p src -w` has been working extremely slow for me so I decided to use gulp for the watcher instead.
+The command `tsc -w` has been working extremely slow for me so I decided to use gulp for the watcher instead.
 
 - `npm install --save-dev gulp gulp-shell`
 - add `gulpfile.js`
