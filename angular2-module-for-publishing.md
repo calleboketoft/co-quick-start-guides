@@ -61,8 +61,8 @@ var server = app.listen(port, () => {
   "start": "node server",
   "build": "npm run typescript",
   "prepublish": "npm run build",
-  "typescript": "tsc -p .",
-  "watch": "tsc -p . -w",
+  "typescript": "tsc",
+  "watch": "tsc -w",
   "typings": "typings",
   "postinstall": "typings install"
 },
