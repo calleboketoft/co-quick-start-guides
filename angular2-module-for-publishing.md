@@ -80,11 +80,11 @@ var server = app.listen(port, () => {
 - create file `index.html`
 
 ```html
-<html><head><meta http-equiv="refresh" content="0; URL='/src'" /></head></html>
+<html><head><meta http-equiv="refresh" content="0; URL='/client-src'" /></head></html>
 ```
 
-- create folder `src`
-- create file `src/systemjs.config.ts`
+- create folder `client-src`
+- create file `client-src/systemjs.config.ts`
 
 ```javascript
 declare var System
@@ -92,12 +92,11 @@ System.config({
   baseURL: '/',
   warnings: true,
   map: {
-    'src': 'src',
     '@angular': '/node_modules/@angular',
     'rxjs': 'node_modules/rxjs'
   },
   packages: {
-    'src': {defaultExtension: 'js'},
+    'client-src': {defaultExtension: 'js'},
     'rxjs': {defaultExtension: 'js'},
     '@angular/common': {defaultExtension: 'js', main: 'index.js'},
     '@angular/compiler': {defaultExtension: 'js', main: 'index.js'},
@@ -106,7 +105,6 @@ System.config({
     '@angular/platform-browser': {defaultExtension: 'js', main: 'index.js'},
     '@angular/platform-browser-dynamic': {defaultExtension: 'js', main: 'index.js'},
     '@angular/router': {defaultExtension: 'js', main: 'index.js'},
-    '@angular/router-deprecated': {defaultExtension: 'js', main: 'index.js'},
     '@angular/testing': {defaultExtension: 'js', main: 'index.js'},
     '@angular/upgrade': {defaultExtension: 'js', main: 'index.js'}
   }
@@ -139,8 +137,8 @@ System.config({
 </html>
 ```
 
-- create folder `src/example`
-- create file `src/example/bootstrap.ts`
+- create folder `client-src/example`
+- create file `client-src/example/bootstrap.ts`
 
 NOTE: bootstrapping code is separated from example so that the example code
 can be used as a component by itself in a separate repo.
@@ -150,7 +148,7 @@ import {AppCmp} from './app-cmp'
 bootstrap(AppCmp)
 ```
 
-- create file `src/example/app-cmp.ts`
+- create file `client-src/example/app-cmp.ts`
 
 ```javascript
 import {Component} from '@angular/core'
@@ -169,8 +167,8 @@ export class AppCmp {}
 
 ## Component
 
-- create component folder `src/my-component`
-- create component file `src/my-component/my-component-cmp.ts`
+- create component folder `client-src/my-component`
+- create component file `client-src/my-component/my-component-cmp.ts`
 
 ```javascript
 import {Component} from '@angular/core'
@@ -181,7 +179,7 @@ import {Component} from '@angular/core'
 export class MyComponentCmp {}
 ```
 
-- import component to `src/example/app-cmp.ts` and enable it
+- import component to `client-src/example/app-cmp.ts` and enable it
 
 ```javascript
 import {Component} from '@angular/core'
@@ -202,12 +200,12 @@ export class AppCmp {}
 
 ```javascript
 frameworks: ['systemjs', 'jasmine'],
-files:['src/test/unit/*.spec.js'],
+files:['client-src/test/unit/*.spec.js'],
 systemjs: {
-  configFile: 'src/systemjs.config.js',
+  configFile: 'client-src/systemjs.config.js',
   // list of files to serve (will not automatically be loaded)
   serveFiles: [
-    'src/**/*',
+    'client-src/**/*',
     'node_modules/**/*'
   ],
   // list of files to insert <script> tag for
@@ -225,8 +223,8 @@ systemjs: {
 }
 ```
 
-- create folder `src/test` and `test/unit`
-- create file `src/test/unit/my-component.spec.ts`:
+- create folder `client-src/test` and `test/unit`
+- create file `client-src/test/unit/my-component.spec.ts`:
 
 ```javascript
 import {MyComponentCmp} from '../../src/my-component/my-component-cmp'
@@ -267,7 +265,7 @@ describe('MyComponent', () => {
 ```javascript
 exports.config = {
   baseUrl: 'http://localhost:3000/src/',
-  specs: ['src/test/e2e/**/*.spec.js'],
+  specs: ['client-src/test/e2e/**/*.spec.js'],
   directConnect: true,
   exclude: [],
   multiCapabilities: [{
@@ -334,7 +332,7 @@ export class MyComponentPageObject {
 // globals from protractor
 declare var describe, it, expect, beforeEach, browser
 
-import { MyComponentPageObject } from './my-component.page-object'
+import {MyComponentPageObject} from './my-component.page-object'
 
 describe('MyComponentPageObject' , () => {
   beforeEach(() => {
@@ -367,7 +365,7 @@ describe('MyComponentPageObject' , () => {
 
 ```json
 {
-  "main": "src/my-component/my-component-cmp.js"
+  "main": "client-src/my-component/my-component-cmp.js"
 }
 ```
 
