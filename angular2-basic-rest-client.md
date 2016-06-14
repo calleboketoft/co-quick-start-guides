@@ -2,70 +2,60 @@
 
 ```javascript
 import {Injectable} from 'angular2/http'
-import {Request, Http, Headers, RequestMethod} from 'angular2/http'
+import {Request, Http, Headers} from 'angular2/http'
 
-export interface IRequestConfig {
-  urlExtension: any,
-  mehtod: any,
-  body?: string,
-  headers?: any
+export const GET = 'GET'
+export const POST = 'POST'
+export const PUT = 'PUT'
+export const DELETE = 'DELETE'
+
+export interface RequestOptions {
+  urlParams?: any;
+  queryParams?: any;
+  body?: any;
+  method?: string;
 }
 
 @Injectable()
 export class RestClient {
-  constructor (private _http: Http) {}
+  constructor (private http: Http) {}
 
-  private _baseUrl = '';
+  private baseUrl = '';
 
-  public getDefaultHeaders = () => {
-    return {
-      'Content-Type': 'application/json'
-    }
-  }
+  public getDefaultHeaders = () => ({'Content-Type': 'application/json'});
 
-  public getFullUrl = (urlExtension) => {
-    return this._baseUrl + urlExtension
-  }
+  public getFullUrl = (urlExt) => this.baseUrl + urlExt;
 
-  public request (config: IRequestConfig) {
+  public request (urlFn, {
+    method,
+    urlParams = {},
+    queryParams = {},
+    body
+  }: RequestOptions) {
+    body = (typeof body === 'string' ? body : JSON.stringify(body))
     let headers = new Headers(Ojbect.assign({}, this.getDefaultHeaders(), config.headers)
-
-    return this._http.request(new Request({
+    return this.http.request(new Request({
+      url: this.getFullUrl(urlFn(urlParams, queryParams)),
+      method,
       headers,
-      method: config.method,
-      url: this.getFullUrl(config.urlExtension),
-      body: config.body
+      body
     }))
   }
 
-  public get (urlFn, options?) {
-    return this.request({
-      method: RequestMethod.Get,
-      urlExtension: urlFn(options ? options.urlParams : {})
-    })
+  public get (urlFn, options = {}) {
+    return this.request(urlFn, Object.assign(options, {method: GET})
   }
 
-  public post (urlFn, options: IMethodOptions) {
-    return this.request({
-      method: RequestMethod.Post,
-      urlExtension: urlFn(options.urlParams),
-      body: typeof options.body === 'string' ? options.body : JSON.stringify(options.body)
-    })
+  public post (urlFn, options) {
+    return this.request(urlFn, Object.assign(options, {method: POST}))
   }
 
-  public put (urlFn, options: IMethodOptions) {
-    return this.request({
-      method: RequestMethod.Put,
-      urlExtension: urlFn(options.urlParams),
-      body: typeof options.body === 'string' ? options.body : JSON.stringify(options.body)
-    })
+  public put (urlFn, options) {
+    return this.request(urlFn, Object.assign(options, {method: PUT}))
   }
 
-  public remove (urlFn, options: IMethodOptions) {
-    return this.request({
-      method: RequestMethod.Delete,
-      urlExtension: urlFn(options.urlParams)
-    })
+  public remove (urlFn, options) {
+    return this.request(urlFn, Object.assign(options, {method: DELETE}))
   }
 }
 
