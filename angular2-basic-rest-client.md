@@ -1,7 +1,7 @@
 # Angular 2 basic REST client
 
 ```javascript
-import {Injectable} from 'angular2/http'
+import {Injectable} from 'angular2/core'
 import {Request, Http, Headers} from 'angular2/http'
 
 export const GET = 'GET'
