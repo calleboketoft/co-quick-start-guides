@@ -1,6 +1,9 @@
 Visual Studio Code issue for TypeScript extensibility
 https://github.com/Microsoft/TypeScript/issues/6508
 
+The issue is planned to be investigated more for TypeScript 2.1
+https://github.com/Microsoft/TypeScript/wiki/Roadmap
+
 Angular 2 template hightlighting TextMate file
 https://github.com/billti/TypeScript-TmLanguage/tree/ngml
 
@@ -14,3 +17,5 @@ http://vincent-ottens.nl/?p=57
 
 Angular 2 related issue
 https://github.com/angular/angular/issues/7482
+
+
