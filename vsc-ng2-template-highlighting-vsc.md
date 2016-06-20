@@ -11,3 +11,6 @@ https://visualstudio.uservoice.com/forums/293070-visual-studio-code/suggestions/
 
 Temp workaround for VSC
 http://vincent-ottens.nl/?p=57
+
+Angular 2 related issue
+https://github.com/angular/angular/issues/7482
