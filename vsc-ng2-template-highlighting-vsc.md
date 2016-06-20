@@ -8,3 +8,6 @@ https://github.com/billti/TypeScript-TmLanguage/tree/ngml
 
 VSC suggestion
 https://visualstudio.uservoice.com/forums/293070-visual-studio-code/suggestions/9660111-html-editing-within-js-ts-code-e-g-in-es6-temp
+
+Temp workaround for VSC
+http://vincent-ottens.nl/?p=57
