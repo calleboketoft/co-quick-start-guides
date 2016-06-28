@@ -1,8 +1,18 @@
+# Visual Studio Code Angular 2 Intellisense
+
 Visual Studio Code issue for TypeScript extensibility
 https://github.com/Microsoft/TypeScript/issues/6508
 
 The issue is planned to be investigated more for TypeScript 2.1
 https://github.com/Microsoft/TypeScript/wiki/Roadmap
+
+## Template literal highlighting
+
+This extension solves it both for html and css
+
+https://marketplace.visualstudio.com/items?itemName=nwallace.language-vscode-javascript-angular2
+
+## Misc
 
 Angular 2 template hightlighting TextMate file
 https://github.com/billti/TypeScript-TmLanguage/tree/ngml
