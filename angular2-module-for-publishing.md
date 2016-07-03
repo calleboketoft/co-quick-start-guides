@@ -211,15 +211,16 @@ systemjs: {
   ],
   // list of files to insert <script> tag for
   includeFiles: [
-    'node_modules/angular2/bundles/angular2-polyfills.js'
+    'node_modules/es6-shim/es6-shim.min.js',
+    'node_modules/zone.js/dist/zone.js',
+    'node_modules/reflect-metadata/Reflect.js',
+    'node_modules/systemjs/dist/system.src.js'
   ],
   config: {
     transpiler: null,
-    paths: {
-      'systemjs': '/node_modules/systemjs/dist/system.js',
-      'system-polyfills': '/node_modules/systemjs/dist/system-polyfills.js',
-      'es6-module-loader': '/node_modules/es6-module-loader/dist/es6-module-loader.js'
-    },
+      paths: {
+        'systemjs': '/node_modules/systemjs/dist/system.js'
+      }
   }
 }
 ```
