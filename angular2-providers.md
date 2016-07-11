@@ -4,11 +4,11 @@ Sometimes you want to send manually entered values to a module during its instan
 
 This situation happens either when you use a third party (non Angular 2 DI) class that needs values sent into its constructor or an Angular 2 DI class that needs some values sent in before the DI system kicks in.
 
-## Example 1
+### Example 1
 
 You have a third party class called "PersonService" that you want to use with Angular 2. PersonService takes a number of params in its constructor that you need to provide upon instantiation.
 
-## 1. The service
+#### 1. The service
 
 PersonService can be any third party service with no framework affiliation
 
@@ -25,7 +25,7 @@ export class PersonService {
 }
 ```
 
-## 2. Defining the service provider
+#### 2. Defining the service provider
 
 The "service provider" is like the recipe for how to instantiate the service. This would be the adaptor for using a third party lib to be used with Angular 2.
 
@@ -55,7 +55,7 @@ export function getPersonServiceProvider (name) {
 }
 ```
 
-## 3. Providing and then using the service
+#### 3. Providing and then using the service
 
 Now it's time to use the PersonService in an Angular 2 component.
 
@@ -80,11 +80,11 @@ export class ExampleComponent {
 }
 ```
 
-# Example 2
+### Example 2
 
 A third party service that needs an instance of an Angular 2 service upon instantiation.
 
-## 1. The services
+#### 1. The services
 
 The third party service "LoginService" which needs an "apiService" upon instantiaiton.
 
@@ -117,7 +117,7 @@ export class ApiService {
 }
 ```
 
-## 2. Defining the service provider
+#### 2. Defining the service provider
 
 `login.service.provider.ts`:
 
@@ -131,7 +131,7 @@ export let loginServiceProvider = {
 }
 ```
 
-## 3. Providing and then using the service
+#### 3. Providing and then using the service
 
 ```javascript
 import {ApiService} from './api.service'
