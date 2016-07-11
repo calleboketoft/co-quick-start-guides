@@ -4,7 +4,7 @@ Sometimes you want to send manually entered values to a module during its instan
 
 This situation happens either when you use a third party (non Angular 2 DI) class that needs values sent into its constructor or an Angular 2 DI class that needs some values sent in before the DI system kicks in.
 
-## Example
+## Example 1
 
 You have a third party class called "PersonService" that you want to use with Angular 2. PersonService takes a number of params in its constructor that you need to provide upon instantiation.
 
@@ -39,7 +39,7 @@ export function getPersonServiceProvider (name) {
 
   // define the factory function that will do the actual instantiation
   // of PersonService
-  let personServiceFactory = (personService: PersonService) {
+  let personServiceFactory = () {
     return new PersonService(name)
   }
 
@@ -77,5 +77,66 @@ import {getPersonServiceProvider} from './person.service.provider'
 })
 export class ExampleComponent {
   constructor (public personService: PersonService) {}
+}
+```
+
+# Example 2
+
+A third party service that needs an instance of an Angular 2 service upon instantiation.
+
+## 1. The service
+
+The third party service "LoginService" which needs an "apiService" upon instantiaiton.
+
+`login.service.ts`
+```javascript
+interface ApiService {
+  login: any;
+  logout: any;
+}
+export class LoginService {
+  constructor (private apiService: ApiService) {
+    public loginWrap (username) {
+      let fixedUsername = username.toUpperCase()
+      return apiService.login(fixedUsername)
+    }
+  }
+}
+```
+
+## 2. Defining the service provider
+
+`login.service.provider.ts`:
+
+```javascript
+import {LoginService} from './login.service'
+
+export let loginServiceProvider = {
+  provide: LoginService,
+  useFactory: (apiService: ApiService) => new LoginService(apiService),
+  deps: [ApiService] // ApiService is an Angular 2 service, use DI
+}
+```
+
+## 3. Providing and then using the service
+
+```javascript
+import {LoginService} from './login.service'
+import {loginServiceProvider} from './login.service.provider'
+
+@Component({
+  selector: 'example2-component',
+  providers: [loginServiceProvider],
+  template: `
+    <input type="text" #username>
+    <button (click)="login(username.value)">Login</button>
+  `
+})
+export class Example2Component {
+  constructor (public loginService: LoginService) {}
+
+  public login (username) {
+    this.loginService.login(username)
+  }
 }
 ```
