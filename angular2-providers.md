@@ -84,7 +84,7 @@ export class ExampleComponent {
 
 A third party service that needs an instance of an Angular 2 service upon instantiation.
 
-## 1. The service
+## 1. The services
 
 The third party service "LoginService" which needs an "apiService" upon instantiaiton.
 
@@ -92,7 +92,6 @@ The third party service "LoginService" which needs an "apiService" upon instanti
 ```javascript
 interface ApiService {
   login: any;
-  logout: any;
 }
 export class LoginService {
   constructor (private apiService: ApiService) {
@@ -100,6 +99,20 @@ export class LoginService {
       let fixedUsername = username.toUpperCase()
       return apiService.login(fixedUsername)
     }
+  }
+}
+```
+
+The Angular 2 service "ApiService"
+
+`api.service.ts`:
+```javascript
+import {Injectable} from '@angular/core'
+
+@Injectable()
+export class ApiService {
+  public login (username) {
+    console.log('Now logging in:', username)
   }
 }
 ```
@@ -121,12 +134,13 @@ export let loginServiceProvider = {
 ## 3. Providing and then using the service
 
 ```javascript
+import {ApiService} from './api.service'
 import {LoginService} from './login.service'
 import {loginServiceProvider} from './login.service.provider'
 
 @Component({
   selector: 'example2-component',
-  providers: [loginServiceProvider],
+  providers: [loginServiceProvider, ApiService],
   template: `
     <input type="text" #username>
     <button (click)="login(username.value)">Login</button>
