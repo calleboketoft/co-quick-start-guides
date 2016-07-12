@@ -196,10 +196,15 @@ export class AppCmp {}
 
 - Install dependencies `npm install --save-dev jasmine-core karma karma-chrome-launcher karma-jasmine karma-systemjs`
 - Initialise Karma `./node_modules/.bin/karma init`
-- Update `karma.config.js`:
+- Update `karma.config.js`, replace "frameworks" and "files", and add "systemjs":
 
 ```javascript
 frameworks: ['systemjs', 'jasmine'],
+plugins: [
+  'karma-jasmine',
+  'karma-chrome-launcher',
+  'karma-systemjs'
+],
 files:['client-src/test/unit/*.spec.js'],
 systemjs: {
   configFile: 'client-src/systemjs.config.js',
@@ -224,7 +229,7 @@ systemjs: {
 }
 ```
 
-- create folder `client-src/test` and `test/unit`
+- create folder `client-src/test/unit`
 - create file `client-src/test/unit/my-page.spec.ts`:
 
 ```javascript
