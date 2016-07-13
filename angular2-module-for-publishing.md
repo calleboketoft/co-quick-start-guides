@@ -263,9 +263,18 @@ describe('MyPageComponent', () => {
 }
 ```
 
+#### Debugging Unit Tests
+In order to debug the unit tests in browser, run the test command like this:
+
+- `npm run test-unit -- --no-single-run --browsers Chrome`
+- Chrome will open up with a page to start the tests. 
+- Click `debug` up right and a new tab will open. 
+- Open dev tools and press `sources`.
+- In there you'll find the test source files
+
 ## Testing - E2E tests
 
-- `npm install -D protractor gulp`
+- `npm install --save-dev protractor gulp`
 - add the file `protractor.conf.js`:
 
 ```javascript
@@ -292,6 +301,8 @@ exports.config = {
   useAllAngular2AppRoots: true
 }
 ```
+
+Running the tests manually would be done by first starting the development server at `localhost:3000` with the command `npm start` and then running the protractor tests towards that server with `./node_modules/.bin/protractor`. The following `gulp` solution makes it into just one command:
 
 - add the file `gulpfile.js`:
 
@@ -356,14 +367,15 @@ describe('MyPagePageObject' , () => {
 
 ```json
 "scripts": {
-  "postinstall": "npm run install_webdriver",
   "install_webdriver": "node_modules/protractor/bin/webdriver-manager update",
-  "test-e2e": "npm run tsc && gulp test-e2e"
+  "test-e2e": "npm run install_webdriver && npm run tsc && gulp test-e2e"
 }
 ```
 
-- Install `webdriver` by `npm run install_webdriver`
-- Run the e2e tests `npm run test-e2e`
+- Ensure latest webdriver is installed and run the e2e tests `npm run test-e2e`
+
+#### Debugging E2E Tests
+
 
 ## Publishing
 
