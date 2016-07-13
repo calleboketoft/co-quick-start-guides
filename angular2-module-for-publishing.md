@@ -375,7 +375,15 @@ describe('MyPagePageObject' , () => {
 - Ensure latest webdriver is installed and run the e2e tests `npm run test-e2e`
 
 #### Debugging E2E Tests
+Add line `browser.pause()` anywhere in a spec file to pause the test. To continue simply type `ctrl + C` to exit the pause state in the terminal.
 
+Inside the spec files, `console.log()` statements can be used to write out things into the terminal. Since all protractor things are async, it would look like this:
+
+```javascript
+pageObject.getMyItem().getText().then(theText => {
+  console.log(theText)
+})
+```
 
 ## Publishing
 
