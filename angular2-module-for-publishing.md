@@ -267,8 +267,8 @@ describe('MyPageComponent', () => {
 In order to debug the unit tests in browser, run the test command like this:
 
 - `npm run test-unit -- --no-single-run --browsers Chrome`
-- Chrome will open up with a page to start the tests. 
-- Click `debug` up right and a new tab will open. 
+- Chrome will open up with a page to start the tests.
+- Click `debug` up right and a new tab will open.
 - Open dev tools and press `sources`.
 - In there you'll find the test source files
 
@@ -383,6 +383,7 @@ Inside the spec files, `console.log()` statements can be used to write out thing
 pageObject.getMyItem().getText().then(theText => {
   console.log(theText)
 })
+browser.pause()
 ```
 
 ## Publishing
