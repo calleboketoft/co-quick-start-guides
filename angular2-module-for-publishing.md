@@ -380,6 +380,10 @@ describe('MyPagePageObject' , () => {
 - To run Protractor commands in the terminal, go to REPL by typing `repl`
 - In REPL mode you can run commands such as `element(by.id('mything')).getText()`
 
+#### Protractor Cheat Sheet
+
+- [Cheat Sheet](https://gist.github.com/javierarques/0c4c817d6c77b0877fda)
+
 ## Publishing
 
 - Specify main file in `package.json`
