@@ -332,33 +332,34 @@ function getProtractorBinary(binaryName){
 ```
 
 - create folder `src/test/e2e`
-- create file `src/test/e2e/my-component.page-object.ts`
+- create "page object" file `src/test/e2e/my-component.po.ts`
 
 ```javascript
-// globals from protractor
-declare var element, by
+import {
+  browser, element, by, By, $, $$, ExpectedConditions
+} from 'protractor/globals'
 
-export class MyPagePageObject {
-  public myPageEl = element(by.tagName('p'))
+export let myPagePo {
+  myPageEl: () => element(by.tagName('p'))
 }
 ```
 
 - create file `test/e2e/my-page.spec.ts`:
 
 ```javascript
-// globals from protractor
-declare var describe, it, expect, beforeEach, browser
+import {
+  browser, element, by, By, $, $$, ExpectedConditions
+} from 'protractor/globals'
 
-import {MyPagePageObject} from './my-page.page-object'
+import {myPagePo} from './my-page.po'
 
 describe('MyPagePageObject' , () => {
   beforeEach(() => {
     browser.get('/')
   })
 
-  let pageObject = new MyPagePageObject()
   it('should be a text in the paragraph', () => {
-    expect(pageObject.myPageEl.getText()).toEqual('My Page')
+    expect(myPagePo.myPageEl().getText()).toEqual('My Page')
   })
 })
 ```
@@ -368,23 +369,16 @@ describe('MyPagePageObject' , () => {
 ```json
 "scripts": {
   "install_webdriver": "node_modules/protractor/bin/webdriver-manager update",
-  "test-e2e": "npm run install_webdriver && npm run tsc && gulp test-e2e"
+  "test-e2e": "gulp test-e2e"
 }
 ```
 
-- Ensure latest webdriver is installed and run the e2e tests `npm run test-e2e`
+- Ensure latest webdriver is installed `npm run install_webdriver` and run the e2e tests `npm run test-e2e`
 
 #### Debugging E2E Tests
-Add line `browser.pause()` anywhere in a spec file to pause the test. To continue simply type `ctrl + C` to exit the pause state in the terminal.
-
-Inside the spec files, `console.log()` statements can be used to write out things into the terminal. Since all protractor things are async, it would look like this:
-
-```javascript
-pageObject.getMyItem().getText().then(theText => {
-  console.log(theText)
-})
-browser.pause()
-```
+- Add line `browser.pause()` anywhere in a spec file to pause the test in terminal.
+- To run Protractor commands in the terminal, go to REPL by typing `repl`
+- In REPL mode you can run commands such as `element(by.id('mything')).getText()`
 
 ## Publishing
 
@@ -423,30 +417,3 @@ examples
 ```
 
 - When everything is ready, publish the package `npm publish`
-
-## TypeScript watcher using Gulp
-
-The command `tsc -w` has been working extremely slow for me so I decided to use gulp for the watcher instead.
-
-- `npm install --save-dev gulp gulp-shell`
-- add `gulpfile.js`
-
-```javascript
-var shell = require('gulp-shell')
-gulp.task('tsc', shell.task([
-  'npm run typescript'
-]))
-
-gulp.task('watch', () => {
-  gulp.watch(paths.typescripts, ['tsc'])
-})
-```
-
-- add to `package.json` scripts
-
-```json
-"gulp:watch": "gulp watch"
-```
-
-- run with `npm run gulp-ts:watch`
-- Note: when using gulp for compilation, the TypeScript files are under `sources` in chrome dev tools
