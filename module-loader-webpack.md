@@ -61,14 +61,17 @@ dist
 var webpack = require('webpack')
 
 module.exports = {
+  // Bundles
   entry: {
     'vendor': './app/vendor',
     'app': './app/main'
   },
+  // Bundle output format
   output: {
     path: __dirname,
     filename: './dist/[name].bundle.js'
   },
+  // Load these files
   resolve: {
     extensions: ['', '.js', '.ts']
   },
@@ -76,6 +79,7 @@ module.exports = {
   module: {
     loaders: [
       {
+        // If file ending is .ts, use ts-loader
         test: /\.ts/,
         loaders: ['ts-loader'],
         exclude: /node_modules/
@@ -83,7 +87,10 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor", /* filename= */"./dist/vendor.bundle.js")
+    // Put common stuff in "vendor" so it's not included in "app"
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['app', 'vendor']
+    })
   ]
 }
 ```
