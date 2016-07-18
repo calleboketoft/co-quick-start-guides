@@ -98,19 +98,69 @@ module.exports = {
 - Create folder `app` and file `app/app.ts`
 
 ```javascript
-export function app () {
-  console.log('ok')
+export function App () {
+  this.param = 'ok'
 }
 ```
 
 - Create file `app/main.ts`
 
 ```javascript
-import {app} from './app'
-app()
+import {App} from './app'
+var app = new App()
+console.log(app.param)
 ```
 
 - Create file `app/vendor.ts` to import vendor scripts resolve
 ```javascript
 // Nothing here yet
 ```
+
+## Unit test with Karma
+
+- `npm install --save-dev karma karma-chrome-launcher karma-jasmine karma-webpack`
+- Add script `"test": "karma start karma.config.js"` to `package.json`
+- Add file `karma.config.js`
+
+```javascript
+var webpackConfig = require('./webpack.config')
+
+module.exports = function (config) {
+  config.set({
+    basePath: '',
+    frameworks: ['jasmine'],
+    // each file acts as entry point for the webpack configuration
+    files: ['test/**/*.spec.ts'],
+    preprocessors: {
+      'test/**/*.spec.ts': ['webpack']
+    },
+    webpack: {
+      module: webpackConfig.module,
+      resolve: webpackConfig.resolve
+    },
+    webpackMiddleware: {
+      noInfo: true
+    },
+    reporters: ['progress'],
+    browsers: ['Chrome'],
+    singleRun: true,
+    concurrency: Infinity
+  })
+}
+```
+
+- Add folder `test` and file `test/app.spec.ts`
+
+```javascript
+declare var describe, it, expect
+
+import {App} from '../app/app'
+
+describe('something', () => {
+  it('should pass a dummy test', () => {
+    var app = new App()
+    expect(app.param).toEqual('ok')
+  })
+})
+```
+
