@@ -118,7 +118,7 @@ console.log(app.param)
 
 ## Unit test with Karma
 
-- `npm install --save-dev karma karma-chrome-launcher karma-jasmine karma-webpack`
+- `npm install --save-dev karma karma-chrome-launcher karma-jasmine karma-webpack jasmine-core`
 - Add script `"test": "karma start karma.config.js"` to `package.json`
 - Add file `karma.config.js`
 
@@ -164,3 +164,8 @@ describe('something', () => {
 })
 ```
 
+## Add typings
+
+- `npm install typings --save-dev`
+- `./node_modules/.bin/typings install dt~jasmine --global --save`
+- Search for typings `./node_modules/.bin/typings search papaparse`
