@@ -118,7 +118,7 @@ console.log(app.param)
 
 ## Unit test with Karma
 
-- `npm install --save-dev karma karma-chrome-launcher karma-jasmine karma-webpack jasmine-core`
+- `npm install --save-dev karma karma-chrome-launcher karma-jasmine karma-webpack jasmine-core karma-sourcemap-loader`
 - Add script `"test": "karma start karma.config.js"` to `package.json`
 - Add file `karma.config.js`
 
@@ -132,11 +132,22 @@ module.exports = function (config) {
     // each file acts as entry point for the webpack configuration
     files: ['test/**/*.spec.ts'],
     preprocessors: {
-      'test/**/*.spec.ts': ['webpack']
+      // Specs need to be preprocessed by webpack and get sourcemaps
+      'test/**/*.spec.ts': ['webpack', 'sourcemap']
     },
     webpack: {
       module: webpackConfig.module,
-      resolve: webpackConfig.resolve
+      resolve: webpackConfig.resolve,
+      devtool: 'inline-source-map',
+      // There's a bug in the sourcemap generation so this script is needed
+      // https://github.com/webpack/karma-webpack/issues/13
+      // https://github.com/webpack/karma-webpack/issues/109#issuecomment-224961264
+      plugins: [
+        new webpack.SourceMapDevToolPlugin({
+          filename: null, // if no value is provided the sourcemap is inlined
+          test: /\.(ts|js)($|\?)/i // process .js and .ts files only
+        })
+      ]
     },
     webpackMiddleware: {
       noInfo: true
