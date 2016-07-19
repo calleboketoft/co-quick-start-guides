@@ -68,8 +68,8 @@ module.exports = {
   },
   // Bundle output format
   output: {
-    path: __dirname,
-    filename: './dist/[name].bundle.js'
+    path: __dirname + '/dist/',
+    filename: '[name].bundle.js'
   },
   // Load these files
   resolve: {
