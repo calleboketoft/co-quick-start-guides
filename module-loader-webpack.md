@@ -1,7 +1,7 @@
 # Module Loader: Webpack
 
 - create folder `myproj` and run `npm init -y` in there
-- install node modules `npm install --save-dev typescript webpack webpack-dev-server ts-loader`
+- install node modules `npm install --save-dev typescript webpack webpack-dev-server awesome-typescript-loader`
 
 - add `.gitignore`
 
@@ -19,7 +19,7 @@ dist
   },
 ```
 
-- create `index.html`
+- create `client-src/index.html`
 
 ```html
 <html>
@@ -63,26 +63,31 @@ var webpack = require('webpack')
 module.exports = {
   // Bundles
   entry: {
-    'vendor': './app/vendor',
-    'app': './app/main'
+    'vendor': './client-src/app/vendor',
+    'app': './client-src/app/main'
   },
   // Bundle output format
   output: {
-    path: __dirname + '/dist/',
+    path: path.resolve(__dirname, '../client-src/dist/'),
+    publicPath: '/dist/',
     filename: '[name].bundle.js'
   },
   // Load these files
   resolve: {
     extensions: ['', '.js', '.ts']
   },
-  devtool: 'source-map',
+  devtool: 'inline-source-map',
+  devServer: {
+    stats: 'minimal',
+    contentBase: 'client-src/'
+  },
   module: {
     loaders: [
       {
         // If file ending is .ts, use ts-loader
         test: /\.ts/,
-        loaders: ['ts-loader'],
-        exclude: /node_modules/
+        loaders: ['awesome-typescript-loader'],
+        exclude: helpers.root('node_modules', 'test')
       }
     ]
   },
@@ -95,7 +100,7 @@ module.exports = {
 }
 ```
 
-- Create folder `app` and file `app/app.ts`
+- Create folder `client-src/app` and file `client-src/app/app.ts`
 
 ```javascript
 export function App () {
@@ -103,7 +108,7 @@ export function App () {
 }
 ```
 
-- Create file `app/main.ts`
+- Create file `client-src/app/main.ts`
 
 ```javascript
 import {App} from './app'
@@ -111,7 +116,7 @@ var app = new App()
 console.log(app.param)
 ```
 
-- Create file `app/vendor.ts` to import vendor scripts resolve
+- Create file `client-src/app/vendor.ts` to import vendor scripts resolve
 ```javascript
 // Nothing here yet
 ```
