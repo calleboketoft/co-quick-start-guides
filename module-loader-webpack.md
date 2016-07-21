@@ -68,7 +68,7 @@ module.exports = {
   },
   // Bundle output format
   output: {
-    path: path.resolve(__dirname, '../client-src/dist/'),
+    path: path.resolve(__dirname, 'client-src/dist/'),
     publicPath: '/dist/',
     filename: '[name].bundle.js'
   },
@@ -185,3 +185,41 @@ describe('something', () => {
 - `npm install typings --save-dev`
 - `./node_modules/.bin/typings install dt~jasmine --global --save`
 - Search for typings `./node_modules/.bin/typings search papaparse`
+
+## Add Angular 2
+
+- `npm install --save-dev @angular/core @angular/compiler @angular/common @angular/platform-browser @angular/platform-browser-dynamic rxjs@5.0.0-beta.6 zone.js@0.6.12 core-js`
+
+- Update file `client-src/app/vendor.ts`
+
+```javascript
+// Polyfills
+import 'core-js/es6'
+import 'core-js/es7/reflect'
+import 'zone.js/dist/zone'
+
+// Angular 2
+import '@angular/platform-browser'
+import '@angular/platform-browser-dynamic'
+import '@angular/core'
+import '@angular/common'
+```
+
+- Update file `client-src/app/main.ts`
+
+```javascript
+import {bootstrap} from '@angular/platform-browser-dynamic'
+import {AppComponent} from './app.component'
+bootstrap(AppComponent)
+  .catch(err => console.error(err))
+```
+
+- Update file `client-src/index.html`
+
+```html
+<body>
+  <app><div style="text-align: center;">Loading...</div></app>
+  ...
+</body>
+```
+
