@@ -214,6 +214,19 @@ bootstrap(AppComponent)
   .catch(err => console.error(err))
 ```
 
+- Add file `client-src/app/app.component.ts`
+
+```javascript
+import {Component} from '@angular/core'
+@Component({
+  selector: 'app',
+  template: `
+    <h1>Angular 2</h1>
+  `
+})
+export class AppComponent {}
+```
+
 - Update file `client-src/index.html`
 
 ```html
