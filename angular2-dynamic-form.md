@@ -1,6 +1,6 @@
-## Angular 2 dynamic form
+# Angular 2 dynamic form
 
-#### Basic form with built-in validators
+How to use FormBuilder and creating custom validators
 
 `main.ts`:
 
@@ -62,7 +62,7 @@ export class AppComponent {
 }
 ```
 
-#### Custom sync validator
+## Custom sync validator
 
 - Create `email.validator.ts`
 
@@ -100,7 +100,7 @@ this.myForm = this.formBuilder.group({
 ...
 ```
 
-#### Custom async validator
+## Custom async validator
 
 - Update `app.ts`
 
