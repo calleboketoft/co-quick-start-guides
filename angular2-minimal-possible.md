@@ -1,14 +1,18 @@
+# Smallest possible Angular 2 starter
+
+An attempt at defining the minimal possible work to get a development project for Angular 2 up and running. Mainly usable for small experiment projects and such. I don't want to use any CLI or anything like that since I want to know all the things that happen.
+
 - create dir `myproj`
 - go to `myproj` and `npm init -y`
 - install deps `npm install --save-dev @angular/core @angular/compiler @angular/common @angular/platform-browser @angular/platform-browser-dynamic rxjs@5.0.0-beta.6 zone.js@0.6.12 reflect-metadata es6-shim systemjs plugin-typescript`
-- create `.gitignore`
+- create `.gitignore`:
 
 ```bash
 node_modules
 .DS_Store
 ```
 
-- create `index.html`
+- create `index.html`:
 
 ```html
 <!DOCTYPE html>
@@ -30,7 +34,7 @@ node_modules
 </html>
 ```
 
-- create `systemjs.config.js`
+- create `systemjs.config.js`:
 
 ```javascript
 System.config({
@@ -79,3 +83,5 @@ import {Component} from '@angular/core'
 class AppComponent {}
 bootstrap(AppComponent).catch(err => console.error(err))
 ```
+
+- Now serve files from `myproj` and open in browser
