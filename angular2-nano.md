@@ -95,4 +95,9 @@ class AppComponent {}
 bootstrap(AppComponent).catch(err => console.error(err))
 ```
 
-- Now serve files from `myproj` and open in browser
+- Now serve files from `myproj` and open in browser.
+
+Example file serving:
+
+- Install a server `npm install -g live-server`
+- Navigate to `myproj` and start server `live-server`
