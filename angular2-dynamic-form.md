@@ -1,6 +1,23 @@
 ## Angular 2 dynamic form
 
-- Basic form with built-in validators:
+#### Basic form with built-in validators
+
+`main.ts`:
+
+```javascript
+import {bootstrap} from '@angular/platform-browser-dynamic'
+
+import {disableDeprecatedForms, provideForms} from '@angular/forms';
+
+import {AppComponent} from './app.component'
+bootstrap(AppComponent, [
+  provideForms(),
+  disableDeprecatedForms()
+])
+  .catch(err => console.error(err))
+```
+
+`app.ts`
 
 ```javascript
 import {Component} from '@angular/core'
@@ -45,7 +62,77 @@ export class AppComponent {
 }
 ```
 
-- Custom validators
+#### Custom sync validator
+
+- Create `email.validator.ts`
 
 ```javascript
+import {FormControl} from '@angular/forms'
+
+export function emailValidator(c: FormControl) {
+  let EMAIL_REGEXP = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
+
+  return EMAIL_REGEXP.test(c.value) ? null : {
+    validateEmail: {
+      valid: false
+    }
+  }
+}
+```
+
+- Update `app.ts`
+
+```html
+<input type="email" class="form-control" formControlName="myEmail">
+<small [hidden]="fc.myEmail.valid || (fc.myEmail.pristine && !submitted)">
+  Email needs to be valid
+</small>
+```
+
+```javascript
+import {emailValidator} from './email.validator'
+...
+this.myForm = this.formBuilder.group({
+  ...
+  myEmail: ['', [emailValidator]]
+  ...
+})
+...
+```
+
+#### Custom async validator
+
+- Update `app.ts`
+
+```html
+<input type="text" class="form-control" formControlName="myEmail">
+<small [hidden]="fc.asyncValue.valid || (fc.asyncValue.pristine && !submitted)">
+  Length max one
+</small>
+```
+
+```javascript
+import {asyncValidator} from './async.validator'
+...
+this.myForm = this.formBuilder.group({
+  ...
+  asyncField: ['', [], [asyncValidator]]
+  ...
+})
+...
+```
+
+- Create `async.validator.ts`
+
+```javascript
+import {FormControl} from '@angular/forms'
+import {Observable} from 'rxjs/Rx'
+
+export function asyncValidator (control: FormControl): Observable<any> {
+  if (control.value.length <= 1) {
+    return Observable.from([null])
+  } else {
+    return Observable.from([{ maxOne: true }])
+  }
+}
 ```
