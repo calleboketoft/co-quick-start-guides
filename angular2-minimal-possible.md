@@ -4,7 +4,7 @@ An attempt at defining the minimal possible work to get a development project fo
 
 - create dir `myproj`
 - go to `myproj` and `npm init -y`
-- install deps `npm install --save-dev @angular/core @angular/compiler @angular/common @angular/platform-browser @angular/platform-browser-dynamic rxjs@5.0.0-beta.6 zone.js@0.6.12 reflect-metadata es6-shim systemjs plugin-typescript`
+- install deps `npm install --save-dev @angular/core @angular/compiler @angular/common @angular/platform-browser @angular/platform-browser-dynamic rxjs@5.0.0-beta.6 zone.js@0.6.12 reflect-metadata es6-shim systemjs plugin-typescript typescript@2.0.0`
 - create `.gitignore`:
 
 ```bash
@@ -34,6 +34,24 @@ node_modules
 </html>
 ```
 
+- create `tsconfig.json`:
+
+```json
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "noImplicitAny": false
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
+```
+
 - create `systemjs.config.js`:
 
 ```javascript
@@ -42,23 +60,17 @@ System.config({
   warnings: true,
   transpiler: 'ts',
   map: {
-    // In-browser transpilation
-    'typescript': 'node_modules/plugin-typescript/node_modules/typescript',
-    'ts': 'node_modules/plugin-typescript/lib/',
-
-    // App packages
+    'typescript': 'node_modules/typescript', // compilation
+    'ts': 'node_modules/plugin-typescript/lib/', // compilation
     '@angular': 'node_modules/@angular',
     'rxjs': 'node_modules/rxjs',
   },
   packages: {
-    // In-browser transpilation
-    'typescript': {
+    'typescript': { // compilation
       main: 'lib/typescript.js',
       meta: {'lib/typescript.js': {exports: 'ts'}}
     },
-    'ts': {'main': 'plugin.js'},
-
-    // App packages
+    'ts': {'main': 'plugin.js'}, // compilation
     'client-src': {defaultExtension: 'ts'},
     'rxjs': {defaultExtension: 'js'},
     '@angular/common': {defaultExtension: 'js', main: 'index.js'},
@@ -68,7 +80,6 @@ System.config({
     '@angular/platform-browser': {defaultExtension: 'js', main: 'index.js'}
   }
 })
-
 ```
 
 - Create dir `client-src` and file `client-src/main.ts`
