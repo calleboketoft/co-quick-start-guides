@@ -141,6 +141,7 @@ System.config({
 
 NOTE: bootstrapping code is separated from example so that the example code
 can be used as a component by itself in a separate repo.
+
 ```javascript
 import {bootstrap} from '@angular/platform-browser-dynamic'
 import {AppComponent} from './app.component'
