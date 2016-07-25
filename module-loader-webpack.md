@@ -59,6 +59,8 @@ dist
 
 ```javascript
 var webpack = require('webpack')
+var path = require('path')
+var helpers = require('webpack-helpers')
 
 module.exports = {
   // Bundles
@@ -98,6 +100,18 @@ module.exports = {
     })
   ]
 }
+```
+
+- Create file `webpack-helpers.js`
+
+```javascript
+var path = require('path')
+var _root = path.resolve(__dirname, '..')
+function root(args) {
+  args = Array.prototype.slice.call(arguments, 0)
+  return path.join.apply(path, [_root].concat(args))
+}
+exports.root = root
 ```
 
 - Create folder `client-src/app` and file `client-src/app/app.ts`
