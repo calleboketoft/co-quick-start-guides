@@ -197,8 +197,7 @@ describe('something', () => {
 ## Add typings
 
 - `npm install typings --save-dev`
-- `./node_modules/.bin/typings install dt~jasmine --global --save`
-- Search for typings `./node_modules/.bin/typings search papaparse`
+- `./node_modules/.bin/typings install dt~jasmine dt~es6-shim --global --save`
 
 ## Add Angular 2
 
