@@ -8,6 +8,7 @@
 ```bash
 node_modules
 dist
+.DS_Store
 ```
 
 - modify `package.json`
@@ -60,7 +61,7 @@ dist
 ```javascript
 var webpack = require('webpack')
 var path = require('path')
-var helpers = require('webpack-helpers')
+var helpers = require('./webpack-helpers')
 
 module.exports = {
   // Bundles
