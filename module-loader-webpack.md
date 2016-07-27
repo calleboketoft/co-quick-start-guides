@@ -9,6 +9,7 @@
 node_modules
 dist
 .DS_Store
+typings
 ```
 
 - modify `package.json`
@@ -199,6 +200,9 @@ describe('something', () => {
 
 - `npm install typings --save-dev`
 - `./node_modules/.bin/typings install dt~jasmine dt~es6-shim --global --save`
+
+- Modify `package.json`:
+- `"scripts": {"prestart": "typings install"}`
 
 ## Add Angular 2
 
