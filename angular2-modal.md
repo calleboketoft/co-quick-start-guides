@@ -2,7 +2,9 @@
 
 ### Add modal
 
-- Hack to make modal component work. Add the following code to the root component.
+- `npm install --save ng2-bootstrap`
+
+- Hack to make modal component work. Add the following code to the root component:
 
 ```javascript
 import {ViewContainerRef} from '@angular/core'
@@ -73,7 +75,7 @@ export class ModalParentComponent {
   @ViewChild(ExampleModalComponent) public exampleModal: ExampleModalComponent
 
   public showExampleModal () {
-    this.largeModal.thisModal.show()
+    this.exampleModal.thisModal.show()
   }
 }
 ```
