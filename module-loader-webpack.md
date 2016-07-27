@@ -202,7 +202,8 @@ describe('something', () => {
 - `./node_modules/.bin/typings install dt~jasmine dt~es6-shim --global --save`
 
 - Modify `package.json`:
-- `"scripts": {"prestart": "typings install"}`
+
+`"scripts": {"prestart": "typings install"}`
 
 ## Add Angular 2
 

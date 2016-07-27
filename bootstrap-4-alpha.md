@@ -1,5 +1,13 @@
 ## Bootstrap 4 alpha
 
+### Get from CDN
+
+With cURL into cwd
+
+- `curl -O https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css`
+
+### Install with NPM
+
 - `npm install --save-dev git+https://git@github.com/twbs/bootstrap.git#v4-dev`
 
 - add to `client/index.html`:
