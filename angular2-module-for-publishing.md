@@ -110,7 +110,7 @@ System.config({
 })
 ```
 
-- create file `src/index.html`
+- create file `client-src/index.html`
 
 ```html
 <!DOCTYPE html>
