@@ -8,8 +8,8 @@ var myRouter = express.Router()
 myRouter.get('/myroute', (req, res) => {
   res.send({'any':'object'})
 })
-server.use(router)
 var server = app.listen(port, () => {
   console.log('listening at port: ' + port)
 })
+app.use(myRouter)
 ```
