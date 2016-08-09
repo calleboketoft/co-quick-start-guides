@@ -72,7 +72,7 @@ var server = app.listen(port, () => {
 },
 ```
 
-- Install typings `./node_modules/.bin/typings install dt~es6-shim dt~jasmine --global --save`
+- Install typings `./node_modules/.bin/typings install dt~es6-shim dt~jasmine dt~node --global --save`
 
 ## Component example
 
