@@ -8,7 +8,7 @@ Here's a complete module following this guide: [co-selectable-items](https://git
 - cd `myproj`
 - `git init`
 - `npm init -y`
-- `npm install --save-dev @angular{core, compiler, common, platform-browser, platform-browser-dynamic} rxjs@5.0.0-beta.6 zone.js@0.6.12 reflect-metadata es6-shim systemjs typescript typings express ghooks`
+- `npm install --save-dev @angular/{core,compiler,common,platform-browser,platform-browser-dynamic} rxjs@5.0.0-beta.6 zone.js@0.6.12 reflect-metadata es6-shim systemjs typescript typings express ghooks`
 
 - create file `.gitignore`
 
@@ -115,38 +115,58 @@ System.config({
 ```html
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Angular 2 ES6 App</title>
-  </head>
-  <body style="margin-top: 50px;">
-    <app><div style="text-align: center;">Loading...</div></app>
-    <!-- Polyfill(s) for older browsers -->
-    <script src="../node_modules/es6-shim/es6-shim.min.js"></script>
 
-    <script src="../node_modules/zone.js/dist/zone.js"></script>
-    <script src="../node_modules/reflect-metadata/Reflect.js"></script>
-    <script src="../node_modules/systemjs/dist/system.src.js"></script>
-    <script src="systemjs.config.js"></script>
-    <script>
+<head>
+  <title>Web app</title>
+</head>
+
+<body style="margin-top: 50px;">
+  <app>
+    <div style="text-align: center;">Loading...</div>
+  </app>
+  <!-- Polyfill(s) for older browsers -->
+  <script src="../node_modules/es6-shim/es6-shim.min.js"></script>
+
+  <script src="../node_modules/zone.js/dist/zone.js"></script>
+  <script src="../node_modules/reflect-metadata/Reflect.js"></script>
+  <script src="../node_modules/systemjs/dist/system.src.js"></script>
+  <script src="systemjs.config.js"></script>
+  <script>
       System.import('./example/main').catch(function(err) {
         console.error(err)
       })
     </script>
-  </body>
+</body>
+
 </html>
 ```
 
 - create folder `client-src/example`
+- create file `app.module.ts`
+
+```javascript
+import { NgModule } from '@angular/core'
+import { BrowserModule } from '@angular/platform-browser'
+import { AppComponent } from './app.component'
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule],
+  bootstrap: [AppComponent],
+})
+export class AppModule { }
+```
+
 - create file `client-src/example/main.ts`
 
 NOTE: bootstrapping code is separated from example so that the example code
 can be used as a component by itself in a separate repo.
 
 ```javascript
-import {bootstrap} from '@angular/platform-browser-dynamic'
-import {AppComponent} from './app.component'
-bootstrap(AppComponent)
-  .catch(err => console.error(err))
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic'
+import { AppModule } from './app.module'
+
+platformBrowserDynamic().bootstrapModule(AppModule)
 ```
 
 - create file `client-src/example/app.component.ts`
@@ -165,33 +185,6 @@ export class AppComponent {}
 - The base of the app is ready to view!
 - compile tsc `npm run build` and start server `npm start` to view in browser `http://localhost:3000`
 
-
-## Component
-
-- create component folder `client-src/my-page`
-- create component file `client-src/my-page/my-page.component.ts`
-
-```javascript
-import {Component} from '@angular/core'
-@Component({
-  selector: 'my-page',
-  template: `<p>My Page</p>`
-})
-export class MyPageComponent {}
-```
-
-- import component to `client-src/example/app.component.ts` and enable it
-
-```javascript
-import {Component} from '@angular/core'
-import {MyPageComponent} from '../my-page/my-page.component'
-@Component({
-  directives: [MyPageComponent],
-  selector: 'app',
-  template: `<my-page></my-page>`
-})
-export class AppCmp {}
-```
 
 ## Testing - Unit tests
 
