@@ -1,5 +1,31 @@
 # Angular 2 Validators
 
+### Sync Validator
+
+```javascript
+import { FormControl } from '@angular/forms'
+
+export function hexColorValidator(c: FormControl) {
+  let HEX_COLOR_REGEXP = /^#[0-9A-F]{6}$/i
+
+  return HEX_COLOR_REGEXP.test(c.value) ? null : {
+    validateHexColor: {
+      valid: false
+    }
+  }
+}
+```
+
+Use it with form builder like this:
+
+```javascript
+this.myForm = this.formBuilder.group({
+  myColor: ['', [
+    Validators.hexColorValidator
+  ]]
+})
+```
+
 ### Async Validator
 
 ```javascript
@@ -15,18 +41,11 @@ export function asyncValidator (control: FormControl): Observable<any> {
 }
 ```
 
-### Synchronous Validator
+Use it with form builder like this:
 
 ```javascript
-import { FormControl } from '@angular/forms'
-
-export function hexColorValidator(c: FormControl) {
-  let HEX_COLOR_REGEXP = /^#[0-9A-F]{6}$/i
-
-  return HEX_COLOR_REGEXP.test(c.value) ? null : {
-    validateHexColor: {
-      valid: false
-    }
-  }
-}
+this.myForm = this.formBuilder.group({
+  asyncField: ['', [], [asyncValidator]]
+})
 ```
+
