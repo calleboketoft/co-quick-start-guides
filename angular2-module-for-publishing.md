@@ -8,7 +8,7 @@ Here's a complete module following this guide: [co-selectable-items](https://git
 - cd `myproj`
 - `git init`
 - `npm init -y`
-- `npm install --save-dev --save-exact @angular/{core,compiler,common,platform-browser,platform-browser-dynamic} rxjs@5.0.0-beta.6 zone.js@0.6.12 reflect-metadata es6-shim systemjs typescript typings express ghooks`
+- `npm install --save-dev --save-exact @angular/{core,compiler,common,platform-browser,platform-browser-dynamic} rxjs@5.0.0-beta.11 zone.js@0.6.12 reflect-metadata core.js systemjs typescript typings express ghooks`
 
 - create file `.gitignore`
 
@@ -58,12 +58,10 @@ var server = app.listen(port, () => {
 ```json
 "scripts": {
   "start": "node server",
-  "build": "npm run typescript",
-  "prepublish": "npm run build",
+  "build": "npm run typings install && npm run typescript",
   "typescript": "tsc",
   "watch": "tsc -w",
   "typings": "typings",
-  "postinstall": "typings install"
 },
 "config": {
   "ghooks": {
@@ -72,7 +70,19 @@ var server = app.listen(port, () => {
 },
 ```
 
-- Install typings `./node_modules/.bin/typings install dt~es6-shim dt~jasmine dt~node --global --save`
+- Create `typings.json`
+
+```json
+{
+  "globalDependencies": {
+    "core-js": "registry:dt/core-js#0.0.0+20160725163759",
+    "jasmine": "registry:dt/jasmine#2.2.0+20160621224255",
+    "node": "registry:dt/node#6.0.0+20160831021119"
+  }
+}
+```
+
+- Installing new typings is done like this `./node_modules/.bin/typings install dt~node --global --save`
 
 ## Component example
 
@@ -91,21 +101,21 @@ System.config({
   baseURL: '/',
   warnings: true,
   map: {
-    '@angular': '/node_modules/@angular',
+    '@angular/core': 'node_modules/@angular/core/bundles/core.umd.js',
+    '@angular/common': 'node_modules/@angular/common/bundles/common.umd.js',
+    '@angular/compiler': 'node_modules/@angular/compiler/bundles/compiler.umd.js',
+    '@angular/platform-browser': 'node_modules/@angular/platform-browser/bundles/platform-browser.umd.js',
+    '@angular/platform-browser-dynamic': 'node_modules/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
     'rxjs': 'node_modules/rxjs'
   },
   packages: {
     'client-src': {defaultExtension: 'js'},
     'rxjs': {defaultExtension: 'js'},
-    '@angular/common': {defaultExtension: 'js', main: 'index.js'},
-    '@angular/compiler': {defaultExtension: 'js', main: 'index.js'},
-    '@angular/core': {defaultExtension: 'js', main: 'index.js'},
-    '@angular/http': {defaultExtension: 'js', main: 'index.js'},
-    '@angular/platform-browser': {defaultExtension: 'js', main: 'index.js'},
-    '@angular/platform-browser-dynamic': {defaultExtension: 'js', main: 'index.js'},
-    '@angular/router': {defaultExtension: 'js', main: 'index.js'},
-    '@angular/testing': {defaultExtension: 'js', main: 'index.js'},
-    '@angular/upgrade': {defaultExtension: 'js', main: 'index.js'}
+    '@angular/common': {defaultExtension: 'js'},
+    '@angular/compiler': {defaultExtension: 'js'},
+    '@angular/core': {defaultExtension: 'js'},
+    '@angular/platform-browser': {defaultExtension: 'js'},
+    '@angular/platform-browser-dynamic': {defaultExtension: 'js'}
   }
 })
 ```
@@ -125,7 +135,7 @@ System.config({
     <div style="text-align: center;">Loading...</div>
   </app>
   <!-- Polyfill(s) for older browsers -->
-  <script src="../node_modules/es6-shim/es6-shim.min.js"></script>
+  <script src="../node_modules/core-js/client/shim.min.js"></script>
 
   <script src="../node_modules/zone.js/dist/zone.js"></script>
   <script src="../node_modules/reflect-metadata/Reflect.js"></script>
