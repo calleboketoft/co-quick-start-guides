@@ -61,7 +61,7 @@ var server = app.listen(port, () => {
   "build": "npm run typings install && npm run typescript",
   "typescript": "tsc",
   "watch": "tsc -w",
-  "typings": "typings",
+  "typings": "typings"
 },
 "config": {
   "ghooks": {
