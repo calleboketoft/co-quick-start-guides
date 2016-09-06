@@ -109,13 +109,13 @@ System.config({
     'rxjs': 'node_modules/rxjs'
   },
   packages: {
-    'client-src': {defaultExtension: 'js'},
-    'rxjs': {defaultExtension: 'js'},
-    '@angular/common': {defaultExtension: 'js'},
-    '@angular/compiler': {defaultExtension: 'js'},
-    '@angular/core': {defaultExtension: 'js'},
-    '@angular/platform-browser': {defaultExtension: 'js'},
-    '@angular/platform-browser-dynamic': {defaultExtension: 'js'}
+    'client-src': { defaultExtension: 'js' },
+    'rxjs': { defaultExtension: 'js' },
+    '@angular/common': { defaultExtension: 'js' },
+    '@angular/compiler': { defaultExtension: 'js' },
+    '@angular/core': { defaultExtension: 'js' },
+    '@angular/platform-browser': { defaultExtension: 'js' },
+    '@angular/platform-browser-dynamic': { defaultExtension: 'js' }
   }
 })
 ```
