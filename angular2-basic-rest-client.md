@@ -18,7 +18,7 @@ export interface RequestOptions {
 }
 
 @Injectable()
-export class RestClient {
+export class RestService {
   constructor (private http: Http) {}
 
   private baseUrl = '';
@@ -31,7 +31,7 @@ export class RestClient {
     method,
     urlParams = {},
     queryParams = {},
-    body,
+    body = '',
     headers
   }: RequestOptions) {
     let headersMerged = new Headers(Object.assign({}, this.getDefaultHeaders(), headers))
