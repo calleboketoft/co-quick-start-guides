@@ -1,8 +1,8 @@
 # Angular 2 basic REST client
 
 ```javascript
-import {Injectable} from 'angular2/core'
-import {Request, Http, Headers} from 'angular2/http'
+import { Injectable } from '@angular/core'
+import { Request, Http, Headers } from '@angular/http'
 
 export const GET = 'GET'
 export const POST = 'POST'
@@ -12,12 +12,13 @@ export const DELETE = 'DELETE'
 export interface RequestOptions {
   urlParams?: any;
   queryParams?: any;
-  body?: any;
+  body?: string;
   method?: string;
+  headers?: any;
 }
 
 @Injectable()
-export class RestClient {
+export class RestService {
   constructor (private http: Http) {}
 
   private baseUrl = '';
@@ -30,20 +31,20 @@ export class RestClient {
     method,
     urlParams = {},
     queryParams = {},
-    body
+    body = '',
+    headers
   }: RequestOptions) {
-    body = (typeof body === 'string' ? body : JSON.stringify(body))
-    let headers = new Headers(Ojbect.assign({}, this.getDefaultHeaders(), config.headers)
+    let headersMerged = new Headers(Object.assign({}, this.getDefaultHeaders(), headers))
     return this.http.request(new Request({
       url: this.getFullUrl(urlFn(urlParams, queryParams)),
       method,
-      headers,
+      headers: headersMerged,
       body
     }))
   }
 
   public get (urlFn, options = {}) {
-    return this.request(urlFn, Object.assign(options, {method: GET})
+    return this.request(urlFn, Object.assign(options, {method: GET}))
   }
 
   public post (urlFn, options) {
