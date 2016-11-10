@@ -10,7 +10,7 @@ export const PUT = 'PUT'
 export const DELETE = 'DELETE'
 
 export interface RequestOptions {
-  urlParams?: any;
+  pathParams?: any;
   queryParams?: any;
   body?: string;
   method?: string;
@@ -29,14 +29,14 @@ export class RestService {
 
   public request (urlFn, {
     method,
-    urlParams = {},
+    pathParams = {},
     queryParams = {},
     body = '',
     headers
   }: RequestOptions) {
     let headersMerged = new Headers(Object.assign({}, this.getDefaultHeaders(), headers))
     return this.http.request(new Request({
-      url: this.getFullUrl(urlFn(urlParams, queryParams)),
+      url: this.getFullUrl(urlFn(pathParams, queryParams)),
       method,
       headers: headersMerged,
       body
@@ -57,6 +57,17 @@ export class RestService {
 
   public remove (urlFn, options) {
     return this.request(urlFn, Object.assign(options, {method: DELETE}))
+  }
+  
+  public getQueryStringFromObj (queryParams) {
+    let urlSearchParams = new URLSearchParams()
+    Object.keys(queryParams).forEach(key => {
+      if (queryParams[key]) {
+        urlSearchParams.set(key, queryParams[key])
+      }
+    })
+    let queryString = urlSearchParams.toString()
+    return queryString
   }
 }
 
@@ -87,7 +98,10 @@ export interface IUserHobbyPost {
 export class UserHobbyModel {
   constructor (private _restClient: RestClient) {}
 
-  private _urlFn = o => `/user/${}/hobby/${o.hobbyId ? '/' + o.hobbyId : ''}`
+  private _urlFn = (pParams, qParams = {}) => {
+    let queryString = this._restClient.getQueryStringFromObj(qParams)
+    return`/user/${}/hobby/${pParams.hobbyId ? '/' + pParams.hobbyId : ''}${queryString}`
+  }
 
   public get (options: IUserHobbyGet) {
     return this._restClient.get(this._urlFn, options)
