@@ -58,7 +58,8 @@ export class RestService {
   public remove (urlFn, options) {
     return this.request(urlFn, Object.assign(options, {method: DELETE}))
   }
-  
+
+  // Works only with one level objects
   public getQueryStringFromObj (queryParams) {
     let urlSearchParams = new URLSearchParams()
     Object.keys(queryParams).forEach(key => {
@@ -76,16 +77,20 @@ export class RestService {
 ## Using the REST service in a model
 
 ```javascript
-import {RestClient} from './rest-client'
+import { RestClient } from './rest-client'
 
 export interface IUserHobbyGet {
-  urlParams: {
+  pathParams: {
     hobbyId: string
+  },
+  queryParams: {
+    includeRelatives: boolean
+    textFormat: string
   }
 }
 
 export interface IUserHobbyPost {
-  urlParams: {
+  pathParams: {
     hobbyId: string
   },
   body: {
@@ -116,7 +121,14 @@ export class UserHobbyModel {
 ## Using the model
 
 ```javascript
-this._userHobbyModel.get({urlParams: {userId: 'calle'}})
+this._userHobbyModel.get({
+  urlParams: {
+    userId: 'calle'
+  },
+  queryParams: {
+    includeRelatives: true,
+    textFormat: 'uppercase'
+  }})
   .subscribe((res) => {
     console.log(res.json())
   })
