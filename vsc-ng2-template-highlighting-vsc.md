@@ -13,7 +13,7 @@ https://github.com/chuckjaz/vscode-ng-template-service
 
 This extension solves it both for html and css
 
-https://marketplace.visualstudio.com/items?itemName=nwallace.language-vscode-javascript-angular2
+https://marketplace.visualstudio.com/items?itemName=natewallace.angular2-inline
 
 ## Misc
 
