@@ -16,8 +16,7 @@ import 'rxjs/add/operator/filter'
 @Injectable()
 export class NgrxStoreSpyService {
   constructor (
-    private store: Store<any>,
-    private pluginAppService: PluginAppService
+    private store: Store<any>
   ) {
     this.store.select('metaReducer')
       .filter(action => action && action['type'])
@@ -25,7 +24,7 @@ export class NgrxStoreSpyService {
         let successStatuses = ['CREATED', 'LOADED', 'UPDATED', 'REMOVED', 'SUCCESS']
 
         if (successStatuses.some(type => action.type.startsWith(type))) {
-          this.handleSuccess(action);
+          this.handleSuccess(action)
         } else if (action.type.startsWith('ERROR')) {
           this.handleError(action)
         }
