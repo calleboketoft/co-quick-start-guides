@@ -22,6 +22,18 @@ export class RestService {
   constructor (private http: Http) {}
 
   private baseUrl = '';
+  
+  // Get query string from 1 level deep object of params
+  public static getQueryStringFromObj (queryParams) {
+    let urlSearchParams = new URLSearchParams()
+    Object.keys(queryParams).forEach(key => {
+      if (queryParams[key]) {
+        urlSearchParams.set(key, queryParams[key])
+      }
+    })
+    let queryString = urlSearchParams.toString()
+    return queryString === '' ? queryString : '?' + queryString
+  }
 
   public getDefaultHeaders = () => ({'Content-Type': 'application/json'});
 
@@ -57,18 +69,6 @@ export class RestService {
 
   public remove (urlFn, options) {
     return this.request(urlFn, Object.assign(options, {method: DELETE}))
-  }
-
-  // Works only with one level objects
-  public getQueryStringFromObj (queryParams) {
-    let urlSearchParams = new URLSearchParams()
-    Object.keys(queryParams).forEach(key => {
-      if (queryParams[key]) {
-        urlSearchParams.set(key, queryParams[key])
-      }
-    })
-    let queryString = urlSearchParams.toString()
-    return queryString
   }
 }
 
