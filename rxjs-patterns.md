@@ -59,3 +59,26 @@ myObservable.subscribe(value => {
   localValue = value
 })
 ```
+
+## ngrx effect resulting in multiple actions
+
+```javascript
+@Effect() public postTicketEvent$ = this.actions$
+    .ofType(POST_TICKET_EVENT)
+    .switchMap((action) => {
+      return this.ssgWebSdkService.post(TICKET_EVENT_URL_FN, action.payload)
+        .catch(error => this.errorService.errorHttpPost({error, action}))
+    })
+    .mergeMap((res: any) => {
+      if (res.type === ERROR_HTTP_POST) {
+        return Observable.from([res])
+      } else {
+        let resJson = res.json()
+        let ticketId = getEventParentId(res.url)
+        return Observable.from([
+          {type: SUCCESS_SAVE_TICKET_EVENT, payload: resJson},
+          {type: GET_TICKET, payload: {pathParams: {ticketId}}}
+        ])
+      }
+    })
+```
