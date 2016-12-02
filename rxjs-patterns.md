@@ -62,6 +62,8 @@ myObservable.subscribe(value => {
 
 ## ngrx effect resulting in multiple actions
 
+https://github.com/ngrx/effects/issues/55#issuecomment-250047180
+
 ```javascript
 @Effect() public postTicketEvent$ = this.actions$
     .ofType(POST_TICKET_EVENT)
