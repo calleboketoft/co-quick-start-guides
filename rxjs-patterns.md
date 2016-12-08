@@ -84,3 +84,18 @@ https://github.com/ngrx/effects/issues/55#issuecomment-250047180
       }
     })
 ```
+
+## Passing parameters between operators
+
+```javascript
+  .switchMap((action) => {
+    return Observable.zip(
+      this.ssgWebSdkService.get(TICKET_URL_FN, action.payload)
+        .catch(error => this.errorService.errorHttpGet({error, action})),
+      new BehaviorSubject(action)
+    )
+  })
+  .mergeMap(([res, action]) => {
+    // the action, which was the input args in the switchMap, is now available here
+  }))
+```
