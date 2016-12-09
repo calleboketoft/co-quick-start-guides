@@ -8,7 +8,7 @@ Here's a complete module following this guide: [co-selectable-items](https://git
 - cd `myproj`
 - `git init`
 - `npm init -y`
-- `npm install --save-dev --save-exact @angular/{core,compiler,common,platform-browser,platform-browser-dynamic} rxjs@5.0.0-beta.12 typings zone.js@0.6.21 reflect-metadata core-js systemjs typescript express ghooks`
+- `npm install --save-dev --save-exact @angular/{core,compiler,common,platform-browser,platform-browser-dynamic} rxjs@5.0.0-rc.4 zone.js@0.7.2 reflect-metadata @types/core-js systemjs typescript express ghooks`
 
 - create file `.gitignore`
 
@@ -16,7 +16,6 @@ Here's a complete module following this guide: [co-selectable-items](https://git
 .DS_Store
 node_modules
 *.log
-typings
 ```
 
 - create file `server.js`
@@ -46,9 +45,7 @@ var server = app.listen(port, () => {
     "noImplicitAny": false
   },
   "exclude": [
-    "node_modules",
-    "typings/main",
-    "typings/main.d.ts"
+    "node_modules"
   ]
 }
 ```
@@ -58,10 +55,8 @@ var server = app.listen(port, () => {
 ```json
 "scripts": {
   "start": "node server",
-  "build": "npm run typings install && npm run typescript",
-  "typescript": "tsc",
+  "build": "tsc",
   "watch": "tsc -w",
-  "typings": "typings"
 },
 "config": {
   "ghooks": {
@@ -69,20 +64,6 @@ var server = app.listen(port, () => {
   }
 },
 ```
-
-- Create `typings.json`
-
-```json
-{
-  "globalDependencies": {
-    "core-js": "registry:dt/core-js#0.0.0+20160725163759",
-    "jasmine": "registry:dt/jasmine#2.2.0+20160621224255",
-    "node": "registry:dt/node#6.0.0+20160831021119"
-  }
-}
-```
-
-- Installing new typings is done like this `./node_modules/.bin/typings install dt~node --global --save`
 
 ## Component example
 
@@ -134,11 +115,8 @@ System.config({
   <app>
     <div style="text-align: center;">Loading...</div>
   </app>
-  <!-- Angular 2 dependencies -->
-  <script src="../node_modules/core-js/client/shim.min.js"></script>
   <script src="../node_modules/zone.js/dist/zone.js"></script>
   <script src="../node_modules/reflect-metadata/Reflect.js"></script>
-
   <script src="../node_modules/systemjs/dist/system.src.js"></script>
   <script src="systemjs.config.js"></script>
   <script>
