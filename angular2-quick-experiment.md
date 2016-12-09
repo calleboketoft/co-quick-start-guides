@@ -80,7 +80,7 @@ module.exports = {
 - create file `index.html`
 
 ```html
-<html><head><meta http-equiv="refresh" content="0; URL='/client-src'" /></head></html>
+<html><head><meta http-equiv="refresh" content="0; URL='/client'" /></head></html>
 ```
 
 - create folder `client`
@@ -94,7 +94,7 @@ module.exports = {
     <link href="../node_modules/bootstrap/dist/bootstrap.min.css" rel="stylesheet" />
   </head>
   <body style="margin-top: 50px;">
-    <app><div style="text-align: center;">Loading...</div></app>
+    <app-component><div style="text-align: center;">Loading...</div></app-component>
     <script src="../node_modules/zone.js/dist/zone.js"></script>
     <script src="../node_modules/reflect-metadata/Reflect.js"></script>
     <script src="./dist/main.bundle.js"></script>
@@ -129,9 +129,9 @@ platformBrowserDynamic().bootstrapModule(AppModule)
 - Create file `client/app/app.component.ts`:
 
 ```javascript
-import {Component} from '@angular/core'
+import { Component } from '@angular/core'
 @Component({
-  selector: 'app',
+  selector: 'app-component',
   template: `
     <h1>Angular 2</h1>
   `
