@@ -42,6 +42,12 @@ $font-size-root: 14px !default;
 
 - Compile SCSS by running `npm run sass`
 
+- Add css to header of `index.html`:
+
+```html
+<link href="./assets/css/main.css" rel="stylesheet" />
+```
+
 - If you want Bootstrap 2 buttons for Bootstrap 4:
 
 >npm install --save-dev @calle/bootstrap-2-buttons
