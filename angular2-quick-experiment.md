@@ -4,9 +4,15 @@
 
 - mkdir `myproj`
 - cd `myproj`
-- `git init`
 - `npm init -y`
-- `npm install --save-dev --save-exact @angular/{core,compiler,common,platform-browser,platform-browser-dynamic} rxjs@5.0.0-rc.4 zone.js@0.7.2 reflect-metadata @types/core-js typescript webpack@2.1.0-beta.27 webpack-dev-server@2.1.0-beta.12 awesome-typescript-loader`
+- `yarn add -exact @angular/{core,compiler,common,platform-browser,platform-browser-dynamic} rxjs@5.0.0-rc.4 zone.js@0.7.2 reflect-metadata @types/core-js typescript webpack@2.1.0-beta.27 webpack-dev-server@2.1.0-beta.12 awesome-typescript-loader`
+
+- Add scripts to `package.json`:
+
+```json
+    "build": "webpack",
+    "watch": "webpack-dev-server"
+```
 
 - create file `.gitignore`
 
@@ -106,6 +112,7 @@ module.exports = {
 - create file `client/app/app.module.ts`:
 
 ```javascript
+import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser'
 import { AppComponent } from './app.component'
 
@@ -139,3 +146,5 @@ import { Component } from '@angular/core'
 export class AppComponent {}
 ```
 
+- Run the experiment `npm run watch`
+- Navigate browser to http://localhost:3030
