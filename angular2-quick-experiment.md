@@ -5,7 +5,7 @@
 - mkdir `myproj`
 - cd `myproj`
 - `npm init -y`
-- `yarn add --exact @angular/{core,compiler,common,platform-browser,platform-browser-dynamic} rxjs@5.0.0-rc.4 zone.js@0.7.2 reflect-metadata @types/core-js typescript webpack@2.2.0-rc.1 webpack-dev-server@2.2.0-beta.0 awesome-typescript-loader`
+- `yarn add --exact --dev @angular/{core,compiler,common,platform-browser,platform-browser-dynamic} rxjs@5.0.0-rc.4 zone.js@0.7.2 reflect-metadata @types/core-js typescript webpack@2.2.0-rc.1 webpack-dev-server@2.2.0-rc.0 awesome-typescript-loader`
 
 - Add scripts to `package.json`:
 
