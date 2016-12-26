@@ -7,7 +7,7 @@ The issue is planned to be investigated more for TypeScript 2.1
 https://github.com/Microsoft/TypeScript/wiki/Roadmap
 
 This is being worked on from within the Angular team
-https://github.com/chuckjaz/vscode-ng-template-service
+https://github.com/angular/vscode-ng-language-service
 
 ## Template literal highlighting
 
