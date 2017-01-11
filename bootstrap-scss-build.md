@@ -50,4 +50,4 @@ $font-size-root: 14px !default;
 
 - If you want Bootstrap 2 buttons for Bootstrap 4:
 
->npm install --save-dev @calle/bootstrap-2-buttons
+>yarn add --dev --exact @calle/bootstrap-2-buttons
