@@ -8,7 +8,7 @@ Here's a complete module following this guide: [co-selectable-items](https://git
 - cd `myproj`
 - `git init`
 - `npm init -y`
-- `npm install --save-dev --save-exact @angular/{core,compiler,common,platform-browser,platform-browser-dynamic} rxjs@5.0.0-rc.4 zone.js@0.7.2 reflect-metadata systemjs typescript express ghooks`
+- `npm install --save-dev --save-exact @angular/{core,compiler,common,platform-browser,platform-browser-dynamic} rxjs zone.js reflect-metadata systemjs typescript express ghooks`
 
 - create file `.gitignore`
 
