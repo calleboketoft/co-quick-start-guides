@@ -60,11 +60,6 @@ var server = app.listen(port, () => {
   "build": "tsc",
   "watch": "tsc -w",
 },
-"config": {
-  "ghooks": {
-    "pre-commit": "npm run build"
-  }
-},
 ```
 
 ## Component example
@@ -72,7 +67,7 @@ var server = app.listen(port, () => {
 - create file `index.html`
 
 ```html
-<html><head><meta http-equiv="refresh" content="0; URL='/client-src'" /></head></html>
+<html><head></head><body><a href="/client-src">index</a></body></html>
 ```
 
 - create folder `client-src`
@@ -122,10 +117,10 @@ System.config({
   <script src="../node_modules/systemjs/dist/system.src.js"></script>
   <script src="systemjs.config.js"></script>
   <script>
-      System.import('./example/main').catch(function(err) {
-        console.error(err)
-      })
-    </script>
+    System.import('./example/main').catch(function(err) {
+      console.error(err)
+    })
+  </script>
 </body>
 
 </html>
@@ -162,19 +157,39 @@ platformBrowserDynamic().bootstrapModule(AppModule)
 - create file `client-src/example/app.component.ts`
 
 ```javascript
-import {Component} from '@angular/core'
+import { Component } from '@angular/core'
 @Component({
   selector: 'app',
   template: `
     <h1>Angular 2</h1>
   `
 })
-export class AppComponent {}
+export class AppComponent { }
 ```
 
 - The base of the app is ready to view!
 - compile tsc `npm run build` and start server `npm start` to view in browser `http://localhost:3000`
 
+## Linting
+
+- `npm install --save-dev --save-exact tslint-config-standard`
+
+- create file `tslint.json`:
+
+```json
+{
+  "extends": "tslint-config-standard",
+  "rules": {
+    "align": [true, "parameters", "statements"]
+  }
+}
+```
+
+## GIT commit ghooks
+
+- `npm install --save-dev --save-exact husky`
+
+- Add script `"precommit": "npm run build"` to `package.json`
 
 ## Testing - Unit tests
 
