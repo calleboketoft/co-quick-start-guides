@@ -1,5 +1,14 @@
 # Visual Studio Code ESlint TypeScript
 
+## Enable ESLint for VSC
+Add this to your VSC settings:
+```json
+  "eslint.enable": true,
+  "eslint.validate": [
+    "typescript"
+  ],
+```
+
 ## Enable TypeScript in ESLint
 
 ESlint plugin for VSC
@@ -20,11 +29,21 @@ Add `.eslintrc.json` file:
     "plugins": [
         "typescript"
     ],
-    "parser": "typescript-eslint-parser"
+    "parser": "typescript-eslint-parser",
+    "rules": {
+        // due to TypeScript
+        "no-undef": "off",
+        "no-unused-vars": "off",
+        "no-useless-constructor": "off",
+
+        // TypeScript specific
+        "typescript/type-annotation-spacing": "error",
+        "typescript/explicit-member-accessibility": "error"
+    }
 }
 ```
 
-## Adding `standard` to the setup
+## Adding `standard` to the setup (not sure if relevant)
 
 Install standard plugins
 >yarn add --exact --dev eslint-plugin-standard eslint-config-standard
@@ -38,6 +57,16 @@ Update `.eslintrc.json` file:
         "promise",
         "typescript"
     ],
-    "parser": "typescript-eslint-parser"
+    "parser": "typescript-eslint-parser",
+    "rules": {
+        // due to TypeScript
+        "no-undef": "off",
+        "no-unused-vars": "off",
+        "no-useless-constructor": "off",
+
+        // TypeScript specific
+        "typescript/type-annotation-spacing": "error",
+        "typescript/explicit-member-accessibility": "error"
+    }
 }
 ```
