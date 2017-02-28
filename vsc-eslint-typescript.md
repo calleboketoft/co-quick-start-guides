@@ -36,11 +36,15 @@ Add `.eslintrc.json` file:
         "no-unused-vars": "off",
         "no-useless-constructor": "off",
 
+        // exceptions
+        "padded-blocks": "off",
+
         // TypeScript specific
         "typescript/type-annotation-spacing": "error",
         "typescript/explicit-member-accessibility": "error"
     }
 }
+
 ```
 
 ## Adding `standard` to the setup (not sure if relevant)
@@ -63,6 +67,9 @@ Update `.eslintrc.json` file:
         "no-undef": "off",
         "no-unused-vars": "off",
         "no-useless-constructor": "off",
+
+        // exceptions
+        "padded-blocks": "off",
 
         // TypeScript specific
         "typescript/type-annotation-spacing": "error",
