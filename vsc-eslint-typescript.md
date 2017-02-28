@@ -1,6 +1,6 @@
 # Visual Studio Code ESlint TypeScript
 
-### Enable TypeScript in ESLint
+## Enable TypeScript in ESLint
 
 ESlint plugin for VSC
 - https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
@@ -24,7 +24,7 @@ Add `.eslintrc.json` file:
 }
 ```
 
-### Adding `standard` to the setup
+## Adding `standard` to the setup
 
 Install standard plugins
 >yarn add --exact --dev eslint-plugin-standard eslint-config-standard
