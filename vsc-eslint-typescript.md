@@ -11,15 +11,6 @@ Add this to your VSC settings:
 
 ## Enable TypeScript in ESLint
 
-ESlint plugin for VSC
-- https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
-
-TypeScript parser for ESLint, needed for ESLint to understand TypeScript
-- https://github.com/eslint/typescript-eslint-parser
-
-TypeScript plugin with specific TS rules for ESLint
-- https://github.com/nzakas/eslint-plugin-typescript
-
 Install needed plugins in project like this
 >yarn add --exact --dev eslint eslint-plugin-typescript typescript-eslint-parser
 
@@ -44,7 +35,6 @@ Add `.eslintrc.json` file:
         "typescript/explicit-member-accessibility": "error"
     }
 }
-
 ```
 
 ## Adding `standard` to the setup (not sure if relevant)
@@ -77,3 +67,14 @@ Update `.eslintrc.json` file:
     }
 }
 ```
+
+## Related links
+
+ESlint plugin for VSC
+- https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint
+
+TypeScript parser for ESLint, needed for ESLint to understand TypeScript
+- https://github.com/eslint/typescript-eslint-parser
+
+TypeScript plugin with specific TS rules for ESLint
+- https://github.com/nzakas/eslint-plugin-typescript
