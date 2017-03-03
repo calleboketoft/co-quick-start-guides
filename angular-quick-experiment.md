@@ -5,7 +5,7 @@
 - mkdir `myproj`
 - cd `myproj`
 - `npm init -y`
-- `yarn add --exact --dev @angular/{core,compiler,common,platform-browser,platform-browser-dynamic} rxjs zone.js reflect-metadata typescript webpack webpack-dev-server awesome-typescript-loader`
+- `yarn add --exact --dev @angular/{core,compiler,common,platform-browser,platform-browser-dynamic} rxjs zone.js core-js typescript webpack webpack-dev-server awesome-typescript-loader`
 
 - Add scripts to `package.json`:
 
@@ -103,9 +103,6 @@ module.exports = {
   </head>
   <body style="margin-top: 50px;">
     <app-component><div style="text-align: center;">Loading...</div></app-component>
-    <script src="../node_modules/zone.js/dist/zone.js"></script>
-    <script src="../node_modules/reflect-metadata/Reflect.js"></script>
-    <script src="./dist/main.bundle.js"></script>
   </body>
 </html>
 ```
@@ -129,6 +126,11 @@ export class AppModule { }
 - create file `client/app/main.ts`:
 
 ```javascript
+import 'core-js/es6'
+import 'core-js/es7/reflect'
+
+import 'zone.js/dist/zone'
+
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic'
 import { AppModule } from './app.module'
 
