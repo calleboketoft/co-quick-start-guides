@@ -33,6 +33,9 @@ Add `.eslintrc.json` file:
         // TypeScript specific
         "typescript/type-annotation-spacing": "error",
         "typescript/explicit-member-accessibility": "error"
+    },
+    "parserOptions": {
+        "sourceType": "module"
     }
 }
 ```
