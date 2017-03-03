@@ -2,7 +2,7 @@
 
 - Install Bootstrap:
 
->yarn add --dev --exact bootstrap@4.0.0-alpha.5
+>yarn add --dev --exact bootstrap@4.0.0-alpha.6
 
 - Install node-sass
 
