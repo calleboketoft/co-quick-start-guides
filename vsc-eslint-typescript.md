@@ -43,7 +43,7 @@ Add `.eslintrc.json` file:
 ## Adding `standard` to the setup (not sure if relevant)
 
 Install standard plugins
->yarn add --exact --dev eslint-plugin-standard eslint-config-standard
+>yarn add --exact --dev eslint-plugin-standard eslint-plugin-promise eslint-config-standard
 
 Update `.eslintrc.json` file:
 ```json
