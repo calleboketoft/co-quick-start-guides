@@ -2,11 +2,11 @@
 
 - Install Bootstrap:
 
->yarn add --dev --exact bootstrap@4.0.0-alpha.6
+>npm install --save-dev --save-exact bootstrap@4.0.0-alpha.6
 
 - Install node-sass
 
->yarn add --dev --exact node-sass
+>npm install --save-dev --save-exact node-sass
 
 - Add SASS script to package.json
 
