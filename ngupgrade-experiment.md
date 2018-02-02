@@ -1,6 +1,6 @@
 > npx @angular/cli@1.7.0-beta.3 new ng-mashup --minimal=true --style=less --prefix=mashup --inline-template
 
-> cd ng-masup && npm install @angular/upgrade@5.2.0 @uirouter/angularjs --save
+> cd ng-mashup && npm install @angular/upgrade@5.2.0 @uirouter/angularjs bootstrap --save
 
 create file `.prettierrc`:
 
@@ -62,8 +62,8 @@ export class AppModule {
   }
 
   private ngDoBootstrap () {
-    const ng1place = document.getElementById('ng1place');
-    this.upgradeModule.bootstrap(ng1place, AppNg1Module.name, { strictDi: true });
+    const htmlEl = document.getElementsByTagName('html')[0];
+    this.upgradeModule.bootstrap(htmlEl, AppNg1Module.name, { strictDi: true });
   }
 }
 ```
@@ -71,8 +71,14 @@ export class AppModule {
 Add to the body of `index.html`:
 
 ```html
-  <div id="ng1place">
     <a ui-sref="hello">hello</a>
     <ui-view></ui-view>
-  </div>
+```
+
+Update `angular-cli.json`:
+
+```json
+      "styles": [
+        "../node_modules/bootstrap/scss/bootstrap.scss"
+      ],
 ```
