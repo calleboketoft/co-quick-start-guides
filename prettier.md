@@ -22,7 +22,7 @@ Add file `.prettierrc`
     "printWidth": 80,
     "singleQuote": true,
     "useTabs": false,
-    "tabWidth": 4,
+    "tabWidth": 2,
     "semi": false,
     "bracketSpacing": true
 }
