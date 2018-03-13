@@ -2,7 +2,7 @@ Minimal webpack project with typescript
 
 - >mkdir proj
 - >cd proj && npm init -y
-- >npm install --save-dev typescript@next ts-loader@next webpack@next
+- >npm install --save-dev typescript ts-loader webpack webpack-cli
 - Add `webpack.config.js`:
 
 ```javascript
