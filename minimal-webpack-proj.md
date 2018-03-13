@@ -6,7 +6,7 @@ Minimal webpack project with typescript
 - Add `webpack.config.js`:
 
 ```javascript
-'use strict';
+const HtmlWebPackPlugin = require("html-webpack-plugin");
 
 module.exports = {
     devtool: 'inline-source-map',
