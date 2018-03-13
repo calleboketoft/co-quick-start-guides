@@ -2,7 +2,7 @@ Minimal webpack project with typescript
 
 - >mkdir proj
 - >cd proj && npm init -y
-- >npm install --save-dev typescript ts-loader webpack webpack-cli
+- >npm install --save-dev typescript ts-loader webpack webpack-cli html-webpack-plugin html-loader
 - Add `webpack.config.js`:
 
 ```javascript
@@ -16,12 +16,27 @@ module.exports = {
             {
                 test: /\.tsx?$/,
                 loader: 'ts-loader'
+            },
+            {
+                test: /\.html$/,
+                use: [
+                    {
+                        loader: 'html-loader',
+                        options: { minimize: true }
+                    }
+                ]
             }
         ]
     },
     resolve: {
         extensions: [ '.ts', '.tsx', '.js' ]
-    }
+    },
+    plugins: [
+        new HtmlWebPackPlugin({
+            template: './src/index.html',
+            filename: './index.html'
+        })
+    ]
 };
 ```
 
@@ -47,14 +62,8 @@ Add `index.html`:
 
 ```html
 <html>
-    <head>
-        <meta charset="UTF-8">
-    </head>
-    <body>
-        <div id="wrapper"></div>
-
-        <script src="dist/main.js"></script>
-    </body>
+    <head></head>
+    <body></body>
 </html>
 ```
 
