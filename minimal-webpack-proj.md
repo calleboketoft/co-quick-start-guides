@@ -6,7 +6,7 @@ Minimal webpack project with typescript
 - Add `webpack.config.js`:
 
 ```javascript
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     devtool: 'inline-source-map',
@@ -34,7 +34,7 @@ module.exports = {
     plugins: [
         new HtmlWebPackPlugin({
             template: './src/index.html',
-            filename: './index.html'
+            filename: './dist/index.html'
         })
     ]
 };
