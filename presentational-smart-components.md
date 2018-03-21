@@ -1,28 +1,20 @@
 # Presentational and smart components
 
-### Install dependencies
+This is a tutorial showing how to refactor a small Angular application to have a "pure function" to be moved to a service and a "presentational component".
 
-`npx @angular/cli@v6.0.0-beta.6 new pres --minimal --prefix=pres --inline-style=true --inline-template=true`
+---
 
-### Set up base application
+- Generate an Angular project `npx @angular/cli@v6.0.0-beta.6 new pres --minimal --prefix=pres --inline-style=true --inline-template=true`
 
-`cd pres`
+- Move into the generated Angular project in your terminal `cd pres`
 
-Replace content of `app.component.ts` with the base application:
+- Replace content of `app.component.ts` with the following application:
 ```javascript
 import { Component } from '@angular/core'
 
 @Component({
   selector: 'pres-root',
   template: `
-    <h3>B-day app</h3>
-
-    <!-- Name text input -->
-    <input type="text" #textInput
-      placeholder="First name" (keyup)="textChanges(textInput.value)">
-    <br>
-
-    <!-- Month dropdown -->
     <label>Month of birth
       <select #monthDropdown (change)="updateSelectedMonth(monthDropdown.value)">
         <option value="" selected disabled hidden>Select month</option>
@@ -32,8 +24,7 @@ import { Component } from '@angular/core'
       </select>
     </label>
 
-    <!-- Result display -->
-    <p>{{ firstName }} has {{ monthsUntilBday }} months until birthday</p>
+    <p>There are {{ monthsUntilBday }} months until birthday</p>
   `
 })
 export class AppComponent {
@@ -41,17 +32,11 @@ export class AppComponent {
 
   selectedMonth = 1
 
-  firstName = ''
-
   monthsUntilBday = null
 
   updateSelectedMonth(selectedMonth) {
     this.selectedMonth = parseInt(selectedMonth, 10)
     this.calculateMonthsUntilBday()
-  }
-
-  textChanges(newText) {
-    this.firstName = newText
   }
 
   calculateMonthsUntilBday() {
@@ -69,7 +54,7 @@ export class AppComponent {
 
 ```
 
-Now run the app with `npm start`
+- Now run the app with `npm start`
 
 ## Part 1: Purify function
 
@@ -79,7 +64,7 @@ The function `calculateMonthsUntilbday` has some logics that would be worth test
 > - Produces no side effects.
 > - Pure functions must not mutate external state.
 
-[Master the JavaScript Interview: What is a Pure Function?](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-pure-function-d1c076bec976)
+From [Master the JavaScript Interview: What is a Pure Function?](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-pure-function-d1c076bec976)
 
 Identify variables that cause the function NOT to produce the same output based on the same input:
 
@@ -115,30 +100,28 @@ calculateMonthsUntilBday () {
 }
 ```
 
-The new `calculateMonthsUntilBday` is not pure but at least we broke out the complicated calculations into another function.
+The new `calculateMonthsUntilBday` is not pure but at least we broke out the complicated calculations into another, pure, function.
 
 ## Part 2: Create service for the pure function
 
 Pure functions are usually ready to be moved out from the component directly into a service.
 
-Use Angular CLI to generate a new service called "bday-calculator":
+- Use Angular CLI to generate a new service called "bday-calculator" `npx ng generate service bday-calculator --module=app.module.ts`
 
-`npx ng generate service bday-calculator --module=app.module.ts`
+- Move the function `calculateMonthsUntilSelected` from `app.component.ts` and paste it in the new service `bday-calculator.service.ts` (right underneath the constructor).
 
-Cut out the function `calculateMonthsUntilSelected` from `app.component.ts` and paste it in the new service `bday-calculator.service.ts` (right underneath the constructor).
-
-Now we need to import that service into `app.component.ts` so that we can use the function again.
+- Import the service into `app.component.ts` so that we can use the function again:
 
 ```javascript
 import { BdayCalculatorService } from './bday-calculator.service.ts'
 ```
 
-And now instantiate it in the "Angular 5 way" in `app.component.ts` by adding a constructor function like following:
+- Instantiate it in the "Angular 5 way" in `app.component.ts` by adding a constructor function:
 ```javascript
 constructor(private bdayCalculatorService: BdayCalculatorService) {}
 ```
 
-Now we can use the service in the function `calculateMonthsUntilBday`:
+- Use the service in the function `calculateMonthsUntilBday`:
 ```javascript
 calculateMonthsUntilBday() {
   const date = new Date()
@@ -150,18 +133,17 @@ calculateMonthsUntilBday() {
 }
 ```
 
-## Part 3: Create presentational component
+## Part 3: Create presentational component with Output
 
 Presentational components are much like pure functions. They should only have inputs and outputs and not mutate external state.
 
 The dropdown for selecting month has quite a bit of UI logics and would be nice to break out of the `app.component.ts` file. Create a new component for the month selector:
 
-`npx ng generate component month-selector --module=app.module.ts`
+- Generate a new component `npx ng generate component month-selector --module=app.module.ts`
 
-Now copy over the HTML for the select from `app.component.ts` template to the template of `month-selector/month-selector.component.ts`:
+- Move over the HTML for the dropdown from `app.component.ts` template to the template of `month-selector/month-selector.component.ts`:
 
 ```html
-<!-- Month dropdown -->
 <label>Month of birth
   <select #monthDropdown (change)="updateSelectedMonth(monthDropdown.value)">
     <option value="" selected disabled hidden>Select month</option>
@@ -172,27 +154,52 @@ Now copy over the HTML for the select from `app.component.ts` template to the te
 </label>
 ```
 
-Move over the `months` property from `app.component.ts` to `month-selector.component.ts`
+- Move over the `months` property from `app.component.ts` to `month-selector.component.ts`
 
-Import `Output` and `EventEmitter` to `month-selector.component.ts`:
+- Import `Output` and `EventEmitter` to `month-selector.component.ts`:
 ```javascript
 import { Output, EventEmitter } from '@angular/core'
 ```
 
-Add the `Output` decorator and function for emitting value first in the class of `MonthSelectorComponent`:
+- Add the `Output` decorator and function for emitting value first in the class of `MonthSelectorComponent`:
 ```javascript
 @Output() monthChanged = new EventEmitter()
 ```
 
-Use the event emitter in the template for the dropdown to emit the selected month directly:
+- Use the event emitter in the template for the dropdown to emit the selected month directly:
 ```html
-...
 <select #monthDropdown (change)="monthChanged.emit(monthDropdown.value)">
-...
 ```
 
-Add the following element to the template in `app.component.ts`:
+- Add the following element to the template in `app.component.ts`:
 ```html
-<pres-month-selector (monthChanged)="updateSelectedMonth($event)">
+<pres-month-selector
+  (monthChanged)="updateSelectedMonth($event)">
 </pres-month-selector>
 ```
+
+## Part 4: Send Input to presentational component
+
+- Move the property `months` from `month-selector.component.ts` to `bday-calculator.service.ts`
+
+- Import `Input` to `month-selector.component.ts`:
+```javascript
+Import { Input } from '@angular/core'
+```
+
+- Declare what type of input we want in the class, right above the `@Output()`:
+```javascript
+@Input() months
+```
+
+- Send the months into the `<pres-month-selector>` in `app.component.ts`:
+```html
+<pres-month-selector
+  (monthChanged)="updateSelectedMonth($event)"
+  [months]="bdayCalculatorService.months">
+</pres-month-selector>
+```
+
+## Conclusion
+
+The component `<pres-month-selector>` is now a "presentational component" since it only has Inputs and Outputs and doesn't know anything about its host.
