@@ -37,7 +37,6 @@ import { Component } from '@angular/core'
   `
 })
 export class AppComponent {
-  // Properties
   months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 
   selectedMonth = 1
@@ -46,7 +45,6 @@ export class AppComponent {
 
   monthsUntilBday = null
 
-  // Methods
   updateSelectedMonth(selectedMonth) {
     this.selectedMonth = parseInt(selectedMonth, 10)
     this.calculateMonthsUntilBday()
@@ -121,6 +119,10 @@ The new `calculateMonthsUntilBday` is not pure but at least we broke out the com
 
 ## Part 2: Create service for the pure function
 
+Pure functions are usually ready to be moved out from the component directly into a service.
+
+Use Angular CLI to generate a new service called "bday-calculator":
+
 `npx ng generate service bday-calculator --module=app.module.ts`
 
 Cut out the function `calculateMonthsUntilSelected` from `app.component.ts` and paste it in the new service `bday-calculator.service.ts` (right underneath the constructor).
@@ -136,7 +138,7 @@ And now instantiate it in the "Angular 5 way" in `app.component.ts` by adding a 
 constructor(private bdayCalculatorService: BdayCalculatorService) {}
 ```
 
-Now we can use the service in the function `calculateMonthsUntilbday`:
+Now we can use the service in the function `calculateMonthsUntilBday`:
 ```javascript
 calculateMonthsUntilBday() {
   const date = new Date()
@@ -158,3 +160,39 @@ The dropdown for selecting month has quite a bit of UI logics and would be nice 
 
 Now copy over the HTML for the select from `app.component.ts` template to the template of `month-selector/month-selector.component.ts`:
 
+```html
+<!-- Month dropdown -->
+<label>Month of birth
+  <select #monthDropdown (change)="updateSelectedMonth(monthDropdown.value)">
+    <option value="" selected disabled hidden>Select month</option>
+    <option *ngFor="let month of months" [value]="month">
+      {{month}}
+    </option>
+  </select>
+</label>
+```
+
+Move over the `months` property from `app.component.ts` to `month-selector.component.ts`
+
+Import `Output` and `EventEmitter` to `month-selector.component.ts`:
+```javascript
+import { Output, EventEmitter } from '@angular/core'
+```
+
+Add the `Output` decorator and function for emitting value first in the class of `MonthSelectorComponent`:
+```javascript
+@Output() monthChanged = new EventEmitter()
+```
+
+Use the event emitter in the template for the dropdown to emit the selected month directly:
+```html
+...
+<select #monthDropdown (change)="monthChanged.emit(monthDropdown.value)">
+...
+```
+
+Add the following element to the template in `app.component.ts`:
+```html
+<pres-month-selector (monthChanged)="updateSelectedMonth($event)">
+</pres-month-selector>
+```
