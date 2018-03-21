@@ -97,13 +97,10 @@ Rewriting the function to make it pure, it could look like this:
 ```javascript
 // NOTE that the function has a new, more generic, name as well
 calculateMonthsUntilSelected(currentMonth, selectedMonth) {
-  let monthsUntilSelected
   if (currentMonth > selectedMonth) {
-    monthsUntilSelected = 12 - currentMonth + selectedMonth
-  } else {
-    monthsUntilSelected = selectedMonth - currentMonth
+    return 12 - currentMonth + selectedMonth
   }
-  return monthsUntilSelected
+  return selectedMonth - currentMonth
 }
 ```
 
@@ -122,7 +119,7 @@ calculateMonthsUntilBday () {
 
 The new `calculateMonthsUntilBday` is not pure but at least we broke out the complicated calculations into another function.
 
-### Create service for the pure function
+## Part 2: Create service for the pure function
 
 `npx ng generate service bday-calculator --module=app.module.ts`
 
@@ -136,7 +133,7 @@ import { BdayCalculatorService } from './bday-calculator.service.ts'
 
 And now instantiate it in the "Angular 5 way" in `app.component.ts` by adding a constructor function like following:
 ```javascript
-constructor(public bdayCalculatorService) {}
+constructor(private bdayCalculatorService: BdayCalculatorService) {}
 ```
 
 Now we can use the service in the function `calculateMonthsUntilbday`:
@@ -151,6 +148,13 @@ calculateMonthsUntilBday() {
 }
 ```
 
-## Part 2: Create presentational component
+## Part 3: Create presentational component
 
 Presentational components are much like pure functions. They should only have inputs and outputs and not mutate external state.
+
+The dropdown for selecting month has quite a bit of UI logics and would be nice to break out of the `app.component.ts` file. Create a new component for the month selector:
+
+`npx ng generate component month-selector --module=app.module.ts`
+
+Now copy over the HTML for the select from `app.component.ts` template to the template of `month-selector/month-selector.component.ts`:
+
