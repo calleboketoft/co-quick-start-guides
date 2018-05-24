@@ -1,0 +1,71 @@
+Minimal webpack project with typescript
+
+- >mkdir proj
+- >cd proj && npm init -y
+- >npm install --save-dev html-webpack-plugin html-loader babel-loader@next @babel/core @babel/preset-env webpack webpack-cli
+- Add `webpack.config.js`:
+
+```javascript
+const HtmlWebPackPlugin = require('html-webpack-plugin');
+
+module.exports = {
+    devtool: 'inline-source-map',
+    entry: './src/index.js',
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/preset-env']
+                    }
+                }
+            },
+            {
+                test: /\.html$/,
+                use: [
+                    {
+                        loader: 'html-loader',
+                        options: { minimize: true }
+                    }
+                ]
+            }
+        ]
+    },
+    resolve: {
+        extensions: [ '.js' ]
+    },
+    plugins: [
+        new HtmlWebPackPlugin({
+            template: './src/index.html',
+            filename: './index.html'
+        })
+    ]
+};
+```
+
+
+Add scripts to `package.json`:
+```json
+  "scripts": {
+    "build": "webpack --mode production",
+    "watch": "webpack --mode development --watch"
+  },
+```
+
+Add `index.html`:
+
+```html
+<html>
+    <head></head>
+    <body></body>
+</html>
+```
+
+Add `src/index.ts`:
+
+```typescript
+console.log('test');
+```
