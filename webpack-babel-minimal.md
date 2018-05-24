@@ -69,3 +69,20 @@ Add `src/index.js`:
 ```typescript
 console.log('test');
 ```
+
+now run command
+```
+npm run build
+```
+
+```
+npm install http-server --save-dev
+```
+
+Add to `package.json`
+```
+scripts: {
+    ...
+    "start": "http-server dist"
+}
+```
