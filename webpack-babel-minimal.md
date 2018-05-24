@@ -64,7 +64,7 @@ Add `src/index.html`:
 </html>
 ```
 
-Add `src/index.ts`:
+Add `src/index.js`:
 
 ```typescript
 console.log('test');
