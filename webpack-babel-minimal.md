@@ -1,4 +1,4 @@
-Minimal webpack project with typescript
+Minimal webpack project with babel
 
 - >mkdir proj
 - >cd proj && npm init -y
