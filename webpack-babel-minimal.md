@@ -15,7 +15,7 @@ module.exports = {
         rules: [
             {
                 test: /\.js$/,
-                exclude: /(node_modules|bower_components)/,
+                exclude: /(node_modules)/,
                 use: {
                     loader: 'babel-loader',
                     options: {
@@ -55,7 +55,7 @@ Add scripts to `package.json`:
   },
 ```
 
-Add `index.html`:
+Add `src/index.html`:
 
 ```html
 <html>
