@@ -74,6 +74,8 @@ now run command
 npm run build
 ```
 
+Installing a simple dev server:
+
 ```
 npm install http-server --save-dev
 ```
