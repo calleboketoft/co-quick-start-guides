@@ -22,19 +22,8 @@ module.exports = {
                         presets: ['@babel/preset-env']
                     }
                 }
-            },
-            {
-                test: /\.html$/,
-                use: [
-                    {
-                        loader: 'html-loader'
-                    }
-                ]
             }
         ]
-    },
-    resolve: {
-        extensions: [ '.js' ]
     },
     plugins: [
         new HtmlWebPackPlugin({
