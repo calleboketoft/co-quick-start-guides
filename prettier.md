@@ -23,7 +23,6 @@ Add file `.prettierrc`
     "singleQuote": true,
     "useTabs": false,
     "tabWidth": 2,
-    "semi": false,
     "bracketSpacing": true
 }
 ```
@@ -31,5 +30,5 @@ Add file `.prettierrc`
 Add npm script `format`
 
 ```bash
-"format": "prettier --write \"src/**/*.ts\""
+"format": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\""
 ```
