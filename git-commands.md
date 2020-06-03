@@ -41,3 +41,45 @@ Interactive rebase
 
 Show what happened in a commit
 >git show [commit hash]
+
+## Fork work
+
+GIT see remote branch
+>git remote -v
+
+Get information about remote
+>git remote show <remote>
+
+Fetch newest stuff from remote
+>git fetch
+
+Pull and merge from remote
+>git pull
+
+Push to remote
+>git push <remote> <local>
+
+HEAD simply refers to the last commit in the current branch for the user
+
+See remotes that are configured
+>git remote -v
+
+Add upstream (and name it "upstream")
+>git remote add upstream repo git@git.build.ingka.ikea.com:ONE/onecheckout-client.git
+
+Fetch upstream branches, need these to set tracking branch
+>git fetch upstream
+
+Set upstream tracking for branch in fork
+>git branch cfb1.3 -u upstream/cfb1.3
+(-u is same as --set-upstream-to)
+
+Pull changes from remote
+>git pull <remote name> <branch name>
+>git pull upstream cfb1.3
+
+Pull changes from tracked branch
+>git pull
+
+Push changes to specific branch
+>git push origin testbranch
