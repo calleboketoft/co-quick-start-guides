@@ -1,5 +1,14 @@
 # GIT commands
 
+GIT handbook
+
+https://git-scm.com/book/en/v2/Git-Basics-Working-with-Remotes
+
+GitHub fork readme
+
+https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/configuring-a-remote-for-a-fork
+
+
 Undo commits and keep changes
 >git reset --soft HEAD~1
 
