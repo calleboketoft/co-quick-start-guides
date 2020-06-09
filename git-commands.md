@@ -84,7 +84,8 @@ Set upstream tracking for branch in fork
 (-u is same as --set-upstream-to)
 
 Pull changes from remote
->git pull <remote name> <branch name>
+>git pull [remote name] [branch name]
+
 >git pull upstream cfb1.3
 
 Pull changes from tracked branch
