@@ -91,5 +91,8 @@ Pull changes from remote
 Pull changes from tracked branch
 >git pull
 
+Rebase changes from tracked branch
+>git rebase upstream/cfb1.3
+
 Push changes to specific branch
 >git push origin testbranch
