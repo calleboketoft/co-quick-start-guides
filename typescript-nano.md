@@ -4,9 +4,9 @@ Minimal project with TypeScript
 - >cd proj && npm init -y
 - >npm install --save-dev typescript http-server
 - >mkdir public
-- Add to `package.json`
+- Add to `package.json`:
 
-´´´json
+```json
 {
   "scripts": {
     "build": "tsc src/*.ts",
@@ -14,7 +14,7 @@ Minimal project with TypeScript
     "serve": "http-server"
   }
 }
-´´´
+```
 
 - Add file `public/index.ts`:
 
