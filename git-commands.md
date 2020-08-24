@@ -51,6 +51,8 @@ Get out of broken rebase
 Interactive rebase
 >git rebase -i HEAD~4
 
+![interactive rebase](https://raw.githubusercontent.com/calleboketoft/co-quick-start-guides/master/git-commands-i-rebase.png "Interactive Rebase")
+
 Show what happened in a commit
 >git show [commit hash]
 
