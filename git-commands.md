@@ -27,6 +27,9 @@ Compare code changes between last commit and now
 for a specific file
 >git diff HEAD~1 filename
 
+Changed files between commits
+>git diff --name-only HEAD~1
+
 Replace local branch commits with remote, forced
 >git reset --hard origin/master
 
