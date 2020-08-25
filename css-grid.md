@@ -1,5 +1,10 @@
 ## CSS Grid
 
+https://learncssgrid.com/
+
+### Grid Template Areas
+
+CSS for the template areas
 ```css
 .wrapper {
   display: grid;
@@ -30,6 +35,8 @@ article {
   grid-area: nav;
 }
 ```
+
+HTML for the template areas
 
 ```html
 <div class="wrapper">
