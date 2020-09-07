@@ -186,3 +186,20 @@ export const SaveButtonComponent: FunctionComponent = (
   );
 };
 ```
+
+## redux/thunks.ts
+
+- Return a function instead of an object from an action
+- Allows for async execution of actions
+- Used exactly like an action, import in the [name].props.ts file
+
+```typescript
+import { setNumber } from './actions';
+
+export const setNumberDelayed = (newNumber: Number) => (dispatch: any) => {
+  setTimeout(() => {
+    dispatch(setNumber(newNumber));
+  }, 1000);
+};
+
+```
