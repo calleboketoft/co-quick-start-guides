@@ -1,8 +1,11 @@
-## React Redux Thunk
+# React Redux Thunk
 
-index.tsx
+## index.tsx
 
-```typescript
+- Import store
+- Connect store to React (react-redux)
+
+```jsx
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -22,7 +25,11 @@ ReactDOM.render(
 );
 ```
 
-redux/store.ts
+## redux/store.ts
+
+- Create store
+- Import reducers and add them to store
+- Activate middlewares and dev tools
 
 ```typescript
 import { createStore, applyMiddleware } from 'redux';
@@ -36,7 +43,9 @@ export const store = createStore(
 );
 ```
 
-redux/actionTypes.ts
+## redux/actionTypes.ts
+
+- Constants for `action.type`
 
 ```typescript
 export const INCREMENT = 'INCREMENT';
@@ -44,7 +53,10 @@ export const DECREMENT = 'DECREMENT';
 export const SET_NUMBER = 'SET_NUMBER';
 ```
 
-redux/actions.ts
+## redux/actions.ts
+
+- Import `actionTypes.ts`
+- Action creators for `action.type` and `action.payload` to be dispatched to store
 
 ```typescript
 import { INCREMENT, DECREMENT, SET_NUMBER } from './actionTypes';
@@ -63,7 +75,10 @@ export const setNumber = (number: Number) => ({
 });
 ```
 
-redux/reducers/index.ts
+## redux/reducers/index.ts
+
+- Imports all reducers
+- Combines reducers for the store
 
 ```typescript
 import { combineReducers } from 'redux';
@@ -72,7 +87,10 @@ import { counter } from './counter';
 export default combineReducers({ counter });
 ```
 
-redux/reducers/counter.reducer.ts
+## redux/reducers/counter.reducer.ts
+
+- Imports `actionTypes.ts` for type names
+- Updates the content of the store for this reducer
 
 ```typescript
 import { INCREMENT, DECREMENT, SET_NUMBER } from '../actionTypes';
@@ -98,7 +116,9 @@ export function counter(state = initialState, action: Action) {
 }
 ```
 
-redux/reducers/counter.selectors.ts
+## redux/reducers/counter.selectors.ts
+
+- Get specific data from the store, with or without modification
 
 ```typescript
 export const selectCounterTimesTen = (state) => {
@@ -106,16 +126,23 @@ export const selectCounterTimesTen = (state) => {
 };
 ```
 
-components/AddButton/index.ts
+## components/IncrementButton/index.ts
+
+- Connects `IncrementButton.props.ts` with `IncrementButton.component.tsx` for `react-redux`
 
 ```typescript
-import { AddButtonComponent } from './AddButton.component';
-import AddButtonConnector from './AddButton.props';
+import { IncrementButtonComponent } from './IncrementButton.component';
+import IncrementButtonConnector from './IncrementButton.props';
 
-export default AddButtonConnector(AddButtonComponent);
+export default IncrementButtonConnector(IncrementButtonComponent);
 ```
 
-components/AddButton/AddButton.props.ts
+## components/IncrementButton/IncrementButton.props.ts
+
+- `mapStateToProps`
+  - Called every time state changes. Receives the whole state and returns object with data that the component needs.
+- `mapDispatchToProps`
+  - Object with the actions that the component needs.
 
 ```typescript
 import { connect } from 'react-redux';
@@ -130,14 +157,16 @@ const mapStateToProps = (state: any /*, ownProps*/) => {
 };
 
 const mapDispatchToProps = {
-  setNumber: setNumber,
-  increment: increment,
+  setNumber,
+  increment,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps);
 ```
 
-components/AddButton/AddButton.component.ts
+## components/IncrementButton/IncrementButton.component.ts
+
+- The React component itself
 
 ```typescript
 import React, { FunctionComponent } from 'react';
