@@ -1,47 +1,14 @@
-# React Redux Thunk
+# React Redux
 
-## index.tsx
+Complete app with React, Redux, and Thunks. Organized bottom up.
 
-- Import store
-- Connect store to React (react-redux)
+## Set up project
 
-```jsx
-import React from 'react';
-import ReactDOM from 'react-dom';
+>npx create-react-app myapp --template typescript
 
-import { Provider } from 'react-redux';
-import { store } from './redux/store';
+>cd myapp
 
-import './index.css';
-import App from './App';
-
-ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
-```
-
-## redux/store.ts
-
-- Create store
-- Import reducers and add them to store
-- Activate middlewares and dev tools
-
-```typescript
-import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import thunk from 'redux-thunk';
-import rootReducer from './reducers';
-
-export const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(thunk))
-);
-```
+>npm install --save redux react-redux redux-thunk redux-devtools-extension @types/react-redux
 
 ## redux/actionTypes.ts
 
@@ -75,18 +42,6 @@ export const setNumber = (number: Number) => ({
 });
 ```
 
-## redux/reducers/index.ts
-
-- Imports all reducers
-- Combines reducers for the store
-
-```typescript
-import { combineReducers } from 'redux';
-import { counter } from './counter';
-
-export default combineReducers({ counter });
-```
-
 ## redux/reducers/counter.reducer.ts
 
 - Imports `actionTypes.ts` for type names
@@ -104,11 +59,11 @@ type Action = {
 
 export function counter(state = initialState, action: Action) {
   switch (action.type) {
-    case actionTypes.INCREMENT:
+    case INCREMENT:
       return state + 1;
-    case actionTypes.DECREMENT:
+    case DECREMENT:
       return state - 1;
-    case actionTypes.SET_NUMBER:
+    case SET_NUMBER:
       return action.payload;
     default:
       return state;
@@ -116,28 +71,72 @@ export function counter(state = initialState, action: Action) {
 }
 ```
 
+## redux/reducers/index.ts
+
+- Gathers all reducers
+- Combines reducers for the store
+
+```typescript
+import { combineReducers } from 'redux';
+import { counter } from './counter.reducer';
+
+export default combineReducers({ counter });
+```
+
+## redux/store.ts
+
+- Create store
+- Import reducers and add them to store
+- Activate middlewares and dev tools
+
+```typescript
+import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
+import rootReducer from './reducers';
+
+export const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+);
+```
+
+## index.tsx
+
+- Import store
+- Connect store to React (react-redux)
+
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
+
+import './index.css';
+import App from './App';
+
+ReactDOM.render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </React.StrictMode>,
+  document.getElementById('root')
+);
+```
+
 ## redux/reducers/counter.selectors.ts
 
 - Get specific data from the store, with or without modification
 
 ```typescript
-export const selectCounterTimesTen = (state) => {
+export const selectCounterTimesTen = (state: any) => {
   return state.counter * 10;
 };
 ```
 
-## components/IncrementButton/index.ts
-
-- Connects `IncrementButton.props.ts` with `IncrementButton.component.tsx` for `react-redux`
-
-```typescript
-import { IncrementButtonComponent } from './IncrementButton.component';
-import IncrementButtonConnector from './IncrementButton.props';
-
-export default IncrementButtonConnector(IncrementButtonComponent);
-```
-
-## components/IncrementButton/IncrementButton.props.ts
+## components/MyButton/MyButton.props.ts
 
 - `mapStateToProps`
   - Called every time state changes. Receives the whole state and returns object with data that the component needs.
@@ -164,14 +163,14 @@ const mapDispatchToProps = {
 export default connect(mapStateToProps, mapDispatchToProps);
 ```
 
-## components/IncrementButton/IncrementButton.component.ts
+## components/MyButton/MyButton.component.ts
 
 - The React component itself
 
 ```typescript
 import React, { FunctionComponent } from 'react';
 
-export const SaveButtonComponent: FunctionComponent = (
+export const MyButtonComponent: FunctionComponent = (
   props: any
 ): JSX.Element => {
   const handleClick = (e: any) => {
@@ -181,11 +180,45 @@ export const SaveButtonComponent: FunctionComponent = (
   };
   return (
     <button type="submit" onClick={(e) => handleClick(e)}>
-      Save
+      Click me
     </button>
   );
 };
 ```
+
+## components/MyButton/index.ts
+
+- Connects `MyButton.props.ts` with `MyButton.component.tsx` for `react-redux`
+
+```typescript
+import { MyButtonComponent } from './MyButton.component';
+import MyButtonConnector from './MyButton.props';
+
+export default MyButtonConnector(MyButtonComponent);
+```
+
+## App.tsx
+
+- Render `MyButton` in the main `App`
+
+```typescript
+import React from 'react';
+import MyButton from './components/MyButton';
+
+function App() {
+  return <MyButton></MyButton>;
+}
+
+export default App;
+```
+
+## Ready to run
+
+>npm start
+
+Open browser and check out the button. Click it and increase the counter.
+
+# Redux Thunk
 
 ## redux/thunks.ts
 
@@ -201,5 +234,30 @@ export const setNumberDelayed = (newNumber: Number) => (dispatch: any) => {
     dispatch(setNumber(newNumber));
   }, 1000);
 };
-
 ```
+
+## components/MyButton/MyButton.props.tsx
+
+- Add `setNumberDelayed` to `mapDispatchToProps` object
+
+```typescript
+import { setNumberDelayed } from '../../redux/thunks';
+
+mapDispatchToProps: {
+  setNumberDelayed: setNumberDelayed,
+}
+```
+
+## components/MyButton/MyButton.component.tsx
+
+- Call `setNumberDelayed` from `handleClick`
+
+```typescript
+handleClick (e) => {
+  props.setNumberDelayed(10);
+}
+```
+
+# Redux Saga
+
+# Redux Observable
