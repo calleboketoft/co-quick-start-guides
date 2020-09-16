@@ -101,3 +101,11 @@ Rebase changes from tracked branch
 
 Push changes to specific branch
 >git push origin testbranch
+
+## Patch
+
+Create patch file from last commit
+>git format-patch -1 [commit sha]
+
+Apply patch
+>git am [patch file name]
