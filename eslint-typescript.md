@@ -2,7 +2,7 @@
 
 Install dependencies
 
-`npm install --save-dev @typescript-eslint/eslint-plugin @typescript-eslint/parse eslint-plugin-react`
+`npm install --save-dev @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-plugin-react`
 
 Add lint script to `package.json`
 
