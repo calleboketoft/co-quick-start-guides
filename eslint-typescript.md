@@ -8,6 +8,10 @@ Add lint script to `package.json`
 
 `"lint": "eslint . --ext .js,.jsx,.ts,.tsx"`
 
+Add TypeScript compiler check to `package.json`
+
+`"check-ts": "tsc --noEmit -p tsconfig.json",`
+
 Add `.eslintrc.js`
 
 ```javascript
