@@ -2,20 +2,9 @@
 
 Install dependencies
 
-`npm install --save-dev prettier tslint-config-prettier`
+`npm install --save-dev prettier`
 
-Add base `tslint.json` file
-
-```json
-{
-  "extends": [
-    "./existing-tslint-file.json",
-    "tslint-config-prettier"
-  ]
-}
-```
-
-Add file `.prettierrc`
+Add file `.prettierrc.json`
 
 ```json
 {
@@ -30,5 +19,5 @@ Add file `.prettierrc`
 Add npm script `format`
 
 ```bash
-"format": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\""
+"format": "prettier --write \"src/**/*.ts\""
 ```
