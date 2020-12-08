@@ -33,3 +33,12 @@ module.exports = {
   }
 };
 ```
+
+If using create-react-app, override eslint like this
+
+Create `.env` file in project root
+```
+EXTEND_ESLINT=true
+```
+
+Remove `node_modules` if your rules file isn't respected

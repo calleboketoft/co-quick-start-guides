@@ -9,8 +9,8 @@ Minimal project with TypeScript
 ```json
 {
   "scripts": {
-    "build": "tsc src/*.ts",
-    "watch": "tsc src/*.ts --watch",
+    "build": "tsc public/*.ts",
+    "watch": "tsc public/*.ts --watch",
     "serve": "http-server"
   }
 }
