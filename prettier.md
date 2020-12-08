@@ -8,7 +8,7 @@ Add file `.prettierrc.json`
 
 ```json
 {
-    "printWidth": 80,
+    "printWidth": 100,
     "singleQuote": true,
     "useTabs": false,
     "tabWidth": 2,
