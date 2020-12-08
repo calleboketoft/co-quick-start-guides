@@ -25,7 +25,7 @@ console.log('test');
 - Add file `public/index.html`:
 
 ```html
-<script src="public/index.js"></script>
+<script src="index.js"></script>
 ```
 
 - Open terminal and run `npm run watch`
