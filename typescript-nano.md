@@ -11,7 +11,7 @@ Minimal project with TypeScript
   "scripts": {
     "build": "tsc public/*.ts",
     "watch": "tsc public/*.ts --watch",
-    "serve": "http-server"
+    "start": "http-server"
   }
 }
 ```
