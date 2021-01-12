@@ -2,53 +2,46 @@ Minimal webpack project with typescript
 
 - > mkdir proj
 - > cd proj && npm init -y
-- > npm install --save-dev typescript ts-loader webpack webpack-cli html-webpack-plugin html-loader webpack-dev-server
+- > npm install --save-dev typescript ts-loader webpack webpack-cli html-webpack-plugin html-loader clean-webpack-plugin webpack-dev-server
 - Add `webpack.config.js`:
 
 ```javascript
-const HtmlWebPackPlugin = require("html-webpack-plugin");
-const path = require("path");
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-  entry: "./src/index.ts",
-  devtool: "inline-source-map",
+  mode: 'development',
+  entry: path.resolve(__dirname, './src/index.ts'),
+  devtool: 'inline-source-map',
   devServer: {
-    contentBase: path.join(__dirname, "dist"),
-    compress: true,
+    contentBase: path.join(__dirname, 'dist'),
     port: 9000,
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        loader: "ts-loader",
+        use: 'ts-loader',
         exclude: /node_modules/,
-      },
-      {
-        test: /\.html$/,
-        use: [
-          {
-            loader: "html-loader",
-            options: { minimize: true },
-          },
-        ],
       },
     ],
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js"],
+    extensions: ['.tsx', '.ts', '.js'],
+  },
+  output: {
+    filename: 'bundle.[hash].js',
+    path: path.resolve(__dirname, 'dist'),
   },
   plugins: [
-    new HtmlWebPackPlugin({
-      template: "./src/index.html",
-      filename: "./dist/index.html",
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, './src/index.html'),
     }),
   ],
-  output: {
-    filename: "bundle.js",
-    path: path.resolve(__dirname, "dist"),
-  },
 };
+
 ```
 
 Add `tsconfig.json`:
@@ -57,12 +50,11 @@ Add `tsconfig.json`:
 {
   "compilerOptions": {
     "outDir": "./dist/",
-    "sourceMap": true,
-    "noImplicitAny": true,
-    "module": "commonjs",
+    "noImplicitAny": false,
+    "module": "es6",
     "target": "es5",
-    "jsx": "react",
-    "allowJs": true
+    "allowJs": false,
+    "sourceMap": true
   }
 }
 ```
@@ -71,8 +63,8 @@ Add scripts to `package.json`:
 
 ```json
   "scripts": {
-    "build": "webpack --mode production",
-    "serve": "webpack-dev-server"
+    "build": "webpack",
+    "start": "webpack serve"
   },
 ```
 
@@ -88,5 +80,5 @@ Add `src/index.html`:
 Add `src/index.ts`:
 
 ```typescript
-console.log("test");
+console.log('test');
 ```
